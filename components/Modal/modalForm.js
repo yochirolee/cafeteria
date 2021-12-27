@@ -24,25 +24,30 @@ export default function ModalForm({ show, onClose, children, title }) {
         },
       ])
       .single();
-    if (!error) products.push(product);
+    if (!error) {
+      products.push(product);
+      handleCloseClick();
+    }
   };
 
   useEffect(() => {
     setIsBrowser(true);
   }, []);
 
-  const handleCloseClick = (e) => {
-    e.preventDefault();
+  const handleCloseClick = () => {
     onClose();
   };
 
   const modalContent = show ? (
-    <div className="absolute bg-white w-3/4 top-20 ">
+    <div className="absolute  mt-2 w-screen h-screen bg-white top-10 ">
       <div>
-        <div>
-          <a href="#" onClick={handleCloseClick}>
-            x
-          </a>
+        <div className="flex flex-row justify-between m-4 text-white items-center">
+          <p>Nuevo Producto</p>
+          <i
+            href="#"
+            className="las la-times-circle text-red-600 text-xl text-center  p-2"
+            onClick={handleCloseClick}
+          ></i>
         </div>
         {title && <div>{title}</div>}
         <div>

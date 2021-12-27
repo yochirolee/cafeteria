@@ -61,19 +61,35 @@ export default function DashBoard() {
       <NavBar />
 
       <div className="container mx-auto  ">
-        <div className="grid place-items-center  ">
-          <ModalForm
-            onClose={() => setShowModal(false)}
-            show={showModal}
-          ></ModalForm>
+        <ModalForm
+          onClose={() => setShowModal(false)}
+          show={showModal}
+        ></ModalForm>
+
+        <div className="flex flex-row justify-evenly bg-white rounded-lg p-2 m-2">
+          <div className=" flex flex-col items-center p-2 rounded-lg bg-white shadow-lg border">
+            <p className="font-bold text-xl text-gray-500">$ 34 000</p>
+            <p>Venta Diaria</p>
+          </div>
+          <div className="p-2 rounded-lg bg-white shadow-lg border">
+            Venta Semanal
+          </div>
+          <div className="p-2 rounded-lg bg-white shadow-lg border">
+            Venta Mesual
+          </div>
+          <div className="p-2 rounded-lg bg-white shadow-lg border">
+            Venta Total
+          </div>
         </div>
-        <div className=" m-2 bg-white w-auto flex flex-col ">
-          <button
-            className="bg-gray-700 text-white p-1 m-2 w-2/4 "
-            onClick={() => setShowModal(true)}
-          >
-            Adicionar Producto
-          </button>
+
+        <div className=" m-2 bg-white w-auto flex flex-col  ">
+          <div className="flex flex-row justify-between  items-center border-b">
+            <p className="ml-2">Inventario:</p>
+            <i
+              className="bg-gray-700 text-white p-1 px-2 m-2 rounded-lg las la-plus  "
+              onClick={() => setShowModal(true)}
+            ></i>
+          </div>
           <table className="border-collapse table-auto  text-sm ">
             <thead className="border-b dark:border-gray-600 font-medium  text-gray-400 dark:text-gray-200 text-center">
               <tr>
@@ -93,7 +109,7 @@ export default function DashBoard() {
               </tr>
             </thead>
             <tbody className="">
-              {products  ? (
+              {products ? (
                 products.map((product) => (
                   <tr key={product.id}>
                     <td className="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
@@ -106,16 +122,12 @@ export default function DashBoard() {
                       {product.quantitySold}
                     </td>
                     <td className="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
-                      <div className="flex flex-row justify-around">
-                        <button className="bg-green-500 text-white p-1 mr-2 rounded-lg">
-                          Editar
-                        </button>
-                        <button
-                          className="bg-red-500 text-white p-1 rounded-lg"
+                      <div className="flex flex-row justify-around align-middle text-center">
+                        <i className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"></i>
+                        <i
+                          className="las la-trash w-12 h-12 text-red-500 text-xl cursor-pointer"
                           onClick={() => handleDeleteProduct(product.id)}
-                        >
-                          Borrar
-                        </button>
+                        ></i>
                       </div>
                     </td>
                   </tr>

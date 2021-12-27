@@ -3,6 +3,7 @@ import { supabase } from "../utils/supabaseClient";
 import NavBar from "../components/NavBar/navbar";
 import ProductsList from "../components/products/productsList";
 import { ProductsContext } from "../context/ProductsContext";
+import Head from "next/head";
 
 export default function Home() {
   const [session, setSession] = useState(null);
