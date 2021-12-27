@@ -7,15 +7,7 @@ export default function ProductList() {
   const [products, setProducts] = useContext(ProductsContext);
   const [error, setError] = useState(null);
 
-  useEffect(async () => {
-    const getData = async () => {
-      const { data, error } = await supabase.from("product").select();
-      await setProducts(data);
-      if (error) setError(error);
-      return;
-    };
-    await getData();
-  }, []);
+ 
 
   const handleProductUpdate = async (id, count) => {
     const prod = products.find((product) => product.id == id);
