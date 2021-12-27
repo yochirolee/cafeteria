@@ -25,7 +25,7 @@ export default function DashBoard({ products, error }) {
   };
   return (
     <>
-      <NavBar />
+    
       <div className="flex flex-row ">
         <div className="w-44  bg-gray-700 text-white h-screen top-1 pt-6 -mt-4 ">
           <ul className="flex flex-col items-center cursor-pointer">
