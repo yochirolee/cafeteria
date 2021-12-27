@@ -66,7 +66,7 @@ export default function DashBoard() {
           show={showModal}
         ></ModalForm>
 
-        <div className="flex flex-row justify-evenly bg-white rounded-lg p-2 m-2">
+        <div className="flex flex-row grow-0 justify-evenly bg-white rounded-lg p-2 m-2">
           <div className=" flex flex-col items-center p-2 rounded-lg bg-white shadow-lg border">
             <p className="font-bold text-xl text-gray-500">$ 34 000</p>
             <p>Venta Diaria</p>
@@ -74,7 +74,7 @@ export default function DashBoard() {
           <div className="p-2 rounded-lg bg-white shadow-lg border">
             Venta Semanal
           </div>
-          <div className="p-2 rounded-lg bg-white shadow-lg border">
+          <div className="p-2 rounded-lg bg-white shadow-lg border hidden lg:block">
             Venta Mesual
           </div>
           <div className="p-2 rounded-lg bg-white shadow-lg border">

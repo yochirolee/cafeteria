@@ -39,7 +39,7 @@ export default function ModalForm({ show, onClose, children, title }) {
   };
 
   const modalContent = show ? (
-    <div className="absolute  mt-2 w-screen h-screen bg-white top-10 ">
+    <div className="absolute left-0  mt-2 w-full h-screen bg-white top-10 ">
       <div>
         <div className="flex flex-row justify-between m-4 text-white items-center">
           <p>Nuevo Producto</p>
