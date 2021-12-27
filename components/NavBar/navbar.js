@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
+import Link from "next/link";
 
 export default function NavBar() {
   const [products] = useContext(ProductsContext);
@@ -17,9 +18,14 @@ export default function NavBar() {
   return (
     <header>
       <div className="bg-gray-700 text-white w-full mb-4 h-12 flex flex-row justify-between px-2 lg:px-8 items-center">
-        <a className="font-bold text-xl"> El Triunfo</a>
+        <Link href="/">
+          <a className="font-bold text-xl"> El Triunfo</a>
+        </Link>
         <div className="flex flex-row items-center  justify-end lg:pr-8 py-2 ">
           <div className="flex flex-row items-center">
+            <Link href={"/dashboard"}>
+              <a className="mr-6 border p-1 rounded-lg">Dashboard</a>
+            </Link>
             <p className="mr-4 ">Venta:</p>
             <p className=" ring-1 ring-gray-500 relative justify-end p-1 rounded-lg font-bold">
               $ {totalSales}

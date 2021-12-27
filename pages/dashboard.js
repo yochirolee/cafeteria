@@ -2,10 +2,12 @@ import NavBar from "../components/NavBar/navbar";
 import { set, useForm } from "react-hook-form";
 import { supabase } from "../utils/supabaseClient";
 import { ProductsContext } from "../context/ProductsContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import ModalForm from "../components/Modal/modalForm";
 
 export default function DashBoard() {
   const [products, setProducts] = useContext(ProductsContext);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(async () => {
     const getData = async () => {
@@ -17,7 +19,7 @@ export default function DashBoard() {
     await getData();
   }, [products]);
 
-  //INSERT PRODUCT
+  /*INSERT PRODUCT
   const {
     register,
     handleSubmit,
@@ -38,7 +40,7 @@ export default function DashBoard() {
       .single();
     if (!error) products.push(product);
   };
-
+*/
   //DELTE PRODUCT
 
   const handleDeleteProduct = async (id) => {
@@ -58,50 +60,20 @@ export default function DashBoard() {
     <div>
       <NavBar />
 
-      <div className="  flex flex-col   ">
-        <div className="lg:flex-row w-3/4  bg-white  mx-auto rounded-xl">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col items-center "
-          >
-            <input
-              type="text"
-              className="border p-1 m-2"
-              placeholder="nombre"
-              {...register("name", { required: true })}
-            />
-            <input
-              className="border p-1 m-2"
-              type="number"
-              placeholder="precio"
-              {...register("price", {})}
-            />
-            <input
-              className="border p-1 m-2"
-              type="number"
-              placeholder="Precio de Venta"
-              {...register("salePrice", {})}
-            />
-            <input
-              className="border p-1 m-2"
-              type="number"
-              placeholder="Cantidad"
-              {...register("quantity", {})}
-            />
-            <input
-              className="border p-1 m-2"
-              type="text"
-              placeholder="Imagen"
-              {...register("image", {})}
-            />
-
-            <input
-              type="submit"
-              className="border bg-gray-700  text-white p-2 m-2 w-1/2"
-            />
-          </form>
+      <div className="container mx-auto  ">
+        <div className="grid place-items-center  ">
+          <ModalForm
+            onClose={() => setShowModal(false)}
+            show={showModal}
+          ></ModalForm>
         </div>
-        <div className=" m-2 bg-white w-auto">
+        <div className=" m-2 bg-white w-auto flex flex-col ">
+          <button
+            className="bg-gray-700 text-white p-1 m-2 w-2/4 "
+            onClick={() => setShowModal(true)}
+          >
+            Adicionar Producto
+          </button>
           <table className="border-collapse table-auto  text-sm ">
             <thead className="border-b dark:border-gray-600 font-medium  text-gray-400 dark:text-gray-200 text-center">
               <tr>
@@ -121,7 +93,7 @@ export default function DashBoard() {
               </tr>
             </thead>
             <tbody className="">
-              {products ? (
+              {products  ? (
                 products.map((product) => (
                   <tr key={product.id}>
                     <td className="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
@@ -149,7 +121,9 @@ export default function DashBoard() {
                   </tr>
                 ))
               ) : (
-                <></>
+                <div className="flex flex-row border">
+                  <p className="p-2 mx-auto">No hay Productos Disponibles</p>
+                </div>
               )}
             </tbody>
           </table>
