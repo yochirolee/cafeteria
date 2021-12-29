@@ -2,7 +2,6 @@ import { supabase } from "../utils/supabaseClient";
 import Auth from "../components/Auth/Auth";
 import Account from "../components/Account/Account";
 import { useState, useEffect } from "react";
-import Router from "next/router";
 
 export default function Login() {
   const [session, setSession] = useState(null);

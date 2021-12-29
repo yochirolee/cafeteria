@@ -5,6 +5,7 @@ import { ProductsContext } from "../context/ProductsContext";
 import { useContext, useEffect, useState } from "react";
 import ModalForm from "../components/Modal/modalForm";
 import InventoryTable from "../components/Table/InventoryTable";
+import ProductsTable from "../components/Table/ProductsTable";
 
 export default function DashBoard() {
   const [products, setProducts] = useContext(ProductsContext);
@@ -82,7 +83,7 @@ export default function DashBoard() {
             Venta Total
           </div>
         </div>
-        <InventoryTable
+        <ProductsTable
           products={products}
           handleDeleteProduct={handleDeleteProduct}
           setShowModal={setShowModal}
