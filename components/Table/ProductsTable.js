@@ -1,16 +1,17 @@
 export default function ProductsTable({
   products,
-  handleDeleteProduct,
+  handleConfirmationModal,
   setShowModal,
+  setDeleteId,
 }) {
   return (
     <div class="col-span-full xl:col-span-8 bg-white shadow-lg rounded-sm border border-gray-200 m-2">
       <header class="px-5 py-4 border-b border-gray-100 flex flex-row justify-between items-center">
         <h2 class="font-semibold text-gray-800">Productos</h2>
         <div className="flex flex-row items-center ">
-          <p className='text-gray-700 text-sm'>Adicionar Producto</p>
+          <p className="text-gray-700 text-sm">Adicionar Producto</p>
           <i
-            className="bg-gray-700 text-white p-1 px-2 m-2 rounded-lg las la-plus  "
+            className="bg-green-700 text-white p-1 ring ring-green-200 m-2 rounded-full las la-plus  "
             onClick={() => setShowModal(true)}
           ></i>
         </div>
@@ -58,7 +59,10 @@ export default function ProductsTable({
                       <i className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"></i>
                       <i
                         className="las la-trash w-12 h-12 text-red-500 text-xl cursor-pointer"
-                        onClick={() => handleDeleteProduct(product.id)}
+                        onClick={() => {
+                          setDeleteId(product.id);
+                          handleConfirmationModal();
+                        }}
                       ></i>
                     </td>
                   </tr>

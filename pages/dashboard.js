@@ -4,12 +4,14 @@ import { supabase } from "../utils/supabaseClient";
 import { ProductsContext } from "../context/ProductsContext";
 import { useContext, useEffect, useState } from "react";
 import ModalForm from "../components/Modal/modalForm";
-import InventoryTable from "../components/Table/InventoryTable";
 import ProductsTable from "../components/Table/ProductsTable";
+import DeleteModal from "../components/Modal/deleteModal";
 
 export default function DashBoard() {
   const [products, setProducts] = useContext(ProductsContext);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(async () => {
     const getData = async () => {
@@ -45,17 +47,25 @@ export default function DashBoard() {
 */
   //DELTE PRODUCT
 
-  const handleDeleteProduct = async (id) => {
+  const handleDeleteProduct = async () => {
+    console.log(deleteId, "deleteID");
     const { data, error } = await supabase
       .from("product")
       .delete()
-      .match({ id: id });
+      .match({ id: deleteId });
     if (!error) {
       const _prods = [...products];
-      const index = await _prods.indexOf(_prods.find((prod) => prod.id == id));
+      const index = await _prods.indexOf(
+        _prods.find((prod) => prod.id == deleteId)
+      );
       _prods.splice(index, 1);
       await setProducts([..._prods]);
+      setShowConfirmationModal(!showConfirmationModal);
     }
+  };
+
+  const handleConfirmationModal = () => {
+    setShowConfirmationModal(!showConfirmationModal);
   };
 
   return (
@@ -63,6 +73,12 @@ export default function DashBoard() {
       <NavBar />
 
       <div className="container mx-auto  ">
+        <DeleteModal
+          showConfirmationModal={showConfirmationModal}
+          handleConfirmationModal={handleConfirmationModal}
+          handleDeleteProduct={handleDeleteProduct}
+        />
+
         <ModalForm
           onClose={() => setShowModal(false)}
           show={showModal}
@@ -85,8 +101,9 @@ export default function DashBoard() {
         </div>
         <ProductsTable
           products={products}
-          handleDeleteProduct={handleDeleteProduct}
+          handleConfirmationModal={handleConfirmationModal}
           setShowModal={setShowModal}
+          setDeleteId={setDeleteId}
         />
       </div>
     </div>
