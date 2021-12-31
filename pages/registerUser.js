@@ -30,7 +30,7 @@ export default function RegisterUser() {
                     type="email"
                     name="email"
                     id="email"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="name@company.com"
                     required=""
                   />
@@ -47,7 +47,7 @@ export default function RegisterUser() {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required=""
                   />
                 </div>
@@ -58,7 +58,7 @@ export default function RegisterUser() {
                         id="remember"
                         aria-describedby="remember"
                         type="checkbox"
-                        class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                        class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-gray-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-gray-600 dark:ring-offset-gray-800"
                         required=""
                       />
                     </div>
@@ -73,14 +73,14 @@ export default function RegisterUser() {
                   </div>
                   <a
                     href="#"
-                    class="text-sm text-blue-700 hover:underline dark:text-blue-500"
+                    class="text-sm text-gray-700 hover:underline dark:text-gray-500"
                   >
                     Restablecer Password?
                   </a>
                 </div>
                 <button
                   type="submit"
-                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                 >
                   Autenticarse
                 </button>
@@ -88,7 +88,7 @@ export default function RegisterUser() {
                   No Registrado?{" "}
                   <a
                     href="#"
-                    class="text-blue-700 hover:underline dark:text-blue-500"
+                    class="text-gray-700 hover:underline dark:text-gray-500"
                   >
                     Crear Cuenta
                   </a>

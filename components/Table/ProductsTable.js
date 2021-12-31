@@ -10,7 +10,7 @@ export default function ProductsTable({
         <h2 class="font-semibold text-gray-800">Productos</h2>
         <div
           onClick={() => setShowModal(true)}
-          className="flex flex-row items-center cursor-pointer bg-blue-600 rounded-lg mx-2  hover:text-white  ring-blue-700 hover:ring-2 "
+          className="flex flex-row items-center cursor-pointer bg-gray-600 rounded-lg mx-2  hover:text-white  ring-gray-700 hover:ring-2 "
         >
           <p className="text-white text-sm mx-2">Adicionar Producto</p>
           <i className="text-white rounded-full  las la-plus  text-sm p-1.5 ml-auto inline-flex items-center "></i>
@@ -52,10 +52,10 @@ export default function ProductsTable({
                     <td className="p-2">
                       <div className="text-center">{product.quantity}</div>
                     </td>
-                    <td className="p-2 text-center text-light-blue-500">
+                    <td className="p-2 text-center text-light-gray-500">
                       {product.quantitySold}
                     </td>
-                    <td className="p-2 text-center text-light-blue-500 flex flex-row">
+                    <td className="p-2 text-center text-light-gray-500 flex flex-row">
                       <i className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"></i>
                       <i
                         className="las la-trash w-12 h-12 text-red-500 text-xl cursor-pointer"
