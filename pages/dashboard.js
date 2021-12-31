@@ -1,11 +1,11 @@
 import NavBar from "../components/NavBar/navbar";
-import { set, useForm } from "react-hook-form";
 import { supabase } from "../utils/supabaseClient";
 import { ProductsContext } from "../context/ProductsContext";
 import { useContext, useEffect, useState } from "react";
 import ModalForm from "../components/Modal/modalForm";
 import ProductsTable from "../components/Table/ProductsTable";
 import DeleteModal from "../components/Modal/deleteModal";
+import AuthLayout from "../layout/AuthLayout";
 
 export default function DashBoard() {
   const [products, setProducts] = useContext(ProductsContext);
@@ -69,9 +69,7 @@ export default function DashBoard() {
   };
 
   return (
-    <div>
-      <NavBar />
-
+    <AuthLayout>
       <div className="container mx-auto  ">
         <DeleteModal
           showConfirmationModal={showConfirmationModal}
@@ -106,7 +104,7 @@ export default function DashBoard() {
           setDeleteId={setDeleteId}
         />
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 

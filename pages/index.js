@@ -3,6 +3,7 @@ import { supabase } from "../utils/supabaseClient";
 import NavBar from "../components/NavBar/navbar";
 import ProductsList from "../components/products/productsList";
 import { ProductsContext } from "../context/ProductsContext";
+import AuthLayout from "../layout/AuthLayout";
 
 export default function Home() {
   const [session, setSession] = useState(null);
@@ -26,9 +27,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <NavBar />
+    <AuthLayout>
       <ProductsList />
-    </div>
+    </AuthLayout>
   );
 }

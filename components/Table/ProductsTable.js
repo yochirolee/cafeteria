@@ -8,18 +8,18 @@ export default function ProductsTable({
     <div class="col-span-full xl:col-span-8 bg-white shadow-lg rounded-sm border border-gray-200 m-2">
       <header class="px-5 py-4 border-b border-gray-100 flex flex-row justify-between items-center">
         <h2 class="font-semibold text-gray-800">Productos</h2>
-        <div className="flex flex-row items-center ">
-          <p className="text-gray-700 text-sm">Adicionar Producto</p>
-          <i
-            className="bg-green-700 text-white p-1 ring ring-green-200 m-2 rounded-full las la-plus  "
-            onClick={() => setShowModal(true)}
-          ></i>
+        <div
+          onClick={() => setShowModal(true)}
+          className="flex flex-row items-center cursor-pointer bg-blue-600 rounded-lg mx-2  hover:text-white  ring-blue-700 hover:ring-2 "
+        >
+          <p className="text-white text-sm mx-2">Adicionar Producto</p>
+          <i className="text-white rounded-full  las la-plus  text-sm p-1.5 ml-auto inline-flex items-center "></i>
         </div>
       </header>
       <div className="p-3">
         <div className="overflow-x-auto ">
           <table className="table-auto w-full">
-            <thead className="text-xs uppercase text-gray-400 bg-gray-50 rounded-sm">
+            <thead className="text-xs uppercase text-gray-400 bg-gray-50  rounded-sm">
               <tr>
                 <th className="p-2">
                   <div class="font-semibold text-left">Nombre</div>
@@ -31,14 +31,14 @@ export default function ProductsTable({
                   <div className="font-semibold text-center">Existencia</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center">Vendidos</div>
+                  <div className="font-semibold text-center ">Vendidos</div>
                 </th>
                 <th className="p-2">
                   <div className="font-semibold text-center">Actions</div>
                 </th>
               </tr>
             </thead>
-            <tbody className="text-sm font-medium divide-y divide-gray-100 items-center">
+            <tbody className="text-xs lg:text-sm font-medium divide-y divide-gray-100 items-center">
               {products ? (
                 products.map((product) => (
                   <tr key={product.id}>

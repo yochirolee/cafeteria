@@ -3,7 +3,7 @@ import { ProductsContext } from "../../context/ProductsContext";
 import Link from "next/link";
 import UserActions from "./userActions";
 
-export default function NavBar() {
+export default function NavBar({user}) {
   const [products] = useContext(ProductsContext);
   const [totalSales, setTotalSales] = useState(0);
   const [toggle, setToggle] = useState(false);
