@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { supabase } from "../utils/supabaseClient";
-import NavBar from "../components/NavBar/navbar";
 import ProductsList from "../components/products/productsList";
 import { ProductsContext } from "../context/ProductsContext";
 import AuthLayout from "../layout/AuthLayout";

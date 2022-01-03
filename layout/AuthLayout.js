@@ -4,10 +4,11 @@ import NavBar from "../components/NavBar/navbar";
 
 
 export default function AuthLayout({ children }) {
-  const [session, setSession] = useContext(AuthContext);
+  const [user, setUser] = useContext(AuthContext);
+
   return (
     <>
-      <NavBar session={session} />
+      <NavBar session={user} />
       <div>{children}</div>
     </>
   );

@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { supabase } from "../../utils/supabaseClient";
 import { ProductsContext } from "../../context/ProductsContext";
 
-export default function ModalForm({ show, onClose, children, title }) {
-  const [isBrowser, setIsBrowser] = useState(false);
-  const [products, setProducts] = useContext(ProductsContext);
+export default function ModalForm({ show, onClose }) {
+  const [setIsBrowser] = useState(false);
+  const [products] = useContext(ProductsContext);
   const {
     register,
     handleSubmit,
@@ -30,9 +30,7 @@ export default function ModalForm({ show, onClose, children, title }) {
     }
   };
 
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
+
 
   const handleCloseClick = () => {
     onClose();
@@ -97,25 +95,25 @@ export default function ModalForm({ show, onClose, children, title }) {
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="precio"
-                      {...register("price", {})}
+                      {...register("price", {required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Precio de Venta"
-                      {...register("salePrice", {})}
+                      {...register("salePrice", {required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Cantidad"
-                      {...register("quantity", {})}
+                      {...register("quantity", {required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="text"
                       placeholder="Imagen"
-                      {...register("image", {})}
+                      {...register("image", {required: true })}
                     />
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button
