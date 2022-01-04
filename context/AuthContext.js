@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
   const { pathname, events } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     // Check that a new route is OK
@@ -15,10 +16,10 @@ export const AuthProvider = (props) => {
         window.location.href = "/login";
       }
     };
-
+    if (user) router.push("/");
     // Check that initial route is OK
     if (pathname !== "/login" && user === null) {
-      window.location.href = "/login";
+      router.push( "/login");
     }
 
     // Monitor routes

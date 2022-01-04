@@ -1,13 +1,12 @@
 import AuthLayout from "../layout/AuthLayout";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../utils/supabaseClient";
 import { AuthContext } from "../context/AuthContext";
-import { useRouter } from "next/router";
 
 export default function Login() {
   const [user, setUser] = useContext(AuthContext);
-  const router = useRouter();
+
 
   const {
     register,
@@ -23,7 +22,7 @@ export default function Login() {
     });
     if (user) {
       setUser(user);
-      router.push('/')
+     
     }
   };
 
@@ -109,15 +108,7 @@ export default function Login() {
                 >
                   Autenticarse
                 </button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                  No Registrado?{" "}
-                  <a
-                    href="#"
-                    class="text-gray-700 hover:underline dark:text-gray-500"
-                  >
-                    Crear Cuenta
-                  </a>
-                </div>
+              
               </form>
             </div>
           </div>

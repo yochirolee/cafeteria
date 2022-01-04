@@ -1,14 +1,14 @@
-import { AuthContext } from "../context/AuthContext";
-import { Component, useContext } from "react";
+import { useContext } from "react";
 import NavBar from "../components/NavBar/navbar";
+import { AuthContext } from "../context/AuthContext";
 
 
 export default function AuthLayout({ children }) {
   const [user, setUser] = useContext(AuthContext);
-
+  //const [user]=useState(true)
   return (
     <>
-      <NavBar session={user} />
+     
       <div>{children}</div>
     </>
   );

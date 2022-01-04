@@ -15,7 +15,7 @@ export default function ProductCardDetails({
       </div>
       <div className="flex flex-col items-center font-bold ">
         <p>Venta</p>
-        <p className="font-bold text-green-700">{salePrice * quantitySold} $</p>
+        <p className="font-bold text-green-700">$ {salePrice * quantitySold} </p>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { supabase } from "../../utils/supabaseClient";
 import { ProductsContext } from "../../context/ProductsContext";
 
@@ -29,8 +29,6 @@ export default function ModalForm({ show, onClose }) {
       handleCloseClick();
     }
   };
-
-
 
   const handleCloseClick = () => {
     onClose();
@@ -88,32 +86,32 @@ export default function ModalForm({ show, onClose }) {
                     <input
                       type="text"
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="nombre"
+                      placeholder="Nombre"
                       {...register("name", { required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
-                      placeholder="precio"
-                      {...register("price", {required: true })}
+                      placeholder="Precio de Compra"
+                      {...register("price", { required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Precio de Venta"
-                      {...register("salePrice", {required: true })}
+                      {...register("salePrice", { required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Cantidad"
-                      {...register("quantity", {required: true })}
+                      {...register("quantity", { required: true })}
                     />
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="text"
                       placeholder="Imagen"
-                      {...register("image", {required: true })}
+                      {...register("image", { required: true })}
                     />
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button
