@@ -5,7 +5,7 @@ import AuthLayout from "../../layout/AuthLayout";
 import DeleteModal from "../Modal/deleteModal";
 import ModalForm from "../Modal/modalForm";
 import ProductsTable from "../Table/ProductsTable";
-import {getTotalDailySales} from '../../utils/products'
+import { getTotalDailySales } from "../../utils/products";
 
 export default function MainDashBoard() {
   const [products, setProducts] = useContext(ProductsContext);
@@ -76,9 +76,12 @@ export default function MainDashBoard() {
           <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
             <div className="flex-row flex  w-full justify-evenly ">
               <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                <span className="text-gray-400 text-xs lg:text-base inline-flex   ">Venta de Hoy</span>
-                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                  <i className="las la-dollar-sign text-green-500 "></i>{getTotalDailySales(products)}
+                <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
+                  Venta de Hoy
+                </span>
+                <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
+                  <i className="las la-dollar-sign text-green-500 "></i>
+                  {getTotalDailySales(products)}
                 </p>
               </div>
               <div className="rounded-lg ring-1 w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
