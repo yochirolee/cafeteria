@@ -59,8 +59,8 @@ export default function MainDashBoard() {
   };
 
   return (
-    <div className="col-span-full container mx-auto xl:col-span-8 bg-white  rounded-sm  border-gray-200 m-2">
-      <div className="col-span-full xl:col-span-6 bg-white  rounded-sm ">
+    <div className="col-span-full container mx-auto xl:col-span-8  rounded-sm  border-gray-200 m-2">
+      <div className="col-span-full xl:col-span-6   rounded-sm ">
         <div className=" w-full mx-auto  ">
           <DeleteModal
             showConfirmationModal={showConfirmationModal}
