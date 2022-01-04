@@ -41,7 +41,7 @@ export default function ModalForm({ show, onClose }) {
       role="dialog"
       aria-modal="true"
     >
-      <div className="flex   items-end justify-center  min-h-screen  lg:px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex items-end justify-center   pt-10 lg:px-4  text-center sm:block sm:p-0">
         <div
           className="fixed  inset-0 bg-gray-500  bg-opacity-75 transition-opacity"
           aria-hidden="true"
