@@ -10,9 +10,9 @@ export default function ProductCard({
   setUpdating,
 }) {
   return (
-    <div className="flex flex-col  items-center m-2  border bg-white rounded-xl w-5/6 ">
+    <div className="flex flex-col  items-center m-2   bg-white rounded-xl w-5/6 ">
       <ProductCardName name={product.name} />
-      <p>${product.salePrice}</p>
+      <p className="items-center flex flex-row"><span className="text-xs pr-2">Precio: </span>${product.salePrice}</p>
       <ProductCardActions
         prod={product}
         handleProductUpdate={handleProductUpdate}
