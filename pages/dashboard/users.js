@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { supabase } from "../../utils/supabaseClient";
 import authWrapper from "../../lib/authWrapper";
 import UsersTable from "../../components/Table/UsersTable";
+import { useState } from "react";
 
 export default function Users() {
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -12,13 +14,16 @@ export default function Users() {
   } = useForm();
 
   const onSubmit = async ({ email, password }) => {
-    console.log(email, "email");
-    const { user, error } = await supabase.auth.signIn({
-      email: email,
-      password: password,
+    console.log(email, password);
+
+    const { user, error } = await supabase.auth.signUp({
+      email,
+      password
     });
-    if (user) {
-      setUser(user);
+
+    console.log(user,error)
+    if (error) {
+      setError(error);
     }
   };
 
@@ -90,6 +95,7 @@ export default function Users() {
                   >
                     Crear Usuario
                   </button>
+                  {error ? <p>{error.message}</p> : <></>}
                 </form>
               </div>
             </div>

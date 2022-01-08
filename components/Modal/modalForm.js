@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-
-export default function ModalForm({ show, onClose,handleInsertProduct }) {
-
+export default function ModalForm({ show, onClose, handleInsertProduct }) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const {
@@ -11,10 +9,10 @@ export default function ModalForm({ show, onClose,handleInsertProduct }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const onSubmit = async (data) => {
     setUpdating(true);
-    await handleInsertProduct(data)
+    await handleInsertProduct(data);
     setUpdating(false);
     handleCloseClick();
   };
@@ -96,12 +94,7 @@ export default function ModalForm({ show, onClose,handleInsertProduct }) {
                       placeholder="Cantidad"
                       {...register("quantity", { required: true })}
                     />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="text"
-                      placeholder="Imagen"
-                      {...register("image", { required: true })}
-                    />
+
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button
                         type="submit"

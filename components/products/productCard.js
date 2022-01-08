@@ -11,9 +11,6 @@ export default function ProductCard({
 }) {
   return (
     <div className="flex flex-col  items-center m-2  border bg-white rounded-xl w-5/6 ">
-      <div className="mt-6 w-12 h-16 lg:w-40 lg:h-40 relative ">
-        <ProductCardImage src={product.image} />
-      </div>
       <ProductCardName name={product.name} />
       <p>${product.salePrice}</p>
       <ProductCardActions
