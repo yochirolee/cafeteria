@@ -2,7 +2,6 @@ import ProductCardDetails from "./productCardDetails";
 import ProductCardName from "./productCardName";
 import ProductCardImage from "./productCardImage";
 import ProductCardActions from "./productCardActions";
-import { useState } from "react";
 
 export default function ProductCard({
   product,

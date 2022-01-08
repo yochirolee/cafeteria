@@ -26,7 +26,7 @@ export default function NavBarDashBoard({ user }) {
           </Link>
         </div>
         <div>
-          <ul className="inline-flex text-sm cursor-pointer">
+          <ul className="inline-flex  cursor-pointer">
             <li className="mx-2">
               <Link href="/" className="text-center hidden lg:block">
                 <div>
@@ -36,15 +36,18 @@ export default function NavBarDashBoard({ user }) {
               </Link>
             </li>
             <li className="mx-2">
-            <Link href="/dashboard" className="text-center hidden lg:block">
+              <Link href="/dashboard" className="text-center hidden lg:block">
                 <div>
                   <i className="las la-list mr-1"></i>
-                  <a className="hidden lg:inline-block">Usuarios</a>
+                  <a className="hidden lg:inline-block">Productos</a>
                 </div>
               </Link>
             </li>
             <li className="mx-2">
-            <Link href="/dashboard/users" className="text-center hidden lg:block">
+              <Link
+                href="/dashboard/users"
+                className="text-center hidden lg:block"
+              >
                 <div>
                   <i className="las la-user mr-1"></i>
                   <a className="hidden lg:inline-block">Usuarios</a>
@@ -52,8 +55,15 @@ export default function NavBarDashBoard({ user }) {
               </Link>
             </li>
             <li className="mx-2">
-              <i className="las la-clipboard-list mr-1"></i>
-              <a className="hidden lg:inline-block">Reportes</a>
+              <Link
+                href="/dashboard/calendar"
+                className="text-center hidden lg:block"
+              >
+                <div>
+                  <i className="las la-clipboard-list mr-1"></i>
+                  <a className="hidden lg:inline-block">Reportes</a>
+                </div>
+              </Link>
             </li>
           </ul>
         </div>

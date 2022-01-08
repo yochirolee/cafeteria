@@ -1,12 +1,16 @@
 import NavBar from "../components/NavBar/navbar";
 import ProductsList from "../components/products/productsList";
-import AuthLayout from "../layout/AuthLayout";
+import { supabase } from "../utils/supabaseClient";
+import { useEffect } from "react";
+import authWrapper from "../lib/authWrapper";
 
 export default function Home() {
   return (
-    <AuthLayout>
-      <NavBar/>
+    <>
+      <NavBar />
       <ProductsList />
-    </AuthLayout>
+    </>
   );
 }
+
+export const getServerSideProps = authWrapper();

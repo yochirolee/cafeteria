@@ -1,33 +1,22 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { supabase } from "../../utils/supabaseClient";
-import { ProductsContext } from "../../context/ProductsContext";
 
-export default function ModalForm({ show, onClose }) {
-  const [setIsBrowser] = useState(false);
-  const [products] = useContext(ProductsContext);
+
+export default function ModalForm({ show, onClose,handleInsertProduct }) {
+
+  const [updating, setUpdating] = useState(false);
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
   const onSubmit = async (data) => {
-    let { data: product, error } = await supabase
-      .from("product")
-      .insert([
-        {
-          name: data.name,
-          price: data.price,
-          salePrice: data.salePrice,
-          quantity: data.quantity,
-          image: data.image,
-        },
-      ])
-      .single();
-    if (!error) {
-      products.push(product);
-      handleCloseClick();
-    }
+    setUpdating(true);
+    await handleInsertProduct(data)
+    setUpdating(false);
+    handleCloseClick();
   };
 
   const handleCloseClick = () => {
@@ -118,7 +107,7 @@ export default function ModalForm({ show, onClose }) {
                         type="submit"
                         className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-700 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2  sm:ml-3 sm:w-auto sm:text-sm"
                       >
-                        Adicionar
+                        {updating ? "Adicionando..." : "Adicionar"}
                       </button>
                       <button
                         onClick={handleCloseClick}
@@ -129,6 +118,13 @@ export default function ModalForm({ show, onClose }) {
                       </button>
                     </div>
                   </form>
+                  {error ? (
+                    <div className="text-center border animate-pulse text-red-600">
+                      {error.message}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
             </div>

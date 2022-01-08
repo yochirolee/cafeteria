@@ -19,22 +19,22 @@ export default function ProductsTable({
       <div className="p-3">
         <div className="overflow-x-auto ">
           <table className="table-auto w-full">
-            <thead className="text-xs uppercase text-gray-400 bg-gray-50  rounded-sm">
+            <thead className="text-xs  uppercase text-gray-400 bg-gray-50  rounded-sm">
               <tr>
                 <th className="p-2">
-                  <div class="font-semibold text-left">Nombre</div>
+                  <div class="font-light text-left">Nombre</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center">Ventas</div>
+                  <div className="font-light text-center">Ventas</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center">Existencia</div>
+                  <div className="font-light text-center">Existencia</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center ">Vendidos</div>
+                  <div className="font-light text-center ">Vendidos</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center">Actions</div>
+                  <div className="font-light text-center">Actions</div>
                 </th>
               </tr>
             </thead>

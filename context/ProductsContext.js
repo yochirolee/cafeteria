@@ -1,18 +1,18 @@
 import React, { useState, useEffect, createContext } from "react";
-import { supabase } from "../utils/supabaseClient";
+import { getProducts } from "../utils/products";
 export const ProductsContext = createContext();
 export const ProductsProvider = (props) => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(async () => {
     const getData = async () => {
-      const { data, error } = await supabase.from("product").select().order('id');
-      await setProducts(data);
-      if (error) setError(error);
-      return;
+      const { data, error } = await getProducts();
+      error ? setError(error) : setProducts(data);
     };
+
     await getData();
-  }, [products]);
+  }, [products.length]);
 
   return (
     <ProductsContext.Provider value={[products, setProducts]}>

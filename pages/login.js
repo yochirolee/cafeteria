@@ -1,12 +1,11 @@
-import AuthLayout from "../layout/AuthLayout";
-import { useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../utils/supabaseClient";
-import { AuthContext } from "../context/AuthContext";
+import { useRouter } from "next/router";
 
 export default function Login() {
-  const [user, setUser] = useContext(AuthContext);
-
+  const [user, setUser] = useState(null);
+   const router=useRouter();
 
   const {
     register,
@@ -22,12 +21,13 @@ export default function Login() {
     });
     if (user) {
       setUser(user);
+      router.push('/')
      
     }
   };
 
   return (
-    <AuthLayout>
+   
       <div className="container mx-auto  h-screen pt-20">
         <div
           id="authentication-modal"
@@ -114,6 +114,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </AuthLayout>
+    
   );
 }

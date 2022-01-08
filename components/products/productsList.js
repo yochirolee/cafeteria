@@ -1,13 +1,10 @@
 import ProductCard from "./productCard";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { supabase } from "../../utils/supabaseClient";
 
 export default function ProductList() {
   const [products, setProducts] = useContext(ProductsContext);
-  const [error, setError] = useState(null);
-
- 
 
   const handleProductUpdate = async (id, count) => {
     const prod = products.find((product) => product.id == id);
@@ -23,6 +20,17 @@ export default function ProductList() {
           quantitySold: prod.quantitySold,
         })
         .match({ id: prod.id });
+
+      let { data: product, error: salesError } = await supabase
+        .from("sales")
+        .insert([
+          {
+            product_name: prod.name,
+            quantity: count,
+          },
+        ])
+        .single();
+
       if (!error) {
         const index = products.indexOf(prod);
         let _products = [...products];
@@ -31,8 +39,6 @@ export default function ProductList() {
       }
     }
   };
-
-  if (error) return <div>{error.message}</div>;
 
   return products ? (
     <div className="grid  grid-cols-2 lg:grid-cols-5  justify-items-center">

@@ -1,12 +1,100 @@
-import SideBarDashboard from "../../components/dashboard/sideBarDashboard";
-import MainDashBoard from "../../components/dashboard/mainDashboard";
-import AuthLayout from "../../layout/AuthLayout";
 import DashBoardLayout from "../../layout/DashBoardLayout";
+import authWrapper from "../../lib/authWrapper";
+import { useContext, useState } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
+import { supabase } from "../../utils/supabaseClient";
+import DeleteModal from "../../components/Modal/deleteModal";
+import ModalForm from "../../components/Modal/modalForm";
+import ProductsTable from "../../components/Table/ProductsTable";
+import { insertProduct } from "../../utils/products";
+import { getTotalDailySales } from "../../utils/products";
 
-export default function Dashboar() {
+export default function Dashboard() {
+  const [products, setProducts] = useContext(ProductsContext);
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  const handleInsertProduct = async (data) => {
+    const { product, error } = await insertProduct(data);
+    if (!error) {
+      const aux = [...products];
+      aux.push(product);
+      setProducts(aux);
+    } else {
+      setError(error);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    console.log(deleteId, "deleteID");
+    const { data, error } = await supabase
+      .from("product")
+      .delete()
+      .match({ id: deleteId });
+    if (!error) {
+      const _prods = [...products];
+      const index = await _prods.indexOf(
+        _prods.find((prod) => prod.id == deleteId)
+      );
+      _prods.splice(index, 1);
+      await setProducts([..._prods]);
+      setShowConfirmationModal(!showConfirmationModal);
+    }
+  };
+
+  const handleConfirmationModal = () => {
+    setShowConfirmationModal(!showConfirmationModal);
+  };
+
   return (
     <DashBoardLayout>
-      <MainDashBoard />
+      <div className="col-span-full container mx-auto xl:col-span-8  rounded-sm  border-gray-200 m-2">
+        <div className="col-span-full xl:col-span-6   rounded-sm ">
+          <div className=" w-full mx-auto  ">
+            <DeleteModal
+              showConfirmationModal={showConfirmationModal}
+              handleConfirmationModal={handleConfirmationModal}
+              handleDeleteProduct={handleDeleteProduct}
+            />
+
+            <ModalForm
+              onClose={() => setShowModal(false)}
+              show={showModal}
+              handleInsertProduct={handleInsertProduct}
+            ></ModalForm>
+
+            <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
+              <div className="flex-row flex  w-full justify-evenly ">
+                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
+                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
+                    Venta de Hoy
+                  </span>
+                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
+                    <i className="las la-dollar-sign text-green-500 "></i>
+                    {getTotalDailySales(products)}
+                  </p>
+                </div>
+                <div className="rounded-lg ring-1 w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
+                  as
+                </div>
+                <div className="rounded-lg ring-1  w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
+                  as
+                </div>
+              </div>
+            </div>
+
+            <ProductsTable
+              products={products}
+              handleConfirmationModal={handleConfirmationModal}
+              setShowModal={setShowModal}
+              setDeleteId={setDeleteId}
+            />
+          </div>
+        </div>
+      </div>
     </DashBoardLayout>
   );
 }
+
+export const getServerSideProps = authWrapper();
