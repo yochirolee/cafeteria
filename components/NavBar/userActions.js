@@ -23,7 +23,7 @@ export default function UserActions({ toggle }) {
               </a>
             </Link>
             <Link href={"/login"}>
-              <a
+              <a onClick={handleLogOut}
                 href="#"
                 class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
               >
@@ -31,7 +31,7 @@ export default function UserActions({ toggle }) {
                   <i className="las la-sign-out-alt text-2xl"></i>
                 </span>
 
-                <span class="ml-3" onClick={handleLogOut}>
+                <span class="ml-3" >
                   Logout
                 </span>
               </a>
