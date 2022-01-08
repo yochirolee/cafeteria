@@ -9,7 +9,7 @@ export default function ProductCardDetails({
         <p className="mr-2 ">Venta</p>
         <p className="font-bold text-gray-600 m-2 p-1 rounded-lg border border-gray-300">${salePrice * quantitySold} </p>
       </div>
-    <div className="flex flex-row justify-around  text-xs ">
+    <div className="flex flex-row justify-around p-1  text-xs ">
       <div className="flex flex-col items-center mx-2 ">
         <p>Vendidos</p>
         <p>{quantitySold}</p>
