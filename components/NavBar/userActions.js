@@ -22,7 +22,7 @@ export default function UserActions({ toggle }) {
                 <span class="ml-3">Dashboard</span>
               </a>
             </Link>
-            <Link href={"/"}>
+            <Link href={"/login"}>
               <a
                 href="#"
                 class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
