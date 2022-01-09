@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { supabase } from "../../utils/supabaseClient";
-export default function UserActions({ toggle }) {
+export default function UserActions({ toggle,user }) {
   const handleLogOut = async () => {
     const { error } = await supabase.auth.signOut();
   };
@@ -9,31 +9,28 @@ export default function UserActions({ toggle }) {
       {!toggle ? (
         <></>
       ) : (
-        <div className="w-64 right-48  z-30 relative mr-8 border top-3 rounded-md  bg-white ">
-          <div class="my-px">
+        <div className="w-64  z-30 absolute  border top-12 right-0 lg:right-14 rounded-md border-gray-500 bg-gray-700 text-white ">
+          <div className="my-px">
+            <div className="p-4 text-center text-gray-400">{user.email}</div>
+            <div className="border-b border-dashed border-gray-600"></div>
             <Link href={"/dashboard"}>
-              <a
-                href="#"
-                class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              >
-                <span class="flex items-center justify-center text-lg text-gray-400">
+              <a className="flex flex-row items-center h-10 px-3  text-gray-500 hover:bg-gray-600 hover:text-white ">
+                <span className="flex items-center justify-center text-lg text-gray-400">
                   <i className="las la-user-cog text-2xl"></i>
                 </span>
-                <span class="ml-3">Dashboard</span>
+                <span className="ml-3">Dashboard</span>
               </a>
             </Link>
             <Link href={"/login"}>
-              <a onClick={handleLogOut}
-                href="#"
-                class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              <a
+                onClick={handleLogOut}
+                className="flex flex-row items-center h-10 px-3  text-gray-500 hover:bg-gray-600 hover:text-white"
               >
-                <span class="flex items-center justify-center text-lg text-gray-400">
+                <span className="flex items-center justify-center text-lg text-gray-400">
                   <i className="las la-sign-out-alt text-2xl"></i>
                 </span>
 
-                <span class="ml-3" >
-                  Logout
-                </span>
+                <span className="ml-3">Salir</span>
               </a>
             </Link>
           </div>

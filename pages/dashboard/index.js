@@ -6,14 +6,17 @@ import { supabase } from "../../utils/supabaseClient";
 import DeleteModal from "../../components/Modal/deleteModal";
 import ModalForm from "../../components/Modal/modalForm";
 import ProductsTable from "../../components/Table/ProductsTable";
-import { insertProduct } from "../../utils/products";
+import { insertProduct, updateProduct } from "../../utils/products";
 import { getTotalDailySales } from "../../utils/products";
+import ModalFormUpdate from "../../components/Modal/modalFormUpdate";
 
-export default function Dashboard() {
+export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
   const [showModal, setShowModal] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [productUpdate, setProductUpdate] = useState(null);
 
   const handleInsertProduct = async (data) => {
     const { product, error } = await insertProduct(data);
@@ -26,17 +29,31 @@ export default function Dashboard() {
     }
   };
 
+  const handleUpdate = async (product) => {
+    setShowModalUpdate(true);
+    setProductUpdate(product);
+  };
+
+  const handleUpdateProductInventory = async ({ quantity }) => {
+    const aux_pro = { ...productUpdate };
+    aux_pro.quantity += parseInt(quantity);
+    const auxProducts = [...products];
+    const { error } = await updateProduct(aux_pro);
+    if (!error) {
+      const index = auxProducts.findIndex((elem) => elem.id === aux_pro.id);
+      auxProducts[index] = aux_pro;
+      setProducts(auxProducts);
+    }
+  };
+
   const handleDeleteProduct = async () => {
-    console.log(deleteId, "deleteID");
     const { data, error } = await supabase
       .from("product")
       .delete()
       .match({ id: deleteId });
     if (!error) {
       const _prods = [...products];
-      const index = await _prods.indexOf(
-        _prods.find((prod) => prod.id == deleteId)
-      );
+      const index = await _prods.findIndex((prod) => prod.id == deleteId);
       _prods.splice(index, 1);
       await setProducts([..._prods]);
       setShowConfirmationModal(!showConfirmationModal);
@@ -48,7 +65,7 @@ export default function Dashboard() {
   };
 
   return (
-    <DashBoardLayout>
+    <DashBoardLayout user={ user }>
       <div className="col-span-full container mx-auto xl:col-span-8  rounded-sm  border-gray-200 m-2">
         <div className="col-span-full xl:col-span-6   rounded-sm ">
           <div className=" w-full mx-auto  ">
@@ -59,10 +76,17 @@ export default function Dashboard() {
             />
 
             <ModalForm
-              onClose={() => setShowModal(false)}
               show={showModal}
               handleInsertProduct={handleInsertProduct}
+              onClose={() => setShowModal(false)}
             ></ModalForm>
+
+            <ModalFormUpdate
+              show={showModalUpdate}
+              productUpdate={productUpdate}
+              onClose={() => setShowModalUpdate(false)}
+              handleUpdateProductInventory={handleUpdateProductInventory}
+            ></ModalFormUpdate>
 
             <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
               <div className="flex-row flex  w-full justify-evenly ">
@@ -89,6 +113,7 @@ export default function Dashboard() {
               handleConfirmationModal={handleConfirmationModal}
               setShowModal={setShowModal}
               setDeleteId={setDeleteId}
+              handleUpdate={handleUpdate}
             />
           </div>
         </div>

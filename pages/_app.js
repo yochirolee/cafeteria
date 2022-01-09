@@ -4,8 +4,7 @@ import Head from "next/head";
 import { supabase } from "../utils/supabaseClient";
 import { useEffect } from "react";
 
-function MyApp({ Component, pageProps, user }) {
-  console.log(user);
+function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {

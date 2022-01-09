@@ -16,6 +16,14 @@ export const insertProduct = async (data) => {
   return { product, error };
 };
 
+export const updateProduct = async (product) => {
+  const { data, error } = await supabase
+    .from("product")
+    .update({ quantity: product.quantity })
+    .eq("id", product.id);
+  return { data, error };
+};
+
 export const getProducts = async () => {
   const { data, error } = await supabase.from("product").select().order("id");
   console.log("query");

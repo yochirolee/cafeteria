@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function ModalForm({ show, onClose, handleInsertProduct }) {
+export default function ModalFormUpdate({
+  show,
+  onClose,
+  handleUpdateProductInventory,
+  productUpdate,
+}) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const {
@@ -13,11 +18,10 @@ export default function ModalForm({ show, onClose, handleInsertProduct }) {
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    await handleInsertProduct(data);
-    setUpdating(false); 
-     reset();
+    await handleUpdateProductInventory(data);
+    setUpdating(false);
+    reset();
     handleCloseClick();
-  
   };
 
   const handleCloseClick = () => {
@@ -45,20 +49,7 @@ export default function ModalForm({ show, onClose, handleInsertProduct }) {
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                 data-modal-toggle="authentication-modal"
                 onClick={handleCloseClick}
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
+              ></button>
             </div>
             <div className="sm:flex sm:items-start">
               <div className="mt-3  flex flex-col mx-auto">
@@ -66,44 +57,47 @@ export default function ModalForm({ show, onClose, handleInsertProduct }) {
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  Adicionar Producto
+                  Editar Producto
                 </h3>
                 <div className="mt-2 ">
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col items-center  "
+                    className="flex flex-col items-left  "
                   >
-                    <input
-                      type="text"
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="Nombre"
-                      {...register("name", { required: true })}
-                    />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="number"
-                      placeholder="Precio de Compra"
-                      {...register("price", { required: true })}
-                    />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="number"
-                      placeholder="Precio de Venta"
-                      {...register("salePrice", { required: true })}
-                    />
+                    <div className="inline-flex">
+                      <span className="mr-2">Nombre:</span>
+                      <p>{productUpdate.name}</p>
+                    </div>
+                    <div className="inline-flex">
+                      <span className="mr-2">Precio de Compra:</span>
+                      <p>{productUpdate.price}</p>
+                    </div>
+                    <div className="inline-flex">
+                      <span className="mr-2">Precio de Venta:</span>
+                      <p>{productUpdate.salePrice}</p>
+                    </div>
+                    <div className="inline-flex">
+                      <span className="mr-2">Cantidad en Inventario:</span>
+                      <p>{productUpdate.quantity}</p>
+                    </div>
+
+                    <div className="border-b py-4"></div>
+
+                    <span>Adicionar a Inventario</span>
                     <input
                       className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Cantidad"
+                      
                       {...register("quantity", { required: true })}
                     />
 
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button
                         type="submit"
-                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-700 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2  sm:ml-3 sm:w-auto sm:text-sm"
+                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2  sm:ml-3 sm:w-auto sm:text-sm"
                       >
-                        {updating ? "Adicionando..." : "Adicionar"}
+                        {updating ? "Updating..." : "Update"}
                       </button>
                       <button
                         onClick={handleCloseClick}

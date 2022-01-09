@@ -3,6 +3,7 @@ export default function ProductsTable({
   handleConfirmationModal,
   setShowModal,
   setDeleteId,
+  handleUpdate,
 }) {
   return (
     <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
@@ -58,7 +59,10 @@ export default function ProductsTable({
                       {product.quantitySold}
                     </td>
                     <td className="p-2 text-center text-light-gray-500 flex flex-row justify-center">
-                      <i className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"></i>
+                      <i
+                        className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"
+                        onClick={()=>handleUpdate(product)}
+                      ></i>
                       <i
                         className="las la-trash-alt w-12 h-12 text-red-500 text-xl cursor-pointer"
                         onClick={() => {

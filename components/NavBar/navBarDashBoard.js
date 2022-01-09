@@ -82,7 +82,7 @@ export default function NavBarDashBoard({ user }) {
               className="rounded-full object-contain"
               src="/images/elyse.png"
             />
-            <UserActions toggle={toggle} />
+            <UserActions toggle={toggle} user={user} />
           </a>
         </div>
       </div>
