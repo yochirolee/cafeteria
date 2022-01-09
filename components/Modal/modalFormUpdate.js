@@ -62,11 +62,11 @@ export default function ModalFormUpdate({
                 <div className="mt-2 ">
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col items-left  "
+                    className="flex flex-col items-left text-sm "
                   >
                     <div className="inline-flex">
                       <span className="mr-2">Nombre:</span>
-                      <p>{productUpdate.name}</p>
+                      <p className="font-bold">{productUpdate.name}</p>
                     </div>
                     <div className="inline-flex">
                       <span className="mr-2">Precio de Compra:</span>
@@ -83,9 +83,9 @@ export default function ModalFormUpdate({
 
                     <div className="border-b py-4"></div>
 
-                    <span>Adicionar a Inventario</span>
+                    <p className="mt-2 mx-auto">Adicionar a Inventario</p>
                     <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className="bg-gray-50 w-64 mx-auto  m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Cantidad"
                       
