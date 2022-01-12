@@ -41,7 +41,7 @@ export default function ProductList() {
   };
 
   return products ? (
-    <div className="grid  grid-cols-2 lg:grid-cols-5  justify-items-center">
+    <div className=" flex flex-col lg:grid  lg:grid-cols-6 justify-items-center">
       {products.map((product) => (
         <ProductCard
           product={product}

@@ -37,7 +37,7 @@ export default function ProductCardActions({ prod, handleProductUpdate }) {
       </div>
 
       <button
-        className={`mt-4 rounded-lg w-3/4 ${
+        className={`mt-4 text-sm lg:text-md rounded-lg w-3/4 ${
           prod.quantity == 0 ? "bg-red-600" : "bg-gray-700"
         }`}
       >

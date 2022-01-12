@@ -4,8 +4,8 @@ export default function ProductCardDetails({
   salePrice,
 }) {
   return (
-    <div className="flex flex-col  w-full rounded-b-lg">
-      <div className="flex flex-row text-xs mx-auto items-center ">
+    <div className="flex flex-col  w-full rounded-b-lg ">
+      <div className="flex flex-row text-xs mx-auto items-center border-b border-dashed lg:border-none ">
         <p className="mr-2 ">Venta</p>
         <p className="font-bold text-gray-600 m-2 p-1  rounded-lg border border-gray-300">${salePrice * quantitySold} </p>
       </div>
