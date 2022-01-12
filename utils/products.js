@@ -25,8 +25,8 @@ export const updateProduct = async (product) => {
 };
 
 export const getProducts = async () => {
-  const { data, error } = await supabase.from("product").select().order("id");
-  console.log("query");
+  const { data, error } = await supabase.from("product").select().order("name");
+
   return { data, error };
 };
 
