@@ -15,15 +15,15 @@ export default function UserActions({ toggle,user }) {
             <div className="p-4 text-center text-gray-400">{user.email}</div>
             <div className="border-b border-dashed border-gray-600"></div>
             <Link href={"/dashboard"}>
-              <a className="flex flex-row items-center h-10 px-3  text-gray-500 hover:bg-gray-600 hover:text-white ">
+              <span className="flex flex-row items-center h-10 px-3  text-gray-500 hover:bg-gray-600 hover:text-white ">
                 <span className="flex items-center justify-center text-lg text-gray-400">
                   <i className="las la-user-cog text-2xl"></i>
                 </span>
                 <span className="ml-3">Dashboard</span>
-              </a>
+              </span>
             </Link>
             <Link href={"/login"}>
-              <a
+              <span
                 onClick={handleLogOut}
                 className="flex flex-row items-center h-10 px-3  text-gray-500 hover:bg-gray-600 hover:text-white"
               >
@@ -32,7 +32,7 @@ export default function UserActions({ toggle,user }) {
                 </span>
 
                 <span className="ml-3">Salir</span>
-              </a>
+              </span>
             </Link>
           </div>
         </div>

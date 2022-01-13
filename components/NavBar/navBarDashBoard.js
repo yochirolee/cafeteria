@@ -65,6 +65,17 @@ export default function NavBarDashBoard({ user }) {
                 </div>
               </Link>
             </li>
+            <li className="mx-2">
+              <Link
+                href="/dashboard/sales"
+                className="text-center hidden lg:block"
+              >
+                <div>
+                  <i className="las la-clipboard-list mr-1"></i>
+                  <a className="hidden lg:inline-block">Reportes</a>
+                </div>
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="flex flex-row items-center  justify-end lg:pr-8 py-2 ">

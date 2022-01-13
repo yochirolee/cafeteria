@@ -23,7 +23,7 @@ export default function ProductsTable({
             <thead className="text-xs  uppercase text-gray-400 bg-gray-50  rounded-sm">
               <tr>
                 <th className="p-2">
-                  <div class="font-light text-left">Nombre</div>
+                  <div className="font-light text-left">Nombre</div>
                 </th>
 
                 <th className="p-2">
@@ -35,29 +35,29 @@ export default function ProductsTable({
                 </th>
               </tr>
             </thead>
-            <tbody className="text-xs lg:text-sm font-medium divide-y divide-gray-100 items-center">
+            <tbody className="text-xs lg:text-sm font-medium  divide-y divide-gray-100 items-center">
               {products ? (
                 products.map((product) => (
-                  <tr key={product.id}>
-                    <td className="p-2 flex items-center">
+                  <tr className="items-center" key={product.id}>
+                    <td className="text-left">
                       <div className="text-gray-800">{product.name}</div>
                     </td>
 
-                    <td className="p-2">
+                    <td className=" ">
                       <div className="text-center">{product.quantity}</div>
                     </td>
 
-                    <td className="p-2 text-center text-light-gray-500 flex flex-row justify-center">
+                    <td className="flex flex-row justify-around items-center">
                       <i
-                        className="las la-plus w-12 h-12 text-blue-500 text-xl cursor-pointer"
+                        className="las  la-plus   text-blue-500 text-xl cursor-pointer"
                         onClick={() => handleUpdate(product)}
                       ></i>
                       <i
-                        className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"
+                        className="las la-edit text-green-500 text-xl cursor-pointer"
                         onClick={() => handleUpdate(product)}
                       ></i>
                       <i
-                        className="las la-trash-alt w-12 h-12 text-red-500 text-xl cursor-pointer"
+                        className="las la-trash-alt  text-red-500 text-xl cursor-pointer"
                         onClick={() => {
                           setDeleteId(product.id);
                           handleConfirmationModal();

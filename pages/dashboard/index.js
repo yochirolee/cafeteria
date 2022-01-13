@@ -102,13 +102,9 @@ export default function Dashboard({ user }) {
               handleUpdateProductInventory={handleUpdateProductInventory}
             ></ModalFormAdd>
 
-            <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
-              <div className="mx-auto flex flex-row justify-evenly items-center p-2">
-                <p className="text-bold">Cerrado</p>
+            <div className="rounded-lg  m-3 ring-gray-900  overflow-hidden bg-gray-50">
+              <div className="flex flex-row border-b justify-end bg-white  p-2">
                 <OpenToggle />
-                <p className="text-green-600 font-bold animate-pulse">
-                  Abierto
-                </p>
               </div>
 
               <div className="flex-row flex  w-full justify-evenly ">

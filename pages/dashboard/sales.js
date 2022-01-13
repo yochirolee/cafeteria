@@ -2,19 +2,53 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import moment from "moment";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
+import Date from "../../components/Date/date";
 
 export default function Sales() {
   const [products, setProducts] = useState([]);
+  const [dailySales,setDailySales]=useState(0);
+
   useEffect(async () => {
     const { data, error } = await supabase
       .from("products")
       .select("id,name, sales(*)")
       .order("created_at");
     setProducts(data);
+    setDailySales(await calculateDailySales());
   }, [products.length]);
+
+ 
+  const calculateDailySales = async () => {
+    const _dailySales = 0;
+    console.log(products)
+    if (products) {
+      await products.map((product) => {
+        product.sales.map((sale) => {
+          _dailySales += sale.sale_price * sale.quantity;
+        });
+      });
+      return _dailySales;
+    }
+  };
+
   return (
     <>
       <NavBarDashBoard />
+      <Date />
+      <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
+        <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
+          <p className="text-center font-semibold">Venta Hoy</p>
+          <p className="p-2 inline-flex text-lg mt-2 font-bold text-green-500 rounded-lg bg-green-50">
+            <span>$</span> {dailySales}
+          </p>
+        </div>
+        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
+          Venta Semana
+        </div>
+        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
+          Venta Mes
+        </div>
+      </div>
       <div className="bg-white mx-4 mt-4 rounded text-xs">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -43,7 +77,7 @@ export default function Sales() {
                         Cant
                       </th>
                       <th scope="col" className="relative px-6 py-3">
-                        <span className="sr-only">Edit</span>
+                        <span className="">Edit</span>
                       </th>
                     </tr>
                   </thead>
@@ -52,7 +86,7 @@ export default function Sales() {
                       products.map((product) =>
                         product.sales.length > 0 ? (
                           product.sales.map((sale) => (
-                            <tr>
+                            <tr key={sale.id}>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="flex items-center">
                                   <div className="flex-shrink-0 h-10"></div>
