@@ -10,6 +10,7 @@ import { insertProduct, updateProduct } from "../../utils/products";
 import { getTotalDailySales } from "../../utils/products";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
 import { Switch } from "@headlessui/react";
+import openToggle from "../../components/Toggle/openToggle";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -93,19 +94,7 @@ export default function Dashboard({ user }) {
             <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
               <div className="mx-auto flex flex-row justify-evenly items-center p-2">
                 <p className="text-bold">Cerrado</p>
-                <Switch
-                  checked={enabled}
-                  onChange={setEnabled}
-                  className={`${enabled ? "bg-green-400" : "bg-gray-400"}
-          relative inline-flex flex-shrink-0 h-[34px] w-[64px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                >
-                  <span className="sr-only">Use setting</span>
-                  <span
-                    aria-hidden="true"
-                    className={`${enabled ? "translate-x-7" : "translate-x-0"}
-            pointer-events-none inline-block h-[30px] w-[30px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
-                  />
-                </Switch>
+                <openToggle />
                 <p className="text-green-600 font-bold animate-pulse">
                   Abierto
                 </p>
