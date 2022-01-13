@@ -40,7 +40,7 @@ export default function Dashboard({ user }) {
     const aux_pro = { ...productUpdate };
     aux_pro.quantity += parseInt(quantity);
     const auxProducts = [...products];
-    const { error } = await updateProduct(aux_pro);
+    const { error } = await updateProduct(aux_pro, quantity);
     if (!error) {
       const index = auxProducts.findIndex((elem) => elem.id === aux_pro.id);
       auxProducts[index] = aux_pro;
@@ -49,8 +49,19 @@ export default function Dashboard({ user }) {
   };
 
   const handleDeleteProduct = async () => {
+    const { data: purchase, error: purchaseError } = await supabase
+      .from("purchase")
+      .delete()
+      .match({ product_id: deleteId });
+    console.log(purchaseError, purchase);
+    const { data: sales, error: salesError } = await supabase
+      .from("sales")
+      .delete()
+      .match({ product_id: deleteId });
+    console.log(salesError, sales);
+
     const { data, error } = await supabase
-      .from("product")
+      .from("products")
       .delete()
       .match({ id: deleteId });
     if (!error) {
@@ -60,6 +71,7 @@ export default function Dashboard({ user }) {
       await setProducts([..._prods]);
       setShowConfirmationModal(!showConfirmationModal);
     }
+    console.log(error);
   };
 
   const handleConfirmationModal = () => {
@@ -105,8 +117,7 @@ export default function Dashboard({ user }) {
                     Venta de Hoy
                   </span>
                   <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                    <i className="las la-dollar-sign text-green-500 "></i>
-                    {getTotalDailySales(products)}
+                    <i className="las la-dollar-sign text-green-500 "></i>0
                   </p>
                 </div>
                 <div className="rounded-lg ring-1 w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">

@@ -8,16 +8,16 @@ export default function ProductList() {
 
   const handleProductUpdate = async (id, count) => {
     const prod = products.find((product) => product.id == id);
-
+    console.log(prod)
     if (count > 0 && prod.quantity - count >= 0) {
       prod.quantity = prod.quantity - count;
-      prod.quantitySold = prod.quantitySold + count;
+      prod.quantity_sold = prod.quantity_sold + count;
 
       const { error } = await supabase
-        .from("product")
+        .from("products")
         .update({
           quantity: prod.quantity,
-          quantitySold: prod.quantitySold,
+          quantity_sold: prod.quantity_sold,
         })
         .match({ id: prod.id });
 
@@ -27,6 +27,7 @@ export default function ProductList() {
           {
             product_id: prod.id,
             quantity: count,
+            sale_price:prod.price
           },
         ])
         .single();

@@ -59,10 +59,10 @@ export default function DatePicker() {
 
   useEffect(async () => {
     const { data, error } = await supabase
-      .from("product")
-      .select("id,name, sales(created_at,quantity)")
+      .from("products")
+      .select("id,name, entries(*),entries_details(*)")
       .order("created_at");
-    console.log(data);
+    console.log(data, "DATA NOWWWWWW");
     setProducts(data);
   }, [products.length]);
 
@@ -379,14 +379,15 @@ export default function DatePicker() {
       </div>
 
       <div className="bg-white mx-4 rounded text-xs">
-        <div class>
+        <div>
           {products &&
             products.map((product) =>
-              product.sales.length > 0 ? (
-                product.sales.map((sales) => (
+              product.entries.length > 0 ? (
+                product.entries.map((entry) => (
                   <div className="flex flex-row">
                     <p className="flex-1">{product.name}</p>
-                    <p className="flex-1">{sales.quantity}</p>
+                    <p className="flex-1">{entry.total_spend}</p>
+                    <p className="flex-1">{Date(entry.created_at)}</p>
                   </div>
                 ))
               ) : (

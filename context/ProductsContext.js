@@ -8,6 +8,7 @@ export const ProductsProvider = (props) => {
   useEffect(async () => {
     const getData = async () => {
       const { data, error } = await getProducts();
+      console.log(data,"DATA")
       error ? setError(error) : setProducts(data);
     };
 

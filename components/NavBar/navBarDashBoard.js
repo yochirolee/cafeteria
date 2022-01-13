@@ -56,7 +56,7 @@ export default function NavBarDashBoard({ user }) {
             </li>
             <li className="mx-2">
               <Link
-                href="/dashboard/calendar"
+                href="/dashboard/purchases"
                 className="text-center hidden lg:block"
               >
                 <div>

@@ -27,7 +27,7 @@ export default function ProductCardActions({ prod, handleProductUpdate }) {
         >
           -
         </button>
-        <spam>{count}</spam>
+        <span>{count}</span>
         <button
           className="rounded-full  h-6 w-6 bg-green-600 text-white font-bold hover:bg-green-700 "
           onClick={() => handlePlus()}
