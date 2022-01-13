@@ -92,7 +92,7 @@ export default function Dashboard({ user }) {
 
             <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
               <div className="mx-auto flex flex-row justify-evenly items-center p-2">
-              <p className="text-bold">Cerrado</p>
+                <p className="text-bold">Cerrado</p>
                 <Switch
                   checked={enabled}
                   onChange={setEnabled}
@@ -106,7 +106,9 @@ export default function Dashboard({ user }) {
             pointer-events-none inline-block h-[30px] w-[30px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
                   />
                 </Switch>
-                <p className="text-green-600 font-bold animate-pulse">Abierto</p>
+                <p className="text-green-600 font-bold animate-pulse">
+                  Abierto
+                </p>
               </div>
 
               <div className="flex-row flex  w-full justify-evenly ">
