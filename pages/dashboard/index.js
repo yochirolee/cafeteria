@@ -113,14 +113,27 @@ export default function Dashboard({ user }) {
                     Venta de Hoy
                   </span>
                   <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                    <i className="las la-dollar-sign text-green-500 "></i>0
+                    <i className="las la-dollar-sign text-green-500 "></i>
+                    {getTotalDailySales(products)}
                   </p>
                 </div>
-                <div className="rounded-lg ring-1 w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                  as
+                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
+                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
+                    Gastos de Hoy
+                  </span>
+                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
+                    <i className="las la-dollar-sign text-green-500 "></i>
+                    {getTotalDailySales(products)}
+                  </p>
                 </div>
-                <div className="rounded-lg ring-1  w-1/3 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                  as
+                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
+                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
+                    Ganancias de Hoy
+                  </span>
+                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
+                    <i className="las la-dollar-sign text-green-500 "></i>
+                    {getTotalDailySales(products)}
+                  </p>
                 </div>
               </div>
             </div>
