@@ -25,11 +25,11 @@ export default function ProductsTable({
                 <th className="p-2">
                   <div class="font-light text-left">Nombre</div>
                 </th>
-             
+
                 <th className="p-2">
                   <div className="font-light text-center">Existencia</div>
                 </th>
-              
+
                 <th className="p-2">
                   <div className="font-light text-center">Actions</div>
                 </th>
@@ -43,19 +43,18 @@ export default function ProductsTable({
                       <div className="text-gray-800">{product.name}</div>
                     </td>
 
-                 
                     <td className="p-2">
                       <div className="text-center">{product.quantity}</div>
                     </td>
-                   
+
                     <td className="p-2 text-center text-light-gray-500 flex flex-row justify-center">
                       <i
                         className="las la-plus w-12 h-12 text-blue-500 text-xl cursor-pointer"
-                        onClick={()=>handleUpdate(product)}
+                        onClick={() => handleUpdate(product)}
                       ></i>
                       <i
                         className="las la-edit w-12 h-12 text-green-500 text-xl cursor-pointer"
-                        onClick={()=>handleUpdate(product)}
+                        onClick={() => handleUpdate(product)}
                       ></i>
                       <i
                         className="las la-trash-alt w-12 h-12 text-red-500 text-xl cursor-pointer"
