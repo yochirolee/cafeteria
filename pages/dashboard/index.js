@@ -9,8 +9,7 @@ import ProductsTable from "../../components/Table/ProductsTable";
 import { insertProduct, updateProduct } from "../../utils/products";
 import { getTotalDailySales } from "../../utils/products";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
-import { Switch } from "@headlessui/react";
-import openToggle from "../../components/Toggle/openToggle";
+import OpenToggle from "../../components/Toggle/openToggle";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -94,7 +93,7 @@ export default function Dashboard({ user }) {
             <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
               <div className="mx-auto flex flex-row justify-evenly items-center p-2">
                 <p className="text-bold">Cerrado</p>
-                <openToggle />
+                <OpenToggle />
                 <p className="text-green-600 font-bold animate-pulse">
                   Abierto
                 </p>
