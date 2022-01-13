@@ -25,7 +25,7 @@ export default function ProductList() {
         .from("sales")
         .insert([
           {
-            product_name: prod.name,
+            product_id: prod.id,
             quantity: count,
           },
         ])

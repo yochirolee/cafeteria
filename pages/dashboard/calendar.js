@@ -49,8 +49,8 @@ export default function DatePicker() {
   const [firstDate, setFirstDate] = useState(null);
   const [secondDate, setSecondDate] = useState(null);
 
-  const [products, setProducts] = useState(null);
-  const [error, setError]=useState(null)
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     console.log(`Month changed to: ${month}`);
@@ -58,9 +58,13 @@ export default function DatePicker() {
   }, [month]);
 
   useEffect(async () => {
-    const { data, error } = await supabase.from("sales").select().order("id");
+    const { data, error } = await supabase
+      .from("product")
+      .select("id,name, sales(created_at,quantity)")
+      .order("created_at");
+    console.log(data);
     setProducts(data);
-  }, [products]);
+  }, [products.length]);
 
   const initDate = () => {
     let today = new Date();
@@ -377,13 +381,18 @@ export default function DatePicker() {
       <div className="bg-white mx-4 rounded text-xs">
         <div class>
           {products &&
-            products.map((product) => (
-              <div className="flex flex-row">
-                <p className="flex-1">{product.product_name}</p>
-                <p className="flex-1">{product.quantity}</p>
-                <p className="flex-1">{product.quantity}</p>
-              </div>
-            ))}
+            products.map((product) =>
+              product.sales.length > 0 ? (
+                product.sales.map((sales) => (
+                  <div className="flex flex-row">
+                    <p className="flex-1">{product.name}</p>
+                    <p className="flex-1">{sales.quantity}</p>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )
+            )}
         </div>
       </div>
     </div>

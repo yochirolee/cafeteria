@@ -8,7 +8,8 @@ import ModalForm from "../../components/Modal/modalForm";
 import ProductsTable from "../../components/Table/ProductsTable";
 import { insertProduct, updateProduct } from "../../utils/products";
 import { getTotalDailySales } from "../../utils/products";
-import ModalFormUpdate from "../../components/Modal/modalFormUpdate";
+import ModalFormAdd from "../../components/Modal/modalFormAdd";
+import { Switch } from "@headlessui/react";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -17,6 +18,7 @@ export default function Dashboard({ user }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [productUpdate, setProductUpdate] = useState(null);
+  const [enabled, setEnabled] = useState(true);
 
   const handleInsertProduct = async (data) => {
     const { product, error } = await insertProduct(data);
@@ -65,7 +67,7 @@ export default function Dashboard({ user }) {
   };
 
   return (
-    <DashBoardLayout user={ user }>
+    <DashBoardLayout user={user}>
       <div className="col-span-full container mx-auto xl:col-span-8  rounded-sm  border-gray-200 m-2">
         <div className="col-span-full xl:col-span-6   rounded-sm ">
           <div className=" w-full mx-auto  ">
@@ -81,14 +83,32 @@ export default function Dashboard({ user }) {
               onClose={() => setShowModal(false)}
             ></ModalForm>
 
-            <ModalFormUpdate
+            <ModalFormAdd
               show={showModalUpdate}
               productUpdate={productUpdate}
               onClose={() => setShowModalUpdate(false)}
               handleUpdateProductInventory={handleUpdateProductInventory}
-            ></ModalFormUpdate>
+            ></ModalFormAdd>
 
             <div className="rounded-lg ring-1 m-3 ring-gray-900 ring-opacity-5 overflow-hidden bg-gray-50">
+              <div className="mx-auto flex flex-row justify-evenly items-center p-2">
+              <p className="text-bold">Cerrado</p>
+                <Switch
+                  checked={enabled}
+                  onChange={setEnabled}
+                  className={`${enabled ? "bg-green-400" : "bg-gray-400"}
+          relative inline-flex flex-shrink-0 h-[34px] w-[64px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                >
+                  <span className="sr-only">Use setting</span>
+                  <span
+                    aria-hidden="true"
+                    className={`${enabled ? "translate-x-7" : "translate-x-0"}
+            pointer-events-none inline-block h-[30px] w-[30px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+                  />
+                </Switch>
+                <p className="text-green-600 font-bold animate-pulse">Abierto</p>
+              </div>
+
               <div className="flex-row flex  w-full justify-evenly ">
                 <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
                   <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
