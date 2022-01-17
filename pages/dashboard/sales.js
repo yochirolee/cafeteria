@@ -1,54 +1,27 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../../utils/supabaseClient";
+import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
 import Date from "../../components/Date/date";
+import { calculateDailySales } from "../../utils/days_lib";
+import { getDayProductsSalesByDay } from "../../utils/products";
+import Stats from "../../components/Stats/stats";
 
 export default function Sales() {
-  const [products, setProducts] = useState([]);
-  const [dailySales,setDailySales]=useState(0);
+  const [productsCurrentDay, setProductsCurrentDay] = useState([]);
+  const [dailySales, setDailySales] = useState(0);
 
   useEffect(async () => {
-    const { data, error } = await supabase
-      .from("products")
-      .select("id,name, sales(*)")
-      .order("created_at");
-    setProducts(data);
-    setDailySales(await calculateDailySales());
-  }, [products.length]);
-
- 
-  const calculateDailySales = async () => {
-    const _dailySales = 0;
-    console.log(products)
-    if (products) {
-      await products.map((product) => {
-        product.sales.map((sale) => {
-          _dailySales += sale.sale_price * sale.quantity;
-        });
-      });
-      return _dailySales;
-    }
-  };
+    console.log("rinnung");
+    const { daySales } = await getDayProductsSalesByDay('');
+    await setDailySales(await calculateDailySales(daySales));
+    setProductsCurrentDay(daySales);
+  }, [productsCurrentDay.length]);
 
   return (
     <>
       <NavBarDashBoard />
       <Date />
-      <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
-        <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
-          <p className="text-center font-semibold">Venta Hoy</p>
-          <p className="p-2 inline-flex text-lg mt-2 font-bold text-green-500 rounded-lg bg-green-50">
-            <span>$</span> {dailySales}
-          </p>
-        </div>
-        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
-          Venta Semana
-        </div>
-        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
-          Venta Mes
-        </div>
-      </div>
+      <Stats dailySales={dailySales} />
       <div className="bg-white mx-4 mt-4 rounded text-xs">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -82,8 +55,8 @@ export default function Sales() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {products &&
-                      products.map((product) =>
+                    {productsCurrentDay &&
+                      productsCurrentDay.map((product) =>
                         product.sales.length > 0 ? (
                           product.sales.map((sale) => (
                             <tr key={sale.id}>
@@ -95,7 +68,7 @@ export default function Sales() {
                                       {product.name}
                                     </div>
                                     <div className="text-xs text-gray-500">
-                                      {moment(sale.created_at).format(
+                                      {moment(sale.sale_at).format(
                                         "DD-MM-YYYY h:mm:ss"
                                       )}
                                     </div>

@@ -1,8 +1,8 @@
-import { ProductsProvider } from "../context/ProductsContext";
 import "../styles/globals.css";
 import Head from "next/head";
 import { supabase } from "../utils/supabaseClient";
 import { useEffect } from "react";
+import { ProductsProvider } from "../context/ProductsContext";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

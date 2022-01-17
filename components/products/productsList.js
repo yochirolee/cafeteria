@@ -1,36 +1,19 @@
 import ProductCard from "./productCard";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
-import { supabase } from "../../utils/supabaseClient";
+import { updateProduct } from "../../utils/products";
 
 export default function ProductList() {
   const [products, setProducts] = useContext(ProductsContext);
 
   const handleProductUpdate = async (id, count) => {
+    console.log("handle Product Update");
     const prod = products.find((product) => product.id == id);
-    console.log(prod)
     if (count > 0 && prod.quantity - count >= 0) {
       prod.quantity = prod.quantity - count;
       prod.quantity_sold = prod.quantity_sold + count;
 
-      const { error } = await supabase
-        .from("products")
-        .update({
-          quantity: prod.quantity,
-          quantity_sold: prod.quantity_sold,
-        })
-        .match({ id: prod.id });
-
-      let { data: product, error: salesError } = await supabase
-        .from("sales")
-        .insert([
-          {
-            product_id: prod.id,
-            quantity: count,
-            sale_price:prod.price
-          },
-        ])
-        .single();
+      const { error } = updateProduct(prod, count);
 
       if (!error) {
         const index = products.indexOf(prod);

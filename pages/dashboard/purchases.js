@@ -1,26 +1,27 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../../utils/supabaseClient";
+import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import Date from "../../components/Date/date";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
+import { ProductsContext } from "../../context/ProductsContext";
+import Stats from "../../components/Stats/stats";
+import { getProductsOfCurrentDay } from "../../utils/days_lib";
 
-export default function Purchases({user}) {
-  const [products, setProducts] = useState([]);
+export default function Purchases({ user }) {
+  const [productsCurrentDay, setProductsCurrentDay] = useState([]);
+
   const [dailyPurchase, setDailyPurchase] = useState(0);
 
   useEffect(async () => {
-    const { data, error } = await supabase
-      .from("products")
-      .select("id,name, purchase(*)")
-      .order("created_at");
-    setProducts(data);
-    setDailyPurchase(await calculateDailyPurchase());
-  }, [products.length]);
+    await setDailyPurchase(await calculateDailyPurchase());
+    console.log("rinnung");
+    const { data } = await getProductsOfCurrentDay();
+    setProductsCurrentDay(data);
+  }, [productsCurrentDay.length]);
 
   const calculateDailyPurchase = async () => {
     const _dailyPurchase = 0;
-    if (products) {
-      await products.map((product) => {
+    if (productsCurrentDay) {
+      await productsCurrentDay.map((product) => {
         product.purchase.map((buy) => {
           _dailyPurchase += buy.cost * buy.quantity;
         });
@@ -33,20 +34,7 @@ export default function Purchases({user}) {
     <>
       <NavBarDashBoard />
       <Date />
-      <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
-        <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
-          <p className="text-center font-semibold">Compra Hoy</p>
-          <p className="p-2 inline-flex text-lg mt-2 font-bold text-red-500 rounded-lg bg-red-50">
-            <span>$</span> {dailyPurchase}
-          </p>
-        </div>
-        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
-          Compra Semana
-        </div>
-        <div className="relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none">
-          Compra Mes
-        </div>
-      </div>
+      <Stats dailyPurchase={dailyPurchase} />
       <div className="bg-white mx-4 mt-4 rounded text-xs">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -80,11 +68,11 @@ export default function Purchases({user}) {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {products &&
-                      products.map((product) =>
+                    {productsCurrentDay &&
+                      productsCurrentDay.map((product) =>
                         product.purchase.length > 0 ? (
                           product.purchase.map((buy) => (
-                            <tr>
+                            <tr key={buy.id}>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="flex items-center">
                                   <div className="flex-shrink-0 h-10"></div>
@@ -132,4 +120,13 @@ export default function Purchases({user}) {
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const productsDay = await getProductsOfCurrentDay();
+  return {
+    props: {
+      productsDay,
+    },
+  };
 }

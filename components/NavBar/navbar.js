@@ -21,7 +21,6 @@ export default function NavBar({ user }) {
     <header>
       <div className="bg-gray-700 text-white w-full  h-12 flex flex-row justify-between px-2 lg:px-8 items-center">
         <div>
-       
           <Link href="/" className="text-center hidden lg:block">
             <a className="font-bold text-xl "> El Triunfo</a>
           </Link>

@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
+import { createNewDayOrGetCurrentDay, updateIsOpen } from "../../utils/days_lib";
+
 
 export default function OpenToggle() {
-  const [enabled, setEnabled] = useState(true);
+  const [day, setDay] = useState(false);
+  const [enabled, setEnabled] = useState(day.isOpen);
+  
+
+  useEffect(async () => {
+    
+      const { day, error } =
+        await createNewDayOrGetCurrentDay();
+      console.log(day, error);
+      await updateIsOpen(day,enabled);
+      if (day) setDay(day);
+      
+    
+  }, [enabled]);
 
   return (
     <div className=" flex flex-row  items-center  ">
-      <p className="mr-2 text-gray-500 font-semibold">{enabled ? "Abierto" : "Cerrado"}</p>
+      <p className="mr-2 text-gray-500 font-semibold">
+        {enabled ? "Abierto" : "Cerrado"}
+      </p>
       <Switch
         checked={enabled}
         onChange={setEnabled}

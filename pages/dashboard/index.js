@@ -10,6 +10,8 @@ import { insertProduct, updateProduct } from "../../utils/products";
 import { getTotalDailySales } from "../../utils/products";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
 import OpenToggle from "../../components/Toggle/openToggle";
+import TodayDate from "../../components/Date/TodayDate";
+import Stats from "../../components/Stats/stats";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -18,7 +20,6 @@ export default function Dashboard({ user }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [productUpdate, setProductUpdate] = useState(null);
-  const [enabled, setEnabled] = useState(true);
 
   const handleInsertProduct = async (data) => {
     const { product, error } = await insertProduct(data);
@@ -102,42 +103,13 @@ export default function Dashboard({ user }) {
               handleUpdateProductInventory={handleUpdateProductInventory}
             ></ModalFormAdd>
 
-            <div className="rounded-lg  m-3 ring-gray-900  overflow-hidden bg-gray-50">
-              <div className="flex flex-row border-b justify-end bg-white  p-2">
-                <OpenToggle />
-              </div>
-
-              <div className="flex-row flex  w-full justify-evenly ">
-                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
-                    Venta de Hoy
-                  </span>
-                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                    <i className="las la-dollar-sign text-green-500 "></i>
-                    {getTotalDailySales(products)}
-                  </p>
-                </div>
-                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
-                    Gastos de Hoy
-                  </span>
-                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                    <i className="las la-dollar-sign text-green-500 "></i>
-                    {getTotalDailySales(products)}
-                  </p>
-                </div>
-                <div className="rounded-lg ring-1 w-1/3 m-2  p-4 text-center ring-gray-900 ring-opacity-5 overflow-hidden bg-white">
-                  <span className="text-gray-400 text-xs lg:text-base inline-flex   ">
-                    Ganancias de Hoy
-                  </span>
-                  <p className="text-xl lg:text-5xl font-bold text-gray-600  p-2">
-                    <i className="las la-dollar-sign text-green-500 "></i>
-                    {getTotalDailySales(products)}
-                  </p>
-                </div>
+            <div className="  m-3 ring-gray-900  overflow-hidden bg-gray-50">
+              <div className="flex  flex-row border-b justify-around bg-white items-center py-2">
+                <TodayDate />
+            
               </div>
             </div>
-
+            <Stats />
             <ProductsTable
               products={products}
               handleConfirmationModal={handleConfirmationModal}

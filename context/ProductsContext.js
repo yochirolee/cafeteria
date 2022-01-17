@@ -4,11 +4,11 @@ export const ProductsContext = createContext();
 export const ProductsProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [isUpdating,setIsUpdating]=useState(false);
 
   useEffect(async () => {
     const getData = async () => {
       const { data, error } = await getProducts();
-      console.log(data,"DATA")
       error ? setError(error) : setProducts(data);
     };
 

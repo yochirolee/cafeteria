@@ -1,4 +1,21 @@
-export default function Date(dateString) {
+import { useEffect, useState } from "react";
+import { createNewDayOrGetCurrentDay } from "../../utils/days_lib";
+
+export default function Date() {
+  const [today, setToday] = useState("");
+
+  useEffect(async () => {
+    const getCurrentDay =async()=>{
+    const { day: _today } = await createNewDayOrGetCurrentDay();
+    setToday([_today.created_at]);
+    console.log(_today);}
+    getCurrentDay();
+  }, [today.created_at]);
+
+
+  const handleDayChange=()=>{
+    alert("day change")
+  }
   return (
     <div className="bg-white rounded-lg items-center m-2 flex flex-col">
       <label for="start">Seleccione Fecha:</label>
@@ -7,9 +24,9 @@ export default function Date(dateString) {
         type="date"
         id="start"
         name="trip-start"
-        value="2018-07-22"
-        min="2018-01-01"
-        max="2018-12-31"
+        value={today}
+        min="2022-01-01"
+        max="2050-12-31"
         className="m-2 bg-white"
       ></input>
     </div>
