@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { supabase } from "../../utils/supabaseClient";
-import {openToggle} from '../Toggle/openToggle';
-export default function UserActions({ toggle,user }) {
+export default function UserActions({ toggle, user }) {
   const handleLogOut = async () => {
     const { error } = await supabase.auth.signOut();
   };

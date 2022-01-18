@@ -14,12 +14,15 @@ export const createNewDayOrGetCurrentDay = async () => {
         },
       ])
       .single();
-      console.log(day,"DAY TEEEEE")
-    return { day, error };
+
+    let { data: products } = await supabase
+      .from("products")
+      .update({ quantity_sold: 0 });
+
+    return { day, products, error };
   } else {
     const day = await getLastDay();
-
-    return { day, error: "Is the same day" };
+    return { day };
   }
 };
 
@@ -40,10 +43,7 @@ export const IsCurrentDay = async () => {
 };
 
 export const getLastDay = async () => {
-  const { data: days, error } = await supabase
-    .from("days")
-    .select("*")
-    ;
+  const { data: days, error } = await supabase.from("days").select("*");
   if (days.length !== 0) {
     const count = days.length;
     const day = days[count - 1];
@@ -58,30 +58,6 @@ export const updateIsOpen = async (day, isOpen) => {
     .update({ isOpen: isOpen })
     .eq("id", day.id);
 
-  return { data, error };
-};
-
-
-
-
-
-
-
-export const getProductsOfCurrentDay = async () => {
-  const { day } = await createNewDayOrGetCurrentDay();
-  console.log(day.id, "DAY ID");
-  const { data, error } = await supabase
-    .from("products")
-    .select(
-      `
-        *,sales(*),
-        purchase("*")
-        
-        `
-    )
-    .eq("day_id", day.id);
-
-  console.log(data, "PRODUCTS Current Day");
   return { data, error };
 };
 

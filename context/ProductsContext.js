@@ -1,10 +1,9 @@
 import React, { useState, useEffect, createContext } from "react";
-import { getProducts } from "../utils/products";
+import { getProducts } from "../utils/products_lib";
 export const ProductsContext = createContext();
 export const ProductsProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
-  const [isUpdating,setIsUpdating]=useState(false);
 
   useEffect(async () => {
     const getData = async () => {

@@ -1,10 +1,13 @@
 import ProductCard from "./productCard";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
-import { updateProduct } from "../../utils/products";
+import { updateProduct } from "../../utils/products_lib";
+import { CurrentDayContext } from "../../context/CurrentDayContext";
 
 export default function ProductList() {
   const [products, setProducts] = useContext(ProductsContext);
+  const [currentDay] = useContext(CurrentDayContext);
+  useEffect(() => {}, [products]);
 
   const handleProductUpdate = async (id, count) => {
     console.log("handle Product Update");
@@ -13,7 +16,7 @@ export default function ProductList() {
       prod.quantity = prod.quantity - count;
       prod.quantity_sold = prod.quantity_sold + count;
 
-      const { error } = updateProduct(prod, count);
+      const { error } = updateProduct(prod, count,currentDay);
 
       if (!error) {
         const index = products.indexOf(prod);

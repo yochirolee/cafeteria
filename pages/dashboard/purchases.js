@@ -1,22 +1,22 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import Date from "../../components/Date/date";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
-import { ProductsContext } from "../../context/ProductsContext";
 import Stats from "../../components/Stats/stats";
-import { getProductsOfCurrentDay } from "../../utils/days_lib";
+import { getProductsPurchaseByDayId } from "../../utils/products_lib";
+import { createNewDayOrGetCurrentDay } from "../../utils/days_lib";
 
 export default function Purchases({ user }) {
+  const [currentDay, setCurrentDay] = useState({});
   const [productsCurrentDay, setProductsCurrentDay] = useState([]);
-
   const [dailyPurchase, setDailyPurchase] = useState(0);
 
   useEffect(async () => {
-    await setDailyPurchase(await calculateDailyPurchase());
     console.log("rinnung");
-    const { data } = await getProductsOfCurrentDay();
-    setProductsCurrentDay(data);
-  }, [productsCurrentDay.length]);
+    const { day } = await createNewDayOrGetCurrentDay();
+    const { dayPurchases } = await getProductsPurchaseByDayId(day.id);
+    setProductsCurrentDay(dayPurchases);
+  }, [currentDay.id]);
 
   const calculateDailyPurchase = async () => {
     const _dailyPurchase = 0;
@@ -62,16 +62,13 @@ export default function Purchases({ user }) {
                       >
                         Cant
                       </th>
-                      <th scope="col" className="relative px-6 py-3">
-                        <span className="sr-only">Edit</span>
-                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {productsCurrentDay &&
                       productsCurrentDay.map((product) =>
-                        product.purchase.length > 0 ? (
-                          product.purchase.map((buy) => (
+                        product.purchases.length > 0 ? (
+                          product.purchases.map((buy) => (
                             <tr key={buy.id}>
                               <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="flex items-center">
@@ -97,14 +94,6 @@ export default function Purchases({ user }) {
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {buy.quantity}
                               </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a
-                                  href="#"
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                >
-                                  Edit
-                                </a>
-                              </td>
                             </tr>
                           ))
                         ) : (
@@ -120,13 +109,4 @@ export default function Purchases({ user }) {
       </div>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const productsDay = await getProductsOfCurrentDay();
-  return {
-    props: {
-      productsDay,
-    },
-  };
 }

@@ -26,15 +26,14 @@ export const insertProduct = async (prod) => {
     if (errorPurchase) {
       return errorPurchase;
     }
-
+    console.log(product, purchase, error, "LOGGIN FROM INSET ON LIB");
     return { product, purchase, error };
   } catch (error) {
     return error;
   }
 };
 
-export const updateProduct = async (product, quantity) => {
-  const { day } = await createNewDayOrGetCurrentDay();
+export const updateProduct = async (product, quantity, currentDay) => {
   const { data, error } = await supabase
     .from("products")
     .update({
@@ -43,8 +42,8 @@ export const updateProduct = async (product, quantity) => {
     })
     .eq("id", product.id);
 
-  const { sales, errorSale } = await createSale(product, quantity, day);
-  console.log(sales, "creating sales");
+  const { sales, errorSale } = await createSale(product, quantity, currentDay);
+
   if (errorSale) {
     return errorSale;
   }
@@ -54,13 +53,13 @@ export const updateProduct = async (product, quantity) => {
 
 export const createPurchase = async (product, quantity, day) => {
   let { data: purchase, error } = await supabase
-    .from("purchase")
+    .from("purchases")
     .insert([
       {
         cost: product.cost,
         quantity: quantity,
         product_id: product.id,
-        created_at: day.created_at,
+        day_id: day.id,
       },
     ])
     .single();
@@ -68,7 +67,7 @@ export const createPurchase = async (product, quantity, day) => {
 };
 export const createSale = async (product, quantity, day) => {
   console.log(product, quantity);
-  let { data: sale, error } = await supabase
+  let { data: sales, error } = await supabase
     .from("sales")
     .insert([
       {
@@ -76,50 +75,55 @@ export const createSale = async (product, quantity, day) => {
         quantity: quantity,
         product_id: product.id,
         created_at: day.created_at,
+        day_id: day.id,
       },
     ])
     .single();
-  console.log(sale);
-  return { sale, error };
+  return { sales, error };
 };
 
 export const getProducts = async () => {
   const { data, error } = await supabase
     .from("products")
-    .select(
-      `
-  *,sales(*),
-  purchase("*")
-  
-  `
-    )
+    .select("*,sales(*),purchases(*)")
     .order("name");
-
   return { data, error };
 };
 
-export const getTotalDailySales = (products) => {
+export const getProductsPurchaseByDayId = async (id) => {
+  if (!id) {
+    const { day } = await createNewDayOrGetCurrentDay();
+    id = day.id;
+  }
+
+  const { data: dayPurchases, error } = await supabase
+    .from("products")
+    .select("*,purchases(*)")
+    .eq("purchases.day_id", id);
+  console.log(id, "day ID", dayPurchases, "dayPurchases");
+  return { dayPurchases, error };
+};
+
+export const getTotalDailySales = async (products) => {
   const sales = 0;
+
   if (products)
-    products.map((product) => {
-      sales += product.quantity_sold * product.price;
+    products.map((_product) => {
+      sales += _product.quantity_sold * _product.price;
     });
   return sales;
 };
 
-export const getDayProductsSalesByDay = async (date) => {
-  const currentDay = null;
-  const created_at = null;
-  if (!date) {
-    currentDay = await createNewDayOrGetCurrentDay();
-    created_at = currentDay.day.created_at;
-  } else {
-    created_at = date;
+export const getProductsSalesByDayId = async (id) => {
+  if (!id) {
+    const { day } = await createNewDayOrGetCurrentDay();
+    id = day.id;
   }
+
   const { data: daySales, error } = await supabase
     .from("products")
     .select("*,sales(*)")
-    .eq("sales.created_at", created_at);
-  console.log(daySales, "current Day day Sales");
+    .eq("sales.day_id", id);
+
   return { daySales, error };
 };

@@ -6,10 +6,9 @@ import { supabase } from "../../utils/supabaseClient";
 import DeleteModal from "../../components/Modal/deleteModal";
 import ModalForm from "../../components/Modal/modalForm";
 import ProductsTable from "../../components/Table/ProductsTable";
-import { insertProduct, updateProduct } from "../../utils/products";
-import { getTotalDailySales } from "../../utils/products";
+import { insertProduct, updateProduct } from "../../utils/products_lib";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
-import OpenToggle from "../../components/Toggle/openToggle";
+
 import TodayDate from "../../components/Date/TodayDate";
 import Stats from "../../components/Stats/stats";
 
@@ -51,7 +50,7 @@ export default function Dashboard({ user }) {
 
   const handleDeleteProduct = async () => {
     const { data: purchase, error: purchaseError } = await supabase
-      .from("purchase")
+      .from("purchases")
       .delete()
       .match({ product_id: deleteId });
     console.log(purchaseError, purchase);
@@ -106,7 +105,6 @@ export default function Dashboard({ user }) {
             <div className="  m-3 ring-gray-900  overflow-hidden bg-gray-50">
               <div className="flex  flex-row border-b justify-around bg-white items-center py-2">
                 <TodayDate />
-            
               </div>
             </div>
             <Stats />

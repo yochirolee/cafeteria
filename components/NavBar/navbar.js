@@ -2,15 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import Link from "next/link";
 import UserActions from "./userActions";
-import { getTotalDailySales } from "../../utils/products";
+import { getTotalDailySales } from "../../utils/products_lib";
 
 export default function NavBar({ user }) {
   const [products] = useContext(ProductsContext);
   const [totalSales, setTotalSales] = useState(0);
   const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    setTotalSales(getTotalDailySales(products));
+  useEffect(async() => {
+    setTotalSales(await getTotalDailySales(products));
   }, [products]);
 
   const handleToggle = () => {
