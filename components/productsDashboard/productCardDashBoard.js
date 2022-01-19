@@ -44,7 +44,7 @@ export default function ProductCardDashBoard({
           </div>
         </div>
       </div>
-      <div className="ml-6 place-items-end text-xl ">
+      <div className="mx-auto place-items-end text-xl ">
         <i
           onClick={() => handleGetProductQuantityAdd(product)}
           className="las la-plus rounded-full mr-2 border border-gray-300  p-1   text-gray-600 bg-gray-100 "
