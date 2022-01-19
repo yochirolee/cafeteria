@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function ModalForm({ show, onClose, handleInsertProduct }) {
+export default function ModalFormInsert({ show, onClose, handleInsertProduct }) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const {
