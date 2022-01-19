@@ -4,7 +4,6 @@ import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { supabase } from "../../utils/supabaseClient";
 import DeleteModal from "../../components/Modal/deleteModal";
-import ModalForm from "../../components/Modal/modalForm";
 import ProductsTable from "../../components/Table/ProductsTable";
 import { insertProduct, updateProduct } from "../../utils/products_lib";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
@@ -109,12 +108,6 @@ export default function Dashboard({ user }) {
             </div>
             <Stats />
             <ProductsTable
-
-
-
-
-
-
               products={products}
               handleConfirmationModal={handleConfirmationModal}
               setShowModal={setShowModal}
