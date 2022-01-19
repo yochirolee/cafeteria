@@ -109,6 +109,12 @@ export default function Dashboard({ user }) {
             </div>
             <Stats />
             <ProductsTable
+
+
+
+
+
+
               products={products}
               handleConfirmationModal={handleConfirmationModal}
               setShowModal={setShowModal}
