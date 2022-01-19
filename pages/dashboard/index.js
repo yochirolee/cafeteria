@@ -1,125 +1,70 @@
-import DashBoardLayout from "../../layout/DashBoardLayout";
-import authWrapper from "../../lib/authWrapper";
 import { useContext, useState } from "react";
+import ProductCardDashBoard from "../../components/productsDashboard/productCardDashBoard";
 import { ProductsContext } from "../../context/ProductsContext";
-import { supabase } from "../../utils/supabaseClient";
-import DeleteModal from "../../components/Modal/deleteModal";
-import ModalForm from "../../components/Modal/modalForm";
-import ProductsTable from "../../components/Table/ProductsTable";
-import { insertProduct, updateProduct } from "../../utils/products_lib";
+import DashBoardLayout from "../../layout/DashBoardLayout";
 import ModalFormAdd from "../../components/Modal/modalFormAdd";
-
-import TodayDate from "../../components/Date/TodayDate";
-import Stats from "../../components/Stats/stats";
+import { CurrentDayContext } from "../../context/CurrentDayContext";
+import { AddProductInventory } from "../../utils/products_lib";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
-  const [showModal, setShowModal] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [productUpdate, setProductUpdate] = useState(null);
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [currentDay, setCurrentDay] = useContext(CurrentDayContext);
+  const [productForUpdate, setProdcutForUpdate] = useState({});
 
-  const handleInsertProduct = async (data) => {
-    const { product, error } = await insertProduct(data);
-    if (!error) {
-      const aux = [...products];
-      aux.push(product);
-      setProducts(aux);
-    } else {
-      setError(error);
-    }
+  const handleInsertProduct = () => {};
+
+  const handleUpdateProduct = async (data) => {
+    console.log(data, "data");
+    const quantityAdded = parseInt(data.quantity);
+    productForUpdate.quantity += quantityAdded;
+    const { data:productUpdated, purchase } = await AddProductInventory(
+      productForUpdate,
+      quantityAdded,
+      currentDay
+    );
+    console.log(productUpdated, purchase, "ADDED PRODUCT TO INVENTORY");
   };
 
-  const handleUpdate = async (product) => {
-    setShowModalUpdate(true);
-    setProductUpdate(product);
-  };
+  const handleDeleteProduct = () => {};
 
-  const handleUpdateProductInventory = async ({ quantity }) => {
-    const aux_pro = { ...productUpdate };
-    aux_pro.quantity += parseInt(quantity);
-    const auxProducts = [...products];
-    const { error } = await updateProduct(aux_pro, quantity);
-    if (!error) {
-      const index = auxProducts.findIndex((elem) => elem.id === aux_pro.id);
-      auxProducts[index] = aux_pro;
-      setProducts(auxProducts);
-    }
-  };
-
-  const handleDeleteProduct = async () => {
-    const { data: purchase, error: purchaseError } = await supabase
-      .from("purchases")
-      .delete()
-      .match({ product_id: deleteId });
-    console.log(purchaseError, purchase);
-    const { data: sales, error: salesError } = await supabase
-      .from("sales")
-      .delete()
-      .match({ product_id: deleteId });
-    console.log(salesError, sales);
-
-    const { data, error } = await supabase
-      .from("products")
-      .delete()
-      .match({ id: deleteId });
-    if (!error) {
-      const _prods = [...products];
-      const index = await _prods.findIndex((prod) => prod.id == deleteId);
-      _prods.splice(index, 1);
-      await setProducts([..._prods]);
-      setShowConfirmationModal(!showConfirmationModal);
-    }
-    console.log(error);
-  };
-
-  const handleConfirmationModal = () => {
-    setShowConfirmationModal(!showConfirmationModal);
+  const handleGetProductQuantityAdd = (product) => {
+    setProdcutForUpdate(product);
+    setShowModalAdd(true);
   };
 
   return (
-    <DashBoardLayout user={user}>
-      <div className="col-span-full container mx-auto xl:col-span-8  rounded-sm  border-gray-200 m-2">
-        <div className="col-span-full xl:col-span-6   rounded-sm ">
-          <div className=" w-full mx-auto  ">
-            <DeleteModal
-              showConfirmationModal={showConfirmationModal}
-              handleConfirmationModal={handleConfirmationModal}
-              handleDeleteProduct={handleDeleteProduct}
+    <div>
+      <DashBoardLayout user={user}>
+        <div className="mx-auto px-10">
+          <div class="my-3 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              name="price"
+              id="price"
+              class=" h-12  block w-full pl-7 pr-12 sm:text-sm  rounded-md"
+              placeholder="Buscar"
             />
-
-            <ModalForm
-              show={showModal}
-              handleInsertProduct={handleInsertProduct}
-              onClose={() => setShowModal(false)}
-            ></ModalForm>
-
-            <ModalFormAdd
-              show={showModalUpdate}
-              productUpdate={productUpdate}
-              onClose={() => setShowModalUpdate(false)}
-              handleUpdateProductInventory={handleUpdateProductInventory}
-            ></ModalFormAdd>
-
-            <div className="  m-3 ring-gray-900  overflow-hidden bg-gray-50">
-              <div className="flex  flex-row border-b justify-around bg-white items-center py-2">
-                <TodayDate />
-              </div>
+            <div class="absolute   rounded-r-md bg-gray-700 inset-y-0 right-0 flex  items-center">
+              <i className="las la-search items-center text-2xl p-4 mt-2 text-gray-200 "></i>
             </div>
-            <Stats />
-            <ProductsTable
-              products={products}
-              handleConfirmationModal={handleConfirmationModal}
-              setShowModal={setShowModal}
-              setDeleteId={setDeleteId}
-              handleUpdate={handleUpdate}
-            />
           </div>
         </div>
-      </div>
-    </DashBoardLayout>
+        <div>
+          {products.map((product) => (
+            <ProductCardDashBoard
+              product={product}
+              handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+            />
+          ))}
+        </div>
+        <ModalFormAdd
+          showModalAdd={showModalAdd}
+          setShowModalAdd={setShowModalAdd}
+          handleProductUpdate={handleUpdateProduct}
+          productForUpdate={productForUpdate}
+        ></ModalFormAdd>
+      </DashBoardLayout>
+    </div>
   );
 }
-
-export const getServerSideProps = authWrapper();

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function ModalFormAdd({
-  show,
-  onClose,
-  handleUpdateProductInventory,
-  productUpdate,
+  showModalAdd,
+  handleProductUpdate,
+  productForUpdate,
+  setShowModalAdd,
 }) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
@@ -18,17 +18,17 @@ export default function ModalFormAdd({
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    await handleUpdateProductInventory(data);
+    await handleProductUpdate(data);
     setUpdating(false);
     reset();
     handleCloseClick();
   };
 
   const handleCloseClick = () => {
-    onClose();
+    setShowModalAdd(false);
   };
 
-  const modalContent = show ? (
+  const modalContent = showModalAdd ? (
     <div
       className="fixed z-10  inset-0 overflow-y-auto  "
       aria-labelledby="modal-title"
@@ -66,19 +66,19 @@ export default function ModalFormAdd({
                   >
                     <div className="inline-flex">
                       <span className="mr-2">Nombre:</span>
-                      <p className="font-bold">{productUpdate.name}</p>
+                      <p className="font-bold">{productForUpdate.name}</p>
                     </div>
                     <div className="inline-flex">
                       <span className="mr-2">Precio de Compra:</span>
-                      <p>{productUpdate.price}</p>
+                      <p>{productForUpdate.cost}</p>
                     </div>
                     <div className="inline-flex">
                       <span className="mr-2">Precio de Venta:</span>
-                      <p>{productUpdate.salePrice}</p>
+                      <p>{productForUpdate.price}</p>
                     </div>
                     <div className="inline-flex">
                       <span className="mr-2">Cantidad en Inventario:</span>
-                      <p>{productUpdate.quantity}</p>
+                      <p>{productForUpdate.quantity}</p>
                     </div>
 
                     <div className="border-b py-4"></div>
@@ -88,7 +88,6 @@ export default function ModalFormAdd({
                       className="bg-gray-50 w-64 mx-auto  m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       type="number"
                       placeholder="Cantidad"
-                      
                       {...register("quantity", { required: true })}
                     />
 
