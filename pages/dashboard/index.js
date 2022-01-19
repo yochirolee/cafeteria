@@ -65,7 +65,7 @@ export default function Dashboard({ user }) {
               onClick={() => setShowModalInsert(true)}
               className="flex flex-row items-center h-12 p-2 cursor-pointer bg-gray-600 rounded-lg   hover:text-white  ring-gray-700 hover:ring-2 "
             >
-              <p className="text-white mx-2">Crear Producto</p>
+              <p className="text-white mx-2">Crear</p>
             </div>
           </header>
 
