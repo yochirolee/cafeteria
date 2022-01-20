@@ -9,7 +9,7 @@ import {
 } from "../../utils/days_lib";
 import { calculateDailySales } from "../../utils/days_lib";
 
-export default function Stats({ dailyPurchase, dailySales }) {
+export default function Stats() {
   const [dailySales, setDailySales] = useState(0);
   const [dailyPurchases, setDailyPurchases] = useState(0);
 
