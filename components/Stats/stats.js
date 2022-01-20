@@ -1,23 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   getProductsPurchaseByDayId,
   getProductsSalesByDayId,
 } from "../../utils/products_lib";
+
 import {
+  calculateDailySales,
   calculateDailyPurchases,
-  createNewDayOrGetCurrentDay,
 } from "../../utils/days_lib";
-import { calculateDailySales } from "../../utils/days_lib";
+import { CurrentDayContext } from "../../context/CurrentDayContext";
 
 export default function Stats() {
   const [dailySales, setDailySales] = useState(0);
   const [dailyPurchases, setDailyPurchases] = useState(0);
 
-  const [currentDay, setCurrentDay] = useState({});
+  const [currentDay] = useContext(CurrentDayContext);
 
   useEffect(async () => {
-    const { day } = await createNewDayOrGetCurrentDay();
-    setCurrentDay(day);
     const { daySales } = await getProductsSalesByDayId(currentDay.id);
     const { dayPurchases } = await getProductsPurchaseByDayId(currentDay.id);
     await setDailySales(await calculateDailySales(daySales));

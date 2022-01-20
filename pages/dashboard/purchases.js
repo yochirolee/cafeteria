@@ -1,34 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import Date from "../../components/Date/date";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
 import Stats from "../../components/Stats/stats";
 import { getProductsPurchaseByDayId } from "../../utils/products_lib";
-import { createNewDayOrGetCurrentDay } from "../../utils/days_lib";
+import { CurrentDayContext } from "../../context/CurrentDayContext";
 
-export default function Purchases({ user }) {
-  const [currentDay, setCurrentDay] = useState({});
+export default function Purchases() {
+  const [currentDay] = useContext(CurrentDayContext);
   const [productsCurrentDay, setProductsCurrentDay] = useState([]);
   const [dailyPurchase, setDailyPurchase] = useState(0);
 
   useEffect(async () => {
-    console.log("rinnung");
-    const { day } = await createNewDayOrGetCurrentDay();
-    const { dayPurchases } = await getProductsPurchaseByDayId(day.id);
+    const { dayPurchases } = await getProductsPurchaseByDayId(currentDay.id);
     setProductsCurrentDay(dayPurchases);
   }, [currentDay.id]);
-
-  const calculateDailyPurchase = async () => {
-    const _dailyPurchase = 0;
-    if (productsCurrentDay) {
-      await productsCurrentDay.map((product) => {
-        product.purchase.map((buy) => {
-          _dailyPurchase += buy.cost * buy.quantity;
-        });
-      });
-      return _dailyPurchase;
-    }
-  };
 
   return (
     <>

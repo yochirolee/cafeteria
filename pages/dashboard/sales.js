@@ -2,23 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
 import Date from "../../components/Date/date";
-import {
-  calculateDailySales,
-  createNewDayOrGetCurrentDay,
-} from "../../utils/days_lib";
 import { getProductsSalesByDayId } from "../../utils/products_lib";
 import Stats from "../../components/Stats/stats";
+import { CurrentDayContext } from "../../context/CurrentDayContext";
 
 export default function Sales() {
   const [productsCurrentDay, setProductsCurrentDay] = useState([]);
-  const [dailySales, setDailySales] = useState(0);
-  const [currentDay, setCurrentDay] = useState({});
+  const [currentDay] = useContext(CurrentDayContext);
 
   useEffect(async () => {
-    const { day } = await createNewDayOrGetCurrentDay();
-    setCurrentDay(day);
     const { daySales } = await getProductsSalesByDayId(currentDay.id);
-    await setDailySales(await calculateDailySales(daySales));
     setProductsCurrentDay(daySales);
   }, [currentDay.id]);
 
