@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductCardDashBoard from "../../components/productsDashboard/productCardDashBoard";
 import { ProductsContext } from "../../context/ProductsContext";
 import DashBoardLayout from "../../layout/DashBoardLayout";
@@ -13,6 +13,19 @@ export default function Dashboard({ user }) {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [currentDay, setCurrentDay] = useContext(CurrentDayContext);
   const [productForUpdate, setProdcutForUpdate] = useState({});
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(async() => {
+    const results =await products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
+
+  const handleSearchTermChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleInsertProduct = async (data) => {
     const { product, error } = await insertProduct(data);
@@ -48,13 +61,15 @@ export default function Dashboard({ user }) {
     <div>
       <DashBoardLayout user={user}>
         <div>
-          <header className="flex flex-row bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
+          <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
             <div class="my-3  relative rounded-md ">
               <input
                 type="text"
                 name="search"
-                className=" h-12  block w-full pl-7 pr-12 border  rounded-md"
+                className=" h-12  block flex pl-7 pr-12 border  rounded-md"
                 placeholder="Buscar"
+                value={searchTerm}
+                onChange={handleSearchTermChange}
               />
               <div class="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
                 <i className="las la-search items-center text-2xl p-4 mt-1 text-gray-400 "></i>
@@ -68,13 +83,19 @@ export default function Dashboard({ user }) {
               <p className="text-white mx-2">Crear</p>
             </div>
           </header>
-
-          {products.map((product) => (
-            <ProductCardDashBoard
-              product={product}
-              handleGetProductQuantityAdd={handleGetProductQuantityAdd}
-            />
-          ))}
+          {searchTerm
+            ? searchResults.map((result) => (
+                <ProductCardDashBoard
+                  product={result}
+                  handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                />
+              ))
+            : products.map((product) => (
+                <ProductCardDashBoard
+                  product={product}
+                  handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                />
+              ))}
         </div>
         <ModalFormInsert
           show={showModalInsert}
