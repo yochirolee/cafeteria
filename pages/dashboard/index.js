@@ -6,6 +6,8 @@ import ModalFormAdd from "../../components/Modal/modalFormAdd";
 import { CurrentDayContext } from "../../context/CurrentDayContext";
 import { AddProductInventory, insertProduct } from "../../utils/products_lib";
 import ModalFormInsert from "../../components/Modal/modalFormInsert";
+import DeleteModal from "../../components/Modal/deleteModal";
+import { supabase } from "../../utils/supabaseClient";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -15,9 +17,11 @@ export default function Dashboard({ user }) {
   const [productForUpdate, setProdcutForUpdate] = useState({});
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
-  useEffect(async() => {
-    const results =await products.filter((product) =>
+  useEffect(async () => {
+    const results = await products.filter((product) =>
       product.name.toLowerCase().includes(searchTerm)
     );
     setSearchResults(results);
@@ -50,7 +54,33 @@ export default function Dashboard({ user }) {
     console.log(productUpdated, purchase, "ADDED PRODUCT TO INVENTORY");
   };
 
-  const handleDeleteProduct = () => {};
+  const handleDeleteProduct = async () => {
+    const { data: purchase, error: purchaseError } = await supabase
+      .from("purchases")
+      .delete()
+      .match({ product_id: deleteId });
+    const { data: sales, error: salesError } = await supabase
+      .from("sales")
+      .delete()
+      .match({ product_id: deleteId });
+
+    const { data, error } = await supabase
+      .from("products")
+      .delete()
+      .match({ id: deleteId });
+    if (!error) {
+      const _prods = [...products];
+      const index = await _prods.findIndex((prod) => prod.id == deleteId);
+      _prods.splice(index, 1);
+      await setProducts([..._prods]);
+      setShowConfirmationModal(!showConfirmationModal);
+    }
+    setSearchTerm("");
+  };
+
+  const handleConfirmationModal = () => {
+    setShowConfirmationModal(!showConfirmationModal);
+  };
 
   const handleGetProductQuantityAdd = (product) => {
     setProdcutForUpdate(product);
@@ -66,7 +96,7 @@ export default function Dashboard({ user }) {
               <input
                 type="text"
                 name="search"
-                className=" h-12  block flex pl-7 pr-12 border  rounded-md"
+                className=" h-12  block  pl-7 pr-12 border  rounded-md"
                 placeholder="Buscar"
                 value={searchTerm}
                 onChange={handleSearchTermChange}
@@ -88,12 +118,16 @@ export default function Dashboard({ user }) {
                 <ProductCardDashBoard
                   product={result}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                  handleConfirmationModal={handleConfirmationModal}
+                  setDeleteId={setDeleteId}
                 />
               ))
             : products.map((product) => (
                 <ProductCardDashBoard
                   product={product}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                  handleConfirmationModal={handleConfirmationModal}
+                  setDeleteId={setDeleteId}
                 />
               ))}
         </div>
@@ -109,6 +143,11 @@ export default function Dashboard({ user }) {
           handleProductUpdate={handleUpdateProduct}
           productForUpdate={productForUpdate}
         ></ModalFormAdd>
+        <DeleteModal
+          showConfirmationModal={showConfirmationModal}
+          handleConfirmationModal={handleConfirmationModal}
+          handleDeleteProduct={handleDeleteProduct}
+        />
       </DashBoardLayout>
     </div>
   );

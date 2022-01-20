@@ -109,9 +109,10 @@ export default function Dashboard({ user }) {
             <Stats />
             <ProductsTable
               products={products}
-              handleConfirmationModal={handleConfirmationModal}
-              setShowModal={setShowModal}
+              handleConfirmationModal={handleConfirmationModal}  
               setDeleteId={setDeleteId}
+              setShowModal={setShowModal}
+            
               handleUpdate={handleUpdate}
             />
           </div>

@@ -123,17 +123,6 @@ export const getProductsPurchaseByDayId = async (id) => {
   console.log(id, "day ID", dayPurchases, "dayPurchases");
   return { dayPurchases, error };
 };
-
-export const getTotalDailySales = async (products) => {
-  const sales = 0;
-
-  if (products)
-    products.map((_product) => {
-      sales += _product.quantity_sold * _product.price;
-    });
-  return sales;
-};
-
 export const getProductsSalesByDayId = async (id) => {
   if (!id) {
     const { day } = await createNewDayOrGetCurrentDay();
@@ -147,3 +136,16 @@ export const getProductsSalesByDayId = async (id) => {
 
   return { daySales, error };
 };
+
+
+export const getTotalDailySales = async (products) => {
+  const sales = 0;
+
+  if (products)
+    products.map((_product) => {
+      sales += _product.quantity_sold * _product.price;
+    });
+  return sales;
+};
+
+

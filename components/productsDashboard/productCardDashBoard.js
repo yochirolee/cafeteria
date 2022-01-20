@@ -1,6 +1,8 @@
 export default function ProductCardDashBoard({
   product,
   handleGetProductQuantityAdd,
+  setDeleteId,
+  handleConfirmationModal,
 }) {
   return (
     <div
@@ -50,7 +52,13 @@ export default function ProductCardDashBoard({
           className="las la-plus rounded-full mr-2 border border-gray-300  p-1   text-gray-600 bg-gray-100 "
         ></i>
         <i className="las la-edit rounded-full mr-2 border border-green-300  p-1  text-green-600 bg-green-100"></i>
-        <i className="las la-trash-alt rounded-full  border border-red-300 p-1  text-red-600 bg-red-100"></i>
+        <i
+          onClick={() => {
+            setDeleteId(product.id);
+            handleConfirmationModal();
+          }}
+          className="las la-trash-alt rounded-full  border border-red-300 p-1  text-red-600 bg-red-100"
+        ></i>
       </div>
     </div>
   );

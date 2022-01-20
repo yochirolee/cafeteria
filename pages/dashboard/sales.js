@@ -26,7 +26,7 @@ export default function Sales() {
     <>
       <NavBarDashBoard />
       <Date />
-      <Stats dailySales={dailySales} />
+      <Stats />
       <div className="bg-white mx-4 mt-4 rounded text-xs">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

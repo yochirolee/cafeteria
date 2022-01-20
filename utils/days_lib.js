@@ -73,3 +73,15 @@ export const calculateDailySales = async (products) => {
     return _dailySales;
   }
 };
+export const calculateDailyPurchases = async (products) => {
+  const _dailyPurchases = 0;
+
+  if (products) {
+    await products.map((product) => {
+      product.purchases.map((purchase) => {
+        _dailyPurchases += purchase.cost * purchase.quantity;
+      });
+    });
+    return _dailyPurchases;
+  }
+};
