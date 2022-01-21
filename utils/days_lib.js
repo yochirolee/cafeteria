@@ -1,9 +1,14 @@
 import { supabase } from "./supabaseClient";
 import moment from "moment";
+import {
+  getProductsSalesByDayId,
+  getProductsPurchaseByDayId,
+} from "./products_lib";
 
 export const createNewDayOrGetCurrentDay = async () => {
   const isCurrent = await IsCurrentDay();
   if (!isCurrent) {
+    await updateLastDay();
     let { data: day, error } = await supabase
       .from("days")
       .insert([
@@ -26,9 +31,21 @@ export const createNewDayOrGetCurrentDay = async () => {
   }
 };
 
+export const updateLastDay = async () => {
+  const lastDay = await getLastDay();
+  const { daySales } = await getProductsSalesByDayId(lastDay.id);
+  const { dayPurchases } = await getProductsPurchaseByDayId(lastDay.id);
+  const totalDailySales = await calculateDailySales(daySales);
+  const totalDailyPurchases = await calculateDailyPurchases(dayPurchases);
+  let { data: day } = await supabase
+    .from("days")
+    .update({ purchases: totalDailyPurchases, sales: totalDailySales })
+    .eq("id", lastDay.id);
+  return day;
+};
+
 export const IsCurrentDay = async () => {
   const lastDay = await getLastDay();
-
   if (!lastDay) {
     return false;
   }
@@ -43,13 +60,12 @@ export const IsCurrentDay = async () => {
 };
 
 export const getLastDay = async () => {
-  const { data: days, error } = await supabase.from("days").select("*");
-  if (days.length !== 0) {
-    const count = days.length;
-    const day = days[count - 1];
-    return day;
-  }
-  return null;
+  const { data: day, error } = await supabase
+    .from("days")
+    .select("*")
+    .order("id", { ascending: false })
+    .limit(1);
+  return day[0];
 };
 
 export const updateIsOpen = async (day, isOpen) => {

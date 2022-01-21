@@ -7,7 +7,7 @@ import { CurrentDayContext } from "../../context/CurrentDayContext";
 export default function ProductList() {
   const [products, setProducts] = useContext(ProductsContext);
   const [currentDay] = useContext(CurrentDayContext);
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(async () => {
@@ -53,7 +53,7 @@ export default function ProductList() {
             value={searchTerm}
             onChange={handleSearchTermChange}
           />
-          <div class="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
+          <div className="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
             <i className="las la-search items-center text-2xl pr-6 mt-1 text-gray-400 "></i>
           </div>
         </div>

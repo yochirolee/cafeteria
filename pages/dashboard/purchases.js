@@ -18,10 +18,10 @@ export default function Purchases() {
 
   return (
     <>
-      <NavBarDashBoard />
+      <NavBarDashBoard /> 
       <Date />
       <Stats dailyPurchase={dailyPurchase} />
-      <div className="bg-white mx-4 mt-4 rounded text-xs">
+      <div className="antialiased font-mono text-slate-500 dark:text-slate-400  dark:bg-slate-900 bg-white mx-4 mt-4 rounded text-xs">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

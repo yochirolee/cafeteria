@@ -17,7 +17,7 @@ export default function Date() {
     alert("day change")
   }
   return (
-    <div className="bg-white rounded-lg items-center m-2 flex flex-col">
+    <div className="bg-white  rounded-lg items-center m-2 flex flex-col">
       <label for="start">Seleccione Fecha:</label>
 
       <input

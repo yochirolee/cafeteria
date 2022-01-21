@@ -13,9 +13,9 @@ export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
   const [showModalInsert, setShowModalInsert] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [currentDay, setCurrentDay] = useContext(CurrentDayContext);
+  const [currentDay] = useContext(CurrentDayContext);
   const [productForUpdate, setProdcutForUpdate] = useState({});
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -88,11 +88,11 @@ export default function Dashboard({ user }) {
   };
 
   return (
-    <div>
+    <div className="antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900">
       <DashBoardLayout user={user}>
         <div>
           <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
-            <div class="my-3  relative rounded-md ">
+            <div className="my-3  relative rounded-md ">
               <input
                 type="text"
                 name="search"
@@ -101,7 +101,7 @@ export default function Dashboard({ user }) {
                 value={searchTerm}
                 onChange={handleSearchTermChange}
               />
-              <div class="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
+              <div className="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
                 <i className="las la-search items-center text-2xl p-4 mt-1 text-gray-400 "></i>
               </div>
             </div>
@@ -120,6 +120,7 @@ export default function Dashboard({ user }) {
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
                   handleConfirmationModal={handleConfirmationModal}
                   setDeleteId={setDeleteId}
+                  key={result.id}
                 />
               ))
             : products.map((product) => (
@@ -128,6 +129,7 @@ export default function Dashboard({ user }) {
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
                   handleConfirmationModal={handleConfirmationModal}
                   setDeleteId={setDeleteId}
+                  key={product.id}
                 />
               ))}
         </div>

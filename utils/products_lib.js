@@ -120,7 +120,6 @@ export const getProductsPurchaseByDayId = async (id) => {
     .from("products")
     .select("*,purchases(*)")
     .eq("purchases.day_id", id);
-  console.log(id, "day ID", dayPurchases, "dayPurchases");
   return { dayPurchases, error };
 };
 export const getProductsSalesByDayId = async (id) => {
@@ -133,10 +132,9 @@ export const getProductsSalesByDayId = async (id) => {
     .from("products")
     .select("*,sales(*)")
     .eq("sales.day_id", id);
-
+  
   return { daySales, error };
 };
-
 
 export const getTotalDailySales = async (products) => {
   const sales = 0;
@@ -147,5 +145,3 @@ export const getTotalDailySales = async (products) => {
     });
   return sales;
 };
-
-

@@ -12,10 +12,10 @@ export default function ProductCardDashBoard({
         <h2 className="text-sm font-bold  pt-2 text-center text-gray-500  lg:text-2xl mb-2">
           {product.name}
         </h2>
-        <p className="items-center text-md inline-flex text-sm rounded-lg lg:border lg:bg-gray-600  lg:shadow-lg px-2 lg:font-bold lg:text-white">
+        <div className="items-center text-md inline-flex text-sm rounded-lg lg:border lg:bg-gray-600  lg:shadow-lg px-2 lg:font-bold lg:text-white">
           <span className="text-xs pr-2 inline-flex">Precio: </span>
-          <p>$ {product.price}</p>
-        </p>
+          <span>$ {product.price}</span>
+        </div>
       </div>
       <div className="flex flex-col  my-2 rounded-b-lg  ">
         <div
