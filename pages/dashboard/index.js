@@ -55,7 +55,7 @@ export default function Dashboard({ user }) {
   };
 
   const handleProductUpdate = async (product) => {
-    console.log(product, "data");
+    
     productForUpdate.name = product.name;
     productForUpdate.price =parseInt(product.price);
     productForUpdate.cost =parseInt(product.cost);
@@ -67,7 +67,7 @@ export default function Dashboard({ user }) {
         price: productForUpdate.price,
       })
       .eq("id", productForUpdate.id);
-    console.log(data, error);
+    
   };
 
   const handleDeleteProduct = async () => {

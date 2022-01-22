@@ -11,18 +11,19 @@ import { getLastDay } from "../../utils/days_lib";
 
 export default function Sales() {
   const [productsSelectedDay, setProductsSelectedDay] = useState([]);
-  const [selectedDay, setSelectedDay] = useState("");
-  const [startDate, setStartDate] = useState();
+  const [selectedDay, setSelectedDay] = useState({});
+  const [startDate, setStartDate] = useState(new Date());
   const [activeDays, setActiveDays] = useState([]);
 
   useEffect(async () => {
     setSelectedDay(await getLastDay());
     await getActiveDays();
   }, []);
-
   useEffect(async () => {
-    
-    if (selectedDay.id) {
+    console.log(selectedDay.id, "FROM USEEGGECT");
+
+    console.log(selectedDay, "SELECTED DAY");
+    if (selectedDay) {
       const { daySales } = await getProductsSalesByDayId(selectedDay.id);
       setProductsSelectedDay(daySales);
     }
@@ -55,7 +56,14 @@ export default function Sales() {
             selected={startDate}
             onSelect={handleDateSelect}
             onChange={(date) => handleDateChange(date)}
-            includeDates={activeDays.map((day) => new Date(day.created_at))}
+            includeDates={activeDays.map((day) => {
+              var dateArray = day.created_at.split("-");
+              var year = dateArray[0];
+              var month = parseInt(dateArray[1], 10) - 1;
+              var date = dateArray[2];
+              var _entryDate = new Date(year, month, date);
+              return _entryDate;
+            })}
           />
         </div>
       </div>

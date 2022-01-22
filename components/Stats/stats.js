@@ -26,7 +26,7 @@ export default function Stats({ day }) {
 
   return (
     <>
-      {loading ? (
+      {loading  ? (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg  items-center  bg-gray-100 m-2 p-2 ">
           <p className="animate-pulse mx-auto">Loading...</p>
         </div>
