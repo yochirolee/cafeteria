@@ -41,25 +41,21 @@ export default function Stats({ day }) {
                   : "text-red-500 bg-red-50"
               } p-2 inline-flex text-lg mt-2 font-bold  rounded-lg `}
             >
-              <div className="flex flex-col mx-auto">
-                <span>$ {dailySales - dailyPurchases}</span>
-              </div>
+              <span className="flex flex-col mx-auto">
+                $ {dailySales - dailyPurchases}
+              </span>
             </p>
           </div>
           <div className="relative flex flex-col rounded-lg shadow-md px-2 py-2 bg-white cursor-pointer text-center  focus:outline-none">
             <p className="text-center ">Venta</p>
             <p className="p-2 inline-flex  text-lg mt-2 font-bold text-blue-500 rounded-lg bg-blue-50">
-              <div className="flex flex-col mx-auto">
-                <span>$ {dailySales}</span>
-              </div>
+              <span className="flex flex-col mx-auto">$ {dailySales}</span>
             </p>
           </div>
           <div className="relative flex flex-col rounded-lg shadow-md px-2 py-2 bg-white cursor-pointer   focus:outline-none">
             <p className="text-center ">Compra</p>
             <p className="p-2 inline-flex text-lg mt-2 font-bold text-red-500 rounded-lg bg-red-50">
-              <div className="flex flex-col mx-auto">
-                <span>$ {dailyPurchases}</span>
-              </div>
+              <span className="flex flex-col mx-auto">$ {dailyPurchases}</span>
             </p>
           </div>
         </div>
