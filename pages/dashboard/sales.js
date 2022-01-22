@@ -5,42 +5,47 @@ import { getProductsSalesByDayId } from "../../utils/products_lib";
 import Stats from "../../components/Stats/stats";
 import { CurrentDayContext } from "../../context/CurrentDayContext";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { supabase } from "../../utils/supabaseClient";
+import { getLastDay } from "../../utils/days_lib";
 
 export default function Sales() {
-  const [productsCurrentDay, setProductsCurrentDay] = useState([]);
-  const [currentDay] = useContext(CurrentDayContext);
-  const [startDate, setStartDate] = useState(new Date());
+  const [productsSelectedDay, setProductsSelectedDay] = useState([]);
+  const [selectedDay, setSelectedDay] = useState("");
+  const [startDate, setStartDate] = useState();
   const [activeDays, setActiveDays] = useState([]);
 
   useEffect(async () => {
-    const { daySales } = await getProductsSalesByDayId(currentDay.id);
-    setProductsCurrentDay(daySales);
+    setSelectedDay(await getLastDay());
     await getActiveDays();
-  }, [currentDay.id]);
+  }, []);
 
-  console.log(
-    moment(currentDay.created_at).format("DD-MM-YYYY"),
-    moment(startDate).format("DD-MM-YYYY"),
-    "Current day"
-  );
+  useEffect(async () => {
+    
+    if (selectedDay.id) {
+      const { daySales } = await getProductsSalesByDayId(selectedDay.id);
+      setProductsSelectedDay(daySales);
+    }
+  }, [selectedDay.id]);
+
   const handleDateSelect = () => {};
   const handleDateChange = async (date) => {
     setStartDate(date);
-    const { data: searchDay, error } = await supabase.from("days").select("*");
+    const selectedDay = activeDays.find((day) => {
+      return (
+        moment(day.created_at).format("DD-MM-YYYY") ==
+        moment(date).format("DD-MM-YYYY")
+      );
+    });
+    console.log(selectedDay.id, "SELECTED DAY");
+    setSelectedDay(selectedDay);
   };
 
   const getActiveDays = async () => {
-    const { data: searchDay, error } = await supabase.from("days").select("*");
-    const days = [];
-    searchDay.map((day) => {
-      days.push(new Date(day.created_at));
-    });
-
+    const { data: days, error } = await supabase.from("days").select("*");
     setActiveDays(days);
   };
+
   return (
     <>
       <NavBarDashBoard />
@@ -50,11 +55,11 @@ export default function Sales() {
             selected={startDate}
             onSelect={handleDateSelect}
             onChange={(date) => handleDateChange(date)}
-            includeDates={activeDays}
+            includeDates={activeDays.map((day) => new Date(day.created_at))}
           />
         </div>
       </div>
-      <Stats />
+      <Stats day={selectedDay} />
       <div className="bg-white mx-4 font-mono mt-4  text-xs antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900 ">
         <div className="flex flex-col ">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -85,8 +90,8 @@ export default function Sales() {
                     </tr>
                   </thead>
                   <tbody className="bg-white  divide-y divide-gray-200">
-                    {productsCurrentDay &&
-                      productsCurrentDay.map((product) =>
+                    {productsSelectedDay &&
+                      productsSelectedDay.map((product) =>
                         product.sales.length > 0 ? (
                           product.sales.map((sale) => (
                             <tr key={sale.id}>

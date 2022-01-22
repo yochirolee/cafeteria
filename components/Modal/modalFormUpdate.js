@@ -1,34 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function ModalForm({ show, onClose, handleInsertProduct,productUpdate }) {
+export default function ModalFormUpdate({
+  showModalUpdate,
+  handleProductUpdate,
+  productForUpdate,
+  onClose,
+}) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
     reset,
+    
     formState: { errors },
   } = useForm();
 
-  useEffect(()=>{
-    if(productUpdate)
-        reset(productUpdate)
-  },[productUpdate])
-
   const onSubmit = async (data) => {
     setUpdating(true);
-    await handleInsertProduct(data);
     setUpdating(false);
+     await handleProductUpdate(data);
+
     reset();
     handleCloseClick();
   };
 
   const handleCloseClick = () => {
+    reset();
     onClose();
   };
 
-  const modalContent = show ? (
+  const modalContent = showModalUpdate ? (
     <div
       className="fixed z-10  inset-0 overflow-y-auto  "
       aria-labelledby="modal-title"
@@ -43,64 +46,51 @@ export default function ModalForm({ show, onClose, handleInsertProduct,productUp
 
         <div className="inline-block w-full m-6 lg:w-1/4 align-bottom lg:mt-20 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="flex justify-end ">
-              <button
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                data-modal-toggle="authentication-modal"
-                onClick={handleCloseClick}
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
             <div className="sm:flex sm:items-start">
               <div className="mt-3  flex flex-col mx-auto">
                 <h3
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  Adicionar Producto
+                  Actualizar Producto
                 </h3>
                 <div className="mt-2 ">
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col items-center  "
+                    className="flex flex-col items-center   "
                   >
-                    <input
-                      type="text"
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="Nombre"
-                      {...register("name", { required: true })}
-                    />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="number"
-                      placeholder="Precio de Compra"
-                      {...register("price", { required: true })}
-                    />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="number"
-                      placeholder="Precio de Venta"
-                      {...register("salePrice", { required: true })}
-                    />
-                    <input
-                      className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      type="number"
-                      placeholder="Cantidad"
-                      {...register("quantity", { required: true })}
-                    />
+                    <div className="w-full">
+                      <label className="pl-2">Nombre</label>
+                      <input
+                        type="text"
+                        className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Nombre"
+                        {...register("name", { required: true })}
+                        defaultValue={productForUpdate.name}
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <label className="pl-2">Precio de Compra</label>
+                      <input
+                        className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        type="number"
+                        placeholder="Precio de Compra"
+                        {...register("cost", { required: true })}
+                        defaultValue={productForUpdate.cost}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label className="pl-2">Precio de Venta</label>
+
+                      <input
+                        className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        type="number"
+                        placeholder="Precio de Venta"
+                        {...register("price", { required: true })}
+                        defaultValue={productForUpdate.price}
+                      />
+                    </div>
 
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button

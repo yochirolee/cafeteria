@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 export default function ModalFormAdd({
   showModalAdd,
-  handleProductUpdate,
+  handleProductAddUpdate,
   productForUpdate,
   setShowModalAdd,
 }) {
@@ -18,7 +18,7 @@ export default function ModalFormAdd({
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    await handleProductUpdate(data);
+    await handleProductAddUpdate(data);
     setUpdating(false);
     reset();
     handleCloseClick();

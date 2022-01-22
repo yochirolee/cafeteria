@@ -8,13 +8,15 @@ import { AddProductInventory, insertProduct } from "../../utils/products_lib";
 import ModalFormInsert from "../../components/Modal/modalFormInsert";
 import DeleteModal from "../../components/Modal/deleteModal";
 import { supabase } from "../../utils/supabaseClient";
+import ModalFormUpdate from "../../components/Modal/modalFormUpdate";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
   const [showModalInsert, setShowModalInsert] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [currentDay] = useContext(CurrentDayContext);
-  const [productForUpdate, setProdcutForUpdate] = useState({});
+  const [productForUpdate, setProductForUpdate] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -42,8 +44,7 @@ export default function Dashboard({ user }) {
     }
   };
 
-  const handleUpdateProduct = async (data) => {
-    console.log(data, "data");
+  const handleUpdateAddProduct = async (data) => {
     const quantityAdded = parseInt(data.quantity);
     productForUpdate.quantity += quantityAdded;
     const { data: productUpdated, purchase } = await AddProductInventory(
@@ -51,7 +52,22 @@ export default function Dashboard({ user }) {
       quantityAdded,
       currentDay
     );
-    console.log(productUpdated, purchase, "ADDED PRODUCT TO INVENTORY");
+  };
+
+  const handleProductUpdate = async (product) => {
+    console.log(product, "data");
+    productForUpdate.name = product.name;
+    productForUpdate.price =parseInt(product.price);
+    productForUpdate.cost =parseInt(product.cost);
+    const { data, error } = await supabase
+      .from("products")
+      .update({
+        name: productForUpdate.name,
+        cost: productForUpdate.cost,
+        price: productForUpdate.price,
+      })
+      .eq("id", productForUpdate.id);
+    console.log(data, error);
   };
 
   const handleDeleteProduct = async () => {
@@ -83,8 +99,13 @@ export default function Dashboard({ user }) {
   };
 
   const handleGetProductQuantityAdd = (product) => {
-    setProdcutForUpdate(product);
+    setProductForUpdate(product);
     setShowModalAdd(true);
+  };
+
+  const handleGetProductForUpdate = (product) => {
+    setProductForUpdate(product);
+    setShowModalUpdate(true);
   };
 
   return (
@@ -118,6 +139,7 @@ export default function Dashboard({ user }) {
                 <ProductCardDashBoard
                   product={result}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                  handleGetProductForUpdate={handleGetProductForUpdate}
                   handleConfirmationModal={handleConfirmationModal}
                   setDeleteId={setDeleteId}
                   key={result.id}
@@ -127,6 +149,7 @@ export default function Dashboard({ user }) {
                 <ProductCardDashBoard
                   product={product}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
+                  handleGetProductForUpdate={handleGetProductForUpdate}
                   handleConfirmationModal={handleConfirmationModal}
                   setDeleteId={setDeleteId}
                   key={product.id}
@@ -142,13 +165,20 @@ export default function Dashboard({ user }) {
         <ModalFormAdd
           showModalAdd={showModalAdd}
           setShowModalAdd={setShowModalAdd}
-          handleProductUpdate={handleUpdateProduct}
+          handleProductAddUpdate={handleUpdateAddProduct}
           productForUpdate={productForUpdate}
         ></ModalFormAdd>
         <DeleteModal
           showConfirmationModal={showConfirmationModal}
           handleConfirmationModal={handleConfirmationModal}
           handleDeleteProduct={handleDeleteProduct}
+        />
+        <ModalFormUpdate
+          showModalUpdate={showModalUpdate}
+          setShowModalUpdate={setShowModalUpdate}
+          handleProductUpdate={handleProductUpdate}
+          productForUpdate={productForUpdate}
+          onClose={() => setShowModalUpdate(false)}
         />
       </DashBoardLayout>
     </div>

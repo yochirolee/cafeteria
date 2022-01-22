@@ -111,11 +111,6 @@ export const getProducts = async () => {
 };
 
 export const getProductsPurchaseByDayId = async (id) => {
-  if (!id) {
-    const { day } = await createNewDayOrGetCurrentDay();
-    id = day.id;
-  }
-
   const { data: dayPurchases, error } = await supabase
     .from("products")
     .select("*,purchases(*)")
@@ -123,16 +118,11 @@ export const getProductsPurchaseByDayId = async (id) => {
   return { dayPurchases, error };
 };
 export const getProductsSalesByDayId = async (id) => {
-  if (!id) {
-    const { day } = await createNewDayOrGetCurrentDay();
-    id = day.id;
-  }
-
   const { data: daySales, error } = await supabase
     .from("products")
     .select("*,sales(*)")
     .eq("sales.day_id", id);
-  
+
   return { daySales, error };
 };
 

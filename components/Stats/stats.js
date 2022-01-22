@@ -8,29 +8,27 @@ import {
   calculateDailySales,
   calculateDailyPurchases,
 } from "../../utils/days_lib";
-import { CurrentDayContext } from "../../context/CurrentDayContext";
 
-export default function Stats() {
+export default function Stats({ day }) {
   const [dailySales, setDailySales] = useState(0);
   const [dailyPurchases, setDailyPurchases] = useState(0);
 
-  const [currentDay] = useContext(CurrentDayContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     setLoading(true);
-    const { daySales } = await getProductsSalesByDayId(currentDay.id);
-    const { dayPurchases } = await getProductsPurchaseByDayId(currentDay.id);
+    const { daySales } = await getProductsSalesByDayId(day.id);
+    const { dayPurchases } = await getProductsPurchaseByDayId(day.id);
     await setDailySales(await calculateDailySales(daySales));
     await setDailyPurchases(await calculateDailyPurchases(dayPurchases));
     setLoading(false);
-  }, [currentDay.id]);
+  }, [day.id]);
 
   return (
     <>
       {loading ? (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg  items-center  bg-gray-100 m-2 p-2 ">
-           <p className="animate-pulse mx-auto">Loading...</p>
+          <p className="animate-pulse mx-auto">Loading...</p>
         </div>
       ) : (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
