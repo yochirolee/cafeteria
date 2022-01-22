@@ -51,8 +51,9 @@ export default function Sales() {
     <>
       <NavBarDashBoard />
       <div className="flex flex-row items-center justify-center mx-2 rounded-lg my-2 p-2 bg-white">
-        <div>
+        <div className="text-slate-600 inline-flex items-center ">
           <DatePicker
+          className="text-center focus:outline-none font-bold"
             selected={startDate}
             onSelect={handleDateSelect}
             onChange={(date) => handleDateChange(date)}
@@ -65,6 +66,7 @@ export default function Sales() {
               return _entryDate;
             })}
           />
+          <i className="las la-calendar-plus text-cyan-700  text-2xl "></i>
         </div>
       </div>
       <Stats day={selectedDay} />

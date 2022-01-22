@@ -26,14 +26,14 @@ export default function Stats({ day }) {
 
   return (
     <>
-      {loading  ? (
+      {loading ? (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg  items-center  bg-gray-100 m-2 p-2 ">
           <p className="animate-pulse mx-auto">Loading...</p>
         </div>
       ) : (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
-          <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
-            <p className="text-center font-semibold">Ganancia Hoy</p>
+          <div className="relative flex flex-col rounded-lg shadow-md px-2 py-2 bg-white cursor-pointer text-center  focus:outline-none">
+            <p className="text-center ">Ganancia</p>
             <p
               className={`${
                 dailySales - dailyPurchases > 0
@@ -41,19 +41,25 @@ export default function Stats({ day }) {
                   : "text-red-500 bg-red-50"
               } p-2 inline-flex text-lg mt-2 font-bold  rounded-lg `}
             >
-              <span>$</span> {dailySales - dailyPurchases}
+              <div className="flex flex-col mx-auto">
+                <span>$ {dailySales - dailyPurchases}</span>
+              </div>
             </p>
           </div>
-          <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
-            <p className="text-center font-semibold">Venta Hoy</p>
-            <p className="p-2 inline-flex text-lg mt-2 font-bold text-blue-500 rounded-lg bg-blue-50">
-              <span>$</span> {dailySales}
+          <div className="relative flex flex-col rounded-lg shadow-md px-2 py-2 bg-white cursor-pointer text-center  focus:outline-none">
+            <p className="text-center ">Venta</p>
+            <p className="p-2 inline-flex  text-lg mt-2 font-bold text-blue-500 rounded-lg bg-blue-50">
+              <div className="flex flex-col mx-auto">
+                <span>$ {dailySales}</span>
+              </div>
             </p>
           </div>
-          <div className="relative flex flex-col rounded-lg shadow-md px-5 py-4 bg-white cursor-pointer text-center  focus:outline-none">
-            <p className="text-center font-semibold">Compra Hoy</p>
+          <div className="relative flex flex-col rounded-lg shadow-md px-2 py-2 bg-white cursor-pointer   focus:outline-none">
+            <p className="text-center ">Compra</p>
             <p className="p-2 inline-flex text-lg mt-2 font-bold text-red-500 rounded-lg bg-red-50">
-              <span>$</span> {dailyPurchases}
+              <div className="flex flex-col mx-auto">
+                <span>$ {dailyPurchases}</span>
+              </div>
             </p>
           </div>
         </div>
