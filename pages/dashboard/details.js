@@ -112,7 +112,7 @@ export default function Details() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <div className=" rounded-xl bg-gray-100  overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+            <div className=" rounded-xl bg-gray-100  overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60">
               <ul className="pt-3">
                 {productsSalesSelectedDay &&
                   productsSalesSelectedDay.map((product) =>
@@ -144,7 +144,7 @@ export default function Details() {
                           </ul>
                           <a
                             href="#"
-                            class="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400"
+                            className="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-gray-400"
                           ></a>
                         </li>
                       ))
@@ -156,36 +156,39 @@ export default function Details() {
             </div>
           </Tab.Panel>
           <Tab.Panel>
-            <div className=" rounded-xl bg-gray-100 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+            <div className=" rounded-xl bg-gray-100 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-gray-400 ring-opacity-60">
               <ul className="pt-3">
                 {productsPurchasesSelectedDay &&
                   productsPurchasesSelectedDay.map((product) =>
                     product.purchases.length > 0 ? (
                       product.purchases.map((buy) => (
-                        <li className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gay-50">
+                        <li className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gray-50">
                           <h3 className="text-sm basis-1/4 text-center font-medium leading-5">
                             {product.name}
                           </h3>
                           <ul className="flex  flex-row w-full justify-around mt-1 space-x-1 text-xs font-normal leading-4 text-gray-500">
                             <li className="flex flex-col  text-center">
                               <span>Hora:</span>
-                              {moment(buy.created_at).format("h:mm:ss")}
+                              <p className=" mt-2">
+                                {moment(buy.created_at).format("h:mm:ss")}
+                              </p>{" "}
                             </li>
 
                             <li className="flex flex-col text-center">
-                              <span>Cantidad</span> {buy.quantity}
+                              <span>Cantidad</span>
+                              <p className=" mt-2">{buy.quantity}</p>
                             </li>
 
                             <li className="flex flex-col text-center">
                               <span>Valor Total</span>{" "}
-                              <span className="px-2 mt-2  inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              <span className="px-2 mt-2  inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                 $ {buy.quantity * buy.cost}
                               </span>
                             </li>
                           </ul>
                           <a
                             href="#"
-                            class="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400"
+                            class="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-gray-400"
                           ></a>
                         </li>
                       ))
