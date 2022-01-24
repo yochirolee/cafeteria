@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function ModalFormUpdate({
   showModalUpdate,
   handleProductUpdate,
   productForUpdate,
-  onClose,
+  setShowModalUpdate,
 }) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
@@ -13,23 +13,24 @@ export default function ModalFormUpdate({
     register,
     handleSubmit,
     reset,
-    
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    setUpdating(false);
-     await handleProductUpdate(data);
-
+    await handleProductUpdate(data);
     reset();
+    setUpdating(false);
     handleCloseClick();
   };
 
   const handleCloseClick = () => {
-    reset();
-    onClose();
+    setShowModalUpdate(false);
   };
+
+  useEffect(() => {
+    reset();
+  }, [productForUpdate]);
 
   const modalContent = showModalUpdate ? (
     <div

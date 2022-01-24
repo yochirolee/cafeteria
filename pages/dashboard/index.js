@@ -67,7 +67,7 @@ export default function Dashboard({ user }) {
         price: productForUpdate.price,
       })
       .eq("id", productForUpdate.id);
-    
+  
   };
 
   const handleDeleteProduct = async () => {
@@ -178,7 +178,7 @@ export default function Dashboard({ user }) {
           setShowModalUpdate={setShowModalUpdate}
           handleProductUpdate={handleProductUpdate}
           productForUpdate={productForUpdate}
-          onClose={() => setShowModalUpdate(false)}
+         
         />
       </DashBoardLayout>
     </div>

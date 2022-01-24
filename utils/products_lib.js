@@ -111,19 +111,23 @@ export const getProducts = async () => {
 };
 
 export const getProductsPurchaseByDayId = async (id) => {
-  const { data: dayPurchases, error } = await supabase
-    .from("products")
-    .select("*,purchases(*)")
-    .eq("purchases.day_id", id);
-  return { dayPurchases, error };
+  if (id) {
+    const { data: dayPurchases, error } = await supabase
+      .from("products")
+      .select("*,purchases(*)")
+      .eq("purchases.day_id", id);
+    return { dayPurchases, error };
+  } else return { error: "No Active ID" };
 };
 export const getProductsSalesByDayId = async (id) => {
-  const { data: daySales, error } = await supabase
-    .from("products")
-    .select("*,sales(*)")
-    .eq("sales.day_id", id);
+  if (id) {
+    const { data: daySales, error } = await supabase
+      .from("products")
+      .select("*,sales(*)")
+      .eq("sales.day_id", id);
 
-  return { daySales, error };
+    return { daySales, error };
+  } else return { error: "No Active ID" };
 };
 
 export const getTotalDailySales = async (products) => {

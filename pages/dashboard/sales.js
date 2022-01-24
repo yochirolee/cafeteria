@@ -19,11 +19,11 @@ export default function Sales() {
     setSelectedDay(await getLastDay());
     await getActiveDays();
   }, []);
-  useEffect(async () => {
-    console.log(selectedDay.id, "FROM USEEGGECT");
 
-    console.log(selectedDay, "SELECTED DAY");
+  useEffect(async () => {
     if (selectedDay) {
+      console.log(selectedDay.id, "FROM USEEGGECT");
+      console.log(selectedDay, "SELECTED DAY");
       const { daySales } = await getProductsSalesByDayId(selectedDay.id);
       setProductsSelectedDay(daySales);
     }
@@ -32,7 +32,7 @@ export default function Sales() {
   const handleDateSelect = () => {};
   const handleDateChange = async (date) => {
     setStartDate(date);
-    const selectedDay = activeDays.find((day) => {
+    const selectedDay = await activeDays.find((day) => {
       return (
         moment(day.created_at).format("DD-MM-YYYY") ==
         moment(date).format("DD-MM-YYYY")
@@ -53,7 +53,7 @@ export default function Sales() {
       <div className="flex flex-row items-center justify-center mx-2 rounded-lg my-2 p-2 bg-white">
         <div className="text-slate-600 inline-flex items-center ">
           <DatePicker
-          className="text-center focus:outline-none font-bold"
+            className="text-center focus:outline-none font-bold"
             selected={startDate}
             onSelect={handleDateSelect}
             onChange={(date) => handleDateChange(date)}
