@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
-  getProductsPurchaseByDayId,
+  getProductsPurchasesByDayId,
   getProductsSalesByDayId,
 } from "../../utils/products_lib";
 
@@ -18,7 +18,7 @@ export default function Stats({ day }) {
   useEffect(async () => {
     setLoading(true);
     const { daySales } = await getProductsSalesByDayId(day.id);
-    const { dayPurchases } = await getProductsPurchaseByDayId(day.id);
+    const { dayPurchases } = await getProductsPurchasesByDayId(day.id);
     await setDailySales(await calculateDailySales(daySales));
     await setDailyPurchases(await calculateDailyPurchases(dayPurchases));
     setLoading(false);

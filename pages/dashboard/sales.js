@@ -3,11 +3,9 @@ import moment from "moment";
 import NavBarDashBoard from "../../components/NavBar/navBarDashBoard";
 import { getProductsSalesByDayId } from "../../utils/products_lib";
 import Stats from "../../components/Stats/stats";
-import { CurrentDayContext } from "../../context/CurrentDayContext";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { supabase } from "../../utils/supabaseClient";
 import { getLastDay } from "../../utils/days_lib";
+import CustomDayPicker from "../../components/Date/customDayPicker";
 
 export default function Sales() {
   const [productsSelectedDay, setProductsSelectedDay] = useState([]);
@@ -22,8 +20,6 @@ export default function Sales() {
 
   useEffect(async () => {
     if (selectedDay) {
-      console.log(selectedDay.id, "FROM USEEGGECT");
-      console.log(selectedDay, "SELECTED DAY");
       const { daySales } = await getProductsSalesByDayId(selectedDay.id);
       setProductsSelectedDay(daySales);
     }
@@ -38,7 +34,6 @@ export default function Sales() {
         moment(date).format("DD-MM-YYYY")
       );
     });
-    console.log(selectedDay.id, "SELECTED DAY");
     setSelectedDay(selectedDay);
   };
 
@@ -50,25 +45,12 @@ export default function Sales() {
   return (
     <>
       <NavBarDashBoard />
-      <div className="flex flex-row items-center justify-center mx-2 rounded-lg my-2 p-2 bg-white">
-        <div className="text-slate-600 inline-flex items-center ">
-          <DatePicker
-            className="text-center focus:outline-none font-bold"
-            selected={startDate}
-            onSelect={handleDateSelect}
-            onChange={(date) => handleDateChange(date)}
-            includeDates={activeDays.map((day) => {
-              var dateArray = day.created_at.split("-");
-              var year = dateArray[0];
-              var month = parseInt(dateArray[1], 10) - 1;
-              var date = dateArray[2];
-              var _entryDate = new Date(year, month, date);
-              return _entryDate;
-            })}
-          />
-          <i className="las la-calendar-plus text-cyan-700  text-2xl "></i>
-        </div>
-      </div>
+      <CustomDayPicker
+        startDate={startDate}
+        activeDays={activeDays}
+        handleDateSelect={handleDateSelect}
+        handleDateChange={handleDateChange}
+      />
       <Stats day={selectedDay} />
       <div className="bg-white mx-4 font-mono mt-4  text-xs antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900 ">
         <div className="flex flex-col ">

@@ -110,7 +110,7 @@ export const getProducts = async () => {
   return { data, error };
 };
 
-export const getProductsPurchaseByDayId = async (id) => {
+export const getProductsPurchasesByDayId = async (id) => {
   if (id) {
     const { data: dayPurchases, error } = await supabase
       .from("products")

@@ -11,9 +11,7 @@ export default function TodayDate() {
 
       setCurrentDay(day);
     };
-
     await getCurrentDay();
-    console.log(currentDay, "Current Day from TodayDate Component");
   }, []);
 
   return currentDay ? (
