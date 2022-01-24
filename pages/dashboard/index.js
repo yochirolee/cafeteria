@@ -55,10 +55,9 @@ export default function Dashboard({ user }) {
   };
 
   const handleProductUpdate = async (product) => {
-    
     productForUpdate.name = product.name;
-    productForUpdate.price =parseInt(product.price);
-    productForUpdate.cost =parseInt(product.cost);
+    productForUpdate.price = parseInt(product.price);
+    productForUpdate.cost = parseInt(product.cost);
     const { data, error } = await supabase
       .from("products")
       .update({
@@ -67,7 +66,6 @@ export default function Dashboard({ user }) {
         price: productForUpdate.price,
       })
       .eq("id", productForUpdate.id);
-  
   };
 
   const handleDeleteProduct = async () => {
@@ -112,8 +110,8 @@ export default function Dashboard({ user }) {
     <div className="antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900">
       <DashBoardLayout user={user}>
         <div>
-          <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
-            <div className="my-3  relative rounded-md ">
+          <header className="inline-flex  w-full mx-auto bg-transparent shadow-sm items-center rounded-lg justify-around  border-gray-500 border-dashed">
+            <div className="my-3   relative rounded-md ">
               <input
                 type="text"
                 name="search"
@@ -178,7 +176,6 @@ export default function Dashboard({ user }) {
           setShowModalUpdate={setShowModalUpdate}
           handleProductUpdate={handleProductUpdate}
           productForUpdate={productForUpdate}
-         
         />
       </DashBoardLayout>
     </div>
