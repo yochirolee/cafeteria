@@ -112,7 +112,7 @@ export default function Details() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <div className=" rounded-xl bg-gray-100 h-64 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+            <div className=" rounded-xl bg-gray-100  overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
               <ul className="pt-3">
                 {productsSalesSelectedDay &&
                   productsSalesSelectedDay.map((product) =>
@@ -156,7 +156,7 @@ export default function Details() {
             </div>
           </Tab.Panel>
           <Tab.Panel>
-            <div className=" rounded-xl bg-gray-100 h-64 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+            <div className=" rounded-xl bg-gray-100 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
               <ul className="pt-3">
                 {productsPurchasesSelectedDay &&
                   productsPurchasesSelectedDay.map((product) =>
