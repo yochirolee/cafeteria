@@ -9,7 +9,7 @@ export default function NavBarDashBoard({ user }) {
   const [totalSales, setTotalSales] = useState(0);
   const [toggle, setToggle] = useState(false);
 
-  useEffect(async() => {
+  useEffect(async () => {
     setTotalSales(await getTotalDailySales(products));
   }, [products]);
 
@@ -56,18 +56,7 @@ export default function NavBarDashBoard({ user }) {
             </li>
             <li className="mx-2">
               <Link
-                href="/dashboard/purchases"
-                className="text-center hidden lg:block"
-              >
-                <div>
-                  <i className="las la-clipboard-list mr-1"></i>
-                  <a className="hidden lg:inline-block">Reportes</a>
-                </div>
-              </Link>
-            </li>
-            <li className="mx-2">
-              <Link
-                href="/dashboard/sales"
+                href="/dashboard/details"
                 className="text-center hidden lg:block"
               >
                 <div>
