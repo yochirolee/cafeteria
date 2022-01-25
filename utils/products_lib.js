@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient";
-import { createNewDayOrGetCurrentDay } from "./days_lib";
+import { createNewDayOrGetCurrentDay, getLastDay } from "./days_lib";
 
 export const insertProduct = async (prod) => {
   try {
@@ -34,6 +34,9 @@ export const insertProduct = async (prod) => {
 };
 
 export const updateProduct = async (product, quantity, currentDay) => {
+  const lastDay = await getLastDay();
+  if (lastDay.id != currentDay.id) product.quantity_sold = 0;
+
   const { data, error } = await supabase
     .from("products")
     .update({
