@@ -2,7 +2,7 @@ import { supabase } from "./supabaseClient";
 import moment from "moment";
 import {
   getProductsSalesByDayId,
-  getProductsPurchaseByDayId,
+  getProductsPurchasesByDayId,
 } from "./products_lib";
 
 export const createNewDayOrGetCurrentDay = async () => {
@@ -36,7 +36,7 @@ export const updateLastDay = async () => {
   const lastDay = await getLastDay();
   if (lastDay) {
     const { daySales } = await getProductsSalesByDayId(lastDay.id);
-    const { dayPurchases } = await getProductsPurchaseByDayId(lastDay.id);
+    const { dayPurchases } = await getProductsPurchasesByDayId(lastDay.id);
     const totalDailySales = await calculateDailySales(daySales);
     const totalDailyPurchases = await calculateDailyPurchases(dayPurchases);
     let { data: day } = await supabase
