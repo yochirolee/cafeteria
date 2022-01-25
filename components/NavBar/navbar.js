@@ -2,22 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import Link from "next/link";
 import UserActions from "./userActions";
-import { getProductsSalesByDayId } from "../../utils/products_lib";
-import { getLastDay, calculateDailySales} from "../../utils/days_lib";
+import { getTotalDailySales } from "../../utils/products_lib";
 
 export default function NavBar({ user }) {
   const [products] = useContext(ProductsContext);
   const [totalSales, setTotalSales] = useState(0);
   const [toggle, setToggle] = useState(false);
-  
 
   useEffect(async() => {
-    const currentDay=await getLastDay();
-    const { daySales } = await getProductsSalesByDayId(currentDay.id);
-    const sales=await calculateDailySales(daySales);
-    setTotalSales(sales)
- 
-    
+    setTotalSales(await getTotalDailySales(products));
   }, [products]);
 
   const handleToggle = () => {

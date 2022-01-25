@@ -26,7 +26,7 @@ export default function Rebalance({ selectedDay }) {
     const prod = products.find((product) => product.id == id);
     if (count > 0 && prod.quantity - count >= 0) {
       prod.quantity = prod.quantity - count;
-      prod.quantity_sold = prod.quantity_sold + count;
+      prod.quantity_sold = 0;
 
       const { error } = updateProduct(prod, count, selectedDay);
 
@@ -41,9 +41,9 @@ export default function Rebalance({ selectedDay }) {
 
   return products ? (
     <div className=" flex flex-col lg:grid  lg:grid-cols-6 justify-items-center">
-      <span className="bg-red-200 border-2 text-red-700 border-red-700 mt-2 w-full text-center">Se esta Modificando el dia: {selectedDay.created_at}</span>
+      <span className="bg-red-200 rounded-full mx-4 border-4 text-red-700 border-red-400 mt-2  text-center">Se esta Modificando el dia: {selectedDay.created_at}</span>
       <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
-        <div className="my-3 w-full  px-4 relative rounded-md ">
+        <div className=" w-full  px-4 relative rounded-md ">
           <input
             type="text"
             name="search"

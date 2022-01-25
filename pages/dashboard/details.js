@@ -95,12 +95,25 @@ export default function Details() {
                 </button>
               )}
             </Tab>
-          
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  class="w-full py-2.5 text-sm leading-5 font-medium text-white rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60 hover:bg-white/[0.12] hover:text-white"
+                  id="headlessui-tabs-tab-1"
+                  role="tab"
+                  type="button"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  Rebalanceo
+                </button>
+              )}
+            </Tab>
           </div>
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <div className=" rounded-xl h-64 bg-gray-100  overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60">
+            <div className=" rounded-xl  bg-gray-100  overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60">
               <ul className="pt-3">
                 {productsSalesSelectedDay &&
                   productsSalesSelectedDay.map((product) =>
@@ -144,7 +157,7 @@ export default function Details() {
             </div>
           </Tab.Panel>
           <Tab.Panel>
-            <div className=" rounded-xl h-64 bg-gray-100 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-gray-400 ring-opacity-60">
+            <div className=" rounded-xl  bg-gray-100 overflow-y-auto mx-2 px-3  focus:outline-none focus:ring-2 ring-offset-2 ring-gray-400 ring-opacity-60">
               <ul className="pt-3">
                 {productsPurchasesSelectedDay &&
                   productsPurchasesSelectedDay.map((product) =>
@@ -187,7 +200,9 @@ export default function Details() {
               </ul>
             </div>
           </Tab.Panel>
-         
+          <Tab.Panel>
+            <Rebalance selectedDay={selectedDay} />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     );
@@ -202,9 +217,7 @@ export default function Details() {
         handleDateChange={handleDateChange}
       />
       <Stats day={selectedDay} />
-      <MyTabs /> 
-      <Rebalance selectedDay={selectedDay}/>
-      
+      <MyTabs />
     </>
   );
 }
