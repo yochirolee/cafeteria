@@ -221,6 +221,7 @@ export default function Dashboard({ user }) {
           showConfirmationModalSellAll={showConfirmationModalSellAll}
           handleConfirmationModalSellAll={handleConfirmationModalSellAll}
           handleSellAll={handleSellAll}
+          productForUpdate={productForUpdate}
         />
       </DashBoardLayout>
     </div>
