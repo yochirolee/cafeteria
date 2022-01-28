@@ -5,8 +5,6 @@ export default function ProductCardDashBoard({
   handleConfirmationModalDelete,
   handleGetProductForUpdate,
   handleGetProductForSellAll,
-  
-
 }) {
   return (
     <div className="flex flex-col bg-white rounded-lg mx-2 text-center my-2 ">
@@ -16,7 +14,7 @@ export default function ProductCardDashBoard({
             {product.name}
           </h2>
           <div className="items-center text-md inline-flex text-sm rounded-lg  lg:bg-gray-600  lg:shadow-lg px-2 lg:font-bold lg:text-white">
-            <span className="text-xs pr-2 ">Precio de Venta: </span>
+            <span className="text-xs pr-2 ">Precio: </span>
             <span>$ {product.price}</span>
           </div>
         </div>
