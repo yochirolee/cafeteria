@@ -9,6 +9,8 @@ import ModalFormInsert from "../../components/Modal/modalFormInsert";
 import DeleteModal from "../../components/Modal/deleteModal";
 import { supabase } from "../../utils/supabaseClient";
 import ModalFormUpdate from "../../components/Modal/modalFormUpdate";
+import { updateProduct } from "../../utils/products_lib";
+import ConfirmationModal from "../../components/Modal/confirmationModal";
 
 export default function Dashboard({ user }) {
   const [products, setProducts] = useContext(ProductsContext);
@@ -19,7 +21,11 @@ export default function Dashboard({ user }) {
   const [productForUpdate, setProductForUpdate] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showConfirmationModalDelete, setShowConfirmationModalDelete] =
+    useState(false);
+  const [showConfirmationModalSellAll, setshowConfirmationModalSellAll] =
+    useState(false);
+  const [saleAllConfirmation, setSetAllConfirmation] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(async () => {
@@ -87,13 +93,13 @@ export default function Dashboard({ user }) {
       const index = await _prods.findIndex((prod) => prod.id == deleteId);
       _prods.splice(index, 1);
       await setProducts([..._prods]);
-      setShowConfirmationModal(!showConfirmationModal);
+      setShowConfirmationModalDelete(!showConfirmationModalDelete);
     }
     setSearchTerm("");
   };
 
-  const handleConfirmationModal = () => {
-    setShowConfirmationModal(!showConfirmationModal);
+  const handleConfirmationModalDelete = () => {
+    setShowConfirmationModalDelete(!showConfirmationModalDelete);
   };
 
   const handleGetProductQuantityAdd = (product) => {
@@ -104,6 +110,35 @@ export default function Dashboard({ user }) {
   const handleGetProductForUpdate = (product) => {
     setProductForUpdate(product);
     setShowModalUpdate(true);
+  };
+
+  const handleGetProductForSellAll = (product) => {
+    setProductForUpdate(product);
+    if(product.quantity>0)
+    setshowConfirmationModalSellAll(true);
+  };
+
+  const handleSellAll = async () => {
+    const count = productForUpdate.quantity;
+
+    if (count > 0 && productForUpdate.quantity - count >= 0) {
+      productForUpdate.quantity = productForUpdate.quantity - count;
+      productForUpdate.quantity_sold = productForUpdate.quantity_sold + count;
+
+      const { error } = updateProduct(productForUpdate, count, currentDay);
+
+      if (!error) {
+        const index = products.indexOf(productForUpdate);
+        let _products = [...products];
+        _products[index] = productForUpdate;
+        setProducts(_products);
+        setshowConfirmationModalSellAll(!setshowConfirmationModalSellAll);
+      }
+    }
+  };
+
+  const handleConfirmationModalSellAll = async () => {
+    setshowConfirmationModalSellAll(!showConfirmationModalSellAll);
   };
 
   return (
@@ -138,7 +173,11 @@ export default function Dashboard({ user }) {
                   product={result}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
                   handleGetProductForUpdate={handleGetProductForUpdate}
-                  handleConfirmationModal={handleConfirmationModal}
+                  handleConfirmationModalDelete={handleConfirmationModalDelete}
+                  handleGetProductForSellAll={handleGetProductForSellAll}
+                  handleConfirmationModalSellAll={
+                    handleConfirmationModalSellAll
+                  }
                   setDeleteId={setDeleteId}
                   key={result.id}
                 />
@@ -148,7 +187,8 @@ export default function Dashboard({ user }) {
                   product={product}
                   handleGetProductQuantityAdd={handleGetProductQuantityAdd}
                   handleGetProductForUpdate={handleGetProductForUpdate}
-                  handleConfirmationModal={handleConfirmationModal}
+                  handleConfirmationModalDelete={handleConfirmationModalDelete}
+                  handleGetProductForSellAll={handleGetProductForSellAll}
                   setDeleteId={setDeleteId}
                   key={product.id}
                 />
@@ -167,8 +207,8 @@ export default function Dashboard({ user }) {
           productForUpdate={productForUpdate}
         ></ModalFormAdd>
         <DeleteModal
-          showConfirmationModal={showConfirmationModal}
-          handleConfirmationModal={handleConfirmationModal}
+          showConfirmationModalDelete={showConfirmationModalDelete}
+          handleConfirmationModalDelete={handleConfirmationModalDelete}
           handleDeleteProduct={handleDeleteProduct}
         />
         <ModalFormUpdate
@@ -176,6 +216,11 @@ export default function Dashboard({ user }) {
           setShowModalUpdate={setShowModalUpdate}
           handleProductUpdate={handleProductUpdate}
           productForUpdate={productForUpdate}
+        />
+        <ConfirmationModal
+          showConfirmationModalSellAll={showConfirmationModalSellAll}
+          handleConfirmationModalSellAll={handleConfirmationModalSellAll}
+          handleSellAll={handleSellAll}
         />
       </DashBoardLayout>
     </div>

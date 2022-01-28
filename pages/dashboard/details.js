@@ -58,10 +58,9 @@ export default function Details() {
       <Tab.Group>
         <Tab.List>
           <div
-            class="flex p-1 mb-2 space-x-1 bg-gray-700 mx-2 rounded-xl"
+            className="flex p-1 mb-2 space-x-1 bg-gray-700 mx-2 rounded-xl"
             role="tablist"
             aria-orientation="horizontal"
-            defaultIndex={1}
           >
             <Tab as={Fragment}>
               {({ selected }) => (
@@ -75,7 +74,7 @@ export default function Details() {
                   role="tab"
                   type="button"
                   aria-selected="false"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
                   Ventas
                 </button>
@@ -84,12 +83,12 @@ export default function Details() {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  class="w-full py-2.5 text-sm leading-5 font-medium text-white rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60 hover:bg-white/[0.12] hover:text-white"
+                  className="w-full py-2.5 text-sm leading-5 font-medium text-white rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60 hover:bg-white/[0.12] hover:text-white"
                   id="headlessui-tabs-tab-1"
                   role="tab"
                   type="button"
                   aria-selected="false"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
                   Compras
                 </button>
@@ -98,12 +97,12 @@ export default function Details() {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  class="w-full py-2.5 text-sm leading-5 font-medium text-white rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60 hover:bg-white/[0.12] hover:text-white"
+                  className="w-full py-2.5 text-sm leading-5 font-medium text-white rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-gray-400 ring-white ring-opacity-60 hover:bg-white/[0.12] hover:text-white"
                   id="headlessui-tabs-tab-1"
                   role="tab"
                   type="button"
                   aria-selected="false"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
                   Rebalanceo
                 </button>
@@ -119,7 +118,7 @@ export default function Details() {
                   productsSalesSelectedDay.map((product) =>
                     product.sales.length > 0 ? (
                       product.sales.map((sale) => (
-                        <li className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gay-50">
+                        <li key={sale.id} className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gay-50">
                           <h3 className="text-sm basis-1/4 text-center font-medium leading-5">
                             {product.name}
                           </h3>
@@ -163,7 +162,7 @@ export default function Details() {
                   productsPurchasesSelectedDay.map((product) =>
                     product.purchases.length > 0 ? (
                       product.purchases.map((buy) => (
-                        <li className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gray-50">
+                        <li key={buy.id} className="relative flex   items-center bg-white shadow-md p-3  mb-2 rounded-md hover:bg-gray-50">
                           <h3 className="text-sm basis-1/4 text-center font-medium leading-5">
                             {product.name}
                           </h3>
@@ -189,7 +188,7 @@ export default function Details() {
                           </ul>
                           <a
                             href="#"
-                            class="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-gray-400"
+                            className="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-gray-400"
                           ></a>
                         </li>
                       ))
