@@ -35,16 +35,14 @@ export default function ConfirmationModal({
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  Vender Todo
+                   {productForUpdate.name}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
                     Esta seguro que quiere vender todo de este producto?
                   </p>
-                  <p className="text-lg leading-6 font-medium text-gray-900 m-2">
-                    {productForUpdate.name}
-                  </p>
-                  <div className="inline-flex border p-2 rounded-full text-xs bg-green-50 text-green-700">
+                 
+                  <div className="inline-flex border p-2 mt-2 rounded-full text-xs bg-green-50 text-green-700">
                      <p className="mr-2">Existencia:</p>
                      <p>{productForUpdate.quantity}</p>
                   </div>
