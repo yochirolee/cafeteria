@@ -18,8 +18,12 @@ export default function ProductsTable() {
       .select("*")
       .order("name");
     setProducts(data);
-    setDailySales(await getTotalDailySales(products));
+   
   }, []);
+
+  useEffect(async()=>{
+     setDailySales(await getTotalDailySales(products));
+  })
   // Function For closing the alert snackbar
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
