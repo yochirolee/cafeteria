@@ -45,6 +45,7 @@ export default function ConfirmationModal({
                   <div className="inline-flex border p-2 mt-2 rounded-full text-xs bg-green-50 text-green-700">
                      <p className="mr-2">Existencia:</p>
                      <p>{productForUpdate.quantity}</p>
+                    
                   </div>
                 </div>
               </div>

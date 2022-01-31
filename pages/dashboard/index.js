@@ -25,7 +25,6 @@ export default function Dashboard({ user }) {
     useState(false);
   const [showConfirmationModalSellAll, setshowConfirmationModalSellAll] =
     useState(false);
-  const [saleAllConfirmation, setSetAllConfirmation] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(async () => {
@@ -64,12 +63,14 @@ export default function Dashboard({ user }) {
     productForUpdate.name = product.name;
     productForUpdate.price = parseInt(product.price);
     productForUpdate.cost = parseInt(product.cost);
+    productForUpdate.quantity = parseInt(product.quantity);
     const { data, error } = await supabase
       .from("products")
       .update({
         name: productForUpdate.name,
         cost: productForUpdate.cost,
         price: productForUpdate.price,
+        quantity: productForUpdate.quantity,
       })
       .eq("id", productForUpdate.id);
   };
@@ -114,8 +115,7 @@ export default function Dashboard({ user }) {
 
   const handleGetProductForSellAll = (product) => {
     setProductForUpdate(product);
-    if(product.quantity>0)
-    setshowConfirmationModalSellAll(true);
+    if (product.quantity > 0) setshowConfirmationModalSellAll(true);
   };
 
   const handleSellAll = async () => {
@@ -144,7 +144,7 @@ export default function Dashboard({ user }) {
   return (
     <div className="antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900">
       <DashBoardLayout user={user}>
-        <div>
+        <div className="lg:flex lg:flex-wrap lg:container lg:mx-auto">
           <header className="inline-flex  w-full mx-auto bg-transparent shadow-sm items-center rounded-lg justify-around  border-gray-500 border-dashed">
             <div className="my-3   relative rounded-md ">
               <input

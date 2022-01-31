@@ -7,7 +7,7 @@ export default function ProductCardDashBoard({
   handleGetProductForSellAll,
 }) {
   return (
-    <div className="flex flex-col bg-white rounded-lg mx-2 text-center my-2 ">
+    <div className="flex flex-col lg:w-1/3  bg-white rounded-lg mx-2 text-center my-2 ">
       <div className="flex flex-row items-center  ">
         <div className="basis-2/4 ">
           <h2 className="text-sm font-bold  text-gray-500  lg:text-2xl">
