@@ -77,7 +77,7 @@ export default function ProductCardDashBoard({
           </div>
         </div>
       </div>
-      <div className="text-xs flex flex-row container justify-center rounded-b-lg border-t">
+      <div className={`${product.cost==product.price ? 'bg-red-400 text-white':''} text-xs flex flex-row container justify-center rounded-b-lg border-t`}>
         <div className="flex mx-2">
           <p>Compra:</p>
           <p className="mx-2">{product.cost} </p>
