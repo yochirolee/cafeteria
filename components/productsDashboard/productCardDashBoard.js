@@ -77,13 +77,14 @@ export default function ProductCardDashBoard({
           </div>
         </div>
       </div>
-      <div className="text-xs flex flex-row container justify-center">
-        <div className="flex">
+      <div className="text-xs flex flex-row container justify-center rounded-b-lg border-t">
+        <div className="flex mx-2">
           <p>Compra:</p>
-          <p>{product.cost} </p>
+          <p className="mx-2">{product.cost} </p>
         </div>
-        <div>
-          <p>Venta:</p> <p className="mx-2">{product.price}</p>
+        <div className="flex mx-2">
+          <p>Venta:</p> 
+          <p className="mx-2">{product.price}</p>
         </div>
       </div>
     </div>
