@@ -120,14 +120,14 @@ export default function Dashboard({ user }) {
 
   const handleGetProductForSellAll = (product) => {
     setProductForUpdate(product);
-    if (product.quantity > 0) setshowConfirmationModalSellAll(true);
+    if (product.quantity +product.entry> 0) setshowConfirmationModalSellAll(true);
   };
 
   const handleSellAll = async (data) => {
     
     const count = parseInt(data.count);
    
-    if (count > 0 && productForUpdate.quantity - count >= 0) {
+    if (count > 0 && productForUpdate.quantity+productForUpdate.entry - count >= 0) {
       // prod.quantity = prod.quantity - count;
       productForUpdate.quantity_sold = productForUpdate.quantity_sold + count;
 
