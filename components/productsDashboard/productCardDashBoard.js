@@ -8,7 +8,7 @@ export default function ProductCardDashBoard({
 }) {
   return (
     <div className="flex flex-col lg:w-1/3  bg-white rounded-lg mx-2 text-center my-2 ">
-      <div>
+      <div class>
         <div className="flex flex-row items-center border-b justify-around ">
           <h2 className="basis-2/4 text-sm items-center font-bold p-2 text-gray-500 ">
             {product.name}
