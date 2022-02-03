@@ -8,11 +8,12 @@ export default function ProductCardDashBoard({
 }) {
   return (
     <div className="flex flex-col lg:w-1/3  bg-white rounded-lg mx-2 text-center my-2 ">
-      <div class>
+      <div>
         <div className="flex flex-row items-center border-b justify-around ">
           <h2 className="basis-2/4 text-sm items-center font-bold p-2 text-gray-500 ">
             {product.name}
           </h2>
+
           <div className="w-full flex justify-end mr-2 ">
             <div className="border-r mr-2">
               <i className="las la-balance-scale h-6 w-6  text-sm rounded-full text-center pt-0.5 mr-2   border "></i>
@@ -66,7 +67,7 @@ export default function ProductCardDashBoard({
               className={`${
                 product.quantity == 0
                   ? "bg-red-600 animate-pulse"
-                  : product.quantity < 10
+                  : product.quantity + product.entry < 10
                   ? " bg-yellow-500"
                   : "bg-green-600 "
               } flex flex-row px-2   text-white rounded-full   mx-auto items-center lg:border-none `}
@@ -75,6 +76,9 @@ export default function ProductCardDashBoard({
             </p>
           </div>
         </div>
+      </div>
+      <div className="text-xs flex flex-row container justify-center">
+        <p>{product.cost} </p> <p className="mx-2">{product.price}</p>
       </div>
     </div>
   );

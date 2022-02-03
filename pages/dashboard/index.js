@@ -177,7 +177,7 @@ export default function Dashboard({ user }) {
             </div>
             <button
               onClick={() => setShowModalInsert(true)}
-              className="flex flex-row items-center p-3 mr-2 mt-4 h-12 cursor-pointer bg-gray-600 rounded-lg   hover:text-white  ring-gray-700 hover:ring-2 "
+              className="flex flex-row items-center p-3 mr-2 mt-4 h-12 cursor-pointer bg-gray-600 rounded-lg   text-white  ring-gray-700 hover:ring-2 "
             >
               Crear
             </button>

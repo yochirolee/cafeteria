@@ -28,7 +28,7 @@ export default function Stats({ day }) {
     <>
       {loading ? (
         <div className="text-gray-400 text-center h-20  rounded-lg  items-center  bg-gray-100 m-2 p-2 ">
-          <i class="las la-spinner animate-spin mt-2 text-gray-400 text-5xl text-center"></i>
+          <i className="las la-spinner animate-spin mt-2 text-gray-400 text-5xl text-center"></i>
         </div>
       ) : (
         <div className="grid grid-flow-col text-xs text-gray-400  rounded-lg gap-3 grid-cols-3 items-center  bg-gray-100 m-2 p-2 ">
