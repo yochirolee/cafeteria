@@ -41,11 +41,11 @@ export default function ProductCardDashBoard({
         </div>
         <div className="flex flex-row justify-around items-center  mx-auto p-1  text-xs ">
           <div className="flex flex-col mx-1 ">
-            <p className="mr-1 ">Inicio</p>
+            <p className="mr-1 font-thin ">Inicio</p>
             <p> {product.quantity}</p>
           </div>
           <div className="flex flex-col  mx-1 ">
-            <p className="mr-1 ">Entrada</p>
+            <p className="mr-1 font-thin">Entrada</p>
             <p>{product.entry}</p>
           </div>
           <div className="flex flex-col   mx-1 ">
@@ -57,11 +57,11 @@ export default function ProductCardDashBoard({
             <p> {product.quantity_sold}</p>
           </div>
           <div className="flex flex-col  items-center mx-1 ">
-            <p className="mr-1 font-thin">Venta</p>
+            <p className="mr-1">Venta</p>
             <p> $ {product.price * product.quantity_sold}</p>
           </div>
           <div className="flex flex-col text-center ">
-            <p className="mr-1 font-thin">Final</p>
+            <p className="mr-1 ">Final</p>
             <p
               className={`${
                 product.quantity == 0
