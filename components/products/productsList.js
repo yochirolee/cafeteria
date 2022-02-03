@@ -3,9 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { updateProduct } from "../../utils/products_lib";
 import { CurrentDayContext } from "../../context/CurrentDayContext";
+import IsLoading from "../Spinners/isLoading";
+import IsError from "../Spinners/isError";
 
 export default function ProductList() {
-  const [products, setProducts] = useContext(ProductsContext);
+  const [{ products, isLoading, isError }, dispatch] =
+    useContext(ProductsContext);
+
   const [currentDay] = useContext(CurrentDayContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -21,27 +25,26 @@ export default function ProductList() {
     setSearchTerm(event.target.value);
   };
 
-  useEffect(() => {}, [products]);
-
   const handleProductUpdate = async (id, count) => {
-    console.log("handle Product Update");
     const prod = products.find((product) => product.id == id);
     if (count > 0 && prod.quantity - count >= 0) {
-      prod.quantity = prod.quantity - count;
+     // prod.quantity = prod.quantity - count;
       prod.quantity_sold = prod.quantity_sold + count;
 
       const { error } = updateProduct(prod, count, currentDay);
 
       if (!error) {
         const index = products.indexOf(prod);
-        let _products = [...products];
-        _products[index] = prod;
-        setProducts(_products);
+        dispatch({ type: "update_product", payload: { index: index,product:prod } });
+        dispatch({ type: "get_daily_sales" });
       }
     }
   };
 
-  return products ? (
+  if (isLoading) return <IsLoading />;
+  if (isError) return <IsError />;
+
+  return (
     <div className=" flex flex-col lg:grid  lg:grid-cols-6 justify-items-center">
       <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
         <div className="my-3 w-full  px-4 relative rounded-md ">
@@ -75,7 +78,5 @@ export default function ProductList() {
             />
           ))}
     </div>
-  ) : (
-    <div>Loading</div>
   );
 }

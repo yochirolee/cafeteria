@@ -18,7 +18,7 @@ export default function ProductCard({
 
       <div className="lg:border-b lg:border-dashed lg:w-full lg:mt-2"></div>
       <ProductCardDetails
-        quantity={product.quantity}
+        quantity={product.quantity+product.entry-product.quantity_sold}
         quantity_sold={product.quantity_sold}
         price={product.price}
       />

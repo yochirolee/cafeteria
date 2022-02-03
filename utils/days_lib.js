@@ -21,10 +21,17 @@ export const createNewDayOrGetCurrentDay = async () => {
       ])
       .single();
 
-    let { data: products } = await supabase
-      .from("products")
-      .update({ quantity_sold: 0 });
- console.log(day,products,error,"INSETEREASFDSA")
+    let { data: products } = await supabase.from("products").select("*");
+    await products.map((el) => {
+      console.log(el, "before");
+      el.quantity = el.quantity + el.entry - el.quantity_sold;
+      el.quantity_sold = 0;
+      el.entry = 0;
+      console.log(el, "AFTER");
+    });
+    const { data } = await supabase.from("products").upsert(products);
+
+    console.log(day, products, error, "UPSERT DATA FOR NEW DAY");
     return { day, products, error };
   } else {
     const day = await getLastDay();

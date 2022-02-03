@@ -13,7 +13,9 @@ import { updateProduct } from "../../utils/products_lib";
 import ConfirmationModal from "../../components/Modal/confirmationModal";
 
 export default function Dashboard({ user }) {
-  const [products, setProducts] = useContext(ProductsContext);
+  const [{ products, isLoading, isError }, dispatch] =
+    useContext(ProductsContext);
+
   const [showModalInsert, setShowModalInsert] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -41,17 +43,15 @@ export default function Dashboard({ user }) {
   const handleInsertProduct = async (data) => {
     const { product, error } = await insertProduct(data);
     if (!error) {
-      const aux = [...products];
-      aux.push(product);
-      setProducts(aux);
+      dispatch({ type: "add_product", payload: { product: product } });
     } else {
-      setError(error);
+      dispatch({ type: "error" });
     }
   };
 
   const handleUpdateAddProduct = async (data) => {
     const quantityAdded = parseInt(data.quantity);
-    productForUpdate.quantity += quantityAdded;
+    productForUpdate.entry += quantityAdded;
     const { data: productUpdated, purchase } = await AddProductInventory(
       productForUpdate,
       quantityAdded,
@@ -64,6 +64,7 @@ export default function Dashboard({ user }) {
     productForUpdate.price = parseInt(product.price);
     productForUpdate.cost = parseInt(product.cost);
     productForUpdate.quantity = parseInt(product.quantity);
+    productForUpdate.entry = parseInt(product.entry);
     const { data, error } = await supabase
       .from("products")
       .update({
@@ -71,6 +72,7 @@ export default function Dashboard({ user }) {
         cost: productForUpdate.cost,
         price: productForUpdate.price,
         quantity: productForUpdate.quantity,
+        entry: productForUpdate.entry,
       })
       .eq("id", productForUpdate.id);
   };
@@ -90,10 +92,13 @@ export default function Dashboard({ user }) {
       .delete()
       .match({ id: deleteId });
     if (!error) {
-      const _prods = [...products];
-      const index = await _prods.findIndex((prod) => prod.id == deleteId);
-      _prods.splice(index, 1);
-      await setProducts([..._prods]);
+      dispatch({ type: "remove_product", payload: { index: deleteId } });
+      dispatch({ type: "get_daily_sales" });
+      // const _prods = [...products];
+      // const index = await _prods.findIndex((prod) => prod.id == deleteId);
+      // _prods.splice(index, 1);
+      // await setProducts([..._prods]);
+
       setShowConfirmationModalDelete(!showConfirmationModalDelete);
     }
     setSearchTerm("");
@@ -118,22 +123,24 @@ export default function Dashboard({ user }) {
     if (product.quantity > 0) setshowConfirmationModalSellAll(true);
   };
 
-  const handleSellAll = async () => {
-    const count = productForUpdate.quantity;
-
+  const handleSellAll = async (data) => {
+    
+    const count = parseInt(data.count);
+   
     if (count > 0 && productForUpdate.quantity - count >= 0) {
-      productForUpdate.quantity = productForUpdate.quantity - count;
+      // prod.quantity = prod.quantity - count;
       productForUpdate.quantity_sold = productForUpdate.quantity_sold + count;
 
       const { error } = updateProduct(productForUpdate, count, currentDay);
 
       if (!error) {
         const index = products.indexOf(productForUpdate);
-        let _products = [...products];
-        _products[index] = productForUpdate;
-        setProducts(_products);
-        setshowConfirmationModalSellAll(!setshowConfirmationModalSellAll);
-      }
+        dispatch({
+          type: "update_product",
+          payload: { index: index, product: productForUpdate },
+        });
+        dispatch({ type: "get_daily_sales" });
+      } else console.log(error);
     }
   };
 
@@ -145,28 +152,37 @@ export default function Dashboard({ user }) {
     <div className="antialiased text-slate-500 dark:text-slate-400  dark:bg-slate-900">
       <DashBoardLayout user={user}>
         <div className="lg:flex lg:flex-wrap lg:container lg:mx-auto">
-          <header className="inline-flex  w-full mx-auto bg-transparent shadow-sm items-center rounded-lg justify-around  border-gray-500 border-dashed">
-            <div className="my-3   relative rounded-md ">
+          <div className="flex items-center">
+            <div className=" w-full pt-4  px-4 relative rounded-md ">
               <input
                 type="text"
                 name="search"
-                className=" h-12  block  pl-7 pr-12 border  rounded-md"
+                className=" h-12 w-full block  pl-7 pr-12 border  rounded-md"
                 placeholder="Buscar"
                 value={searchTerm}
                 onChange={handleSearchTermChange}
               />
               <div className="absolute   rounded-r-md  inset-y-0 right-0 flex  items-center">
-                <i className="las la-search items-center text-2xl p-4 mt-1 text-gray-400 "></i>
+                {!searchTerm ? (
+                  <i className="las la-search items-center text-2xl pr-6 mt-4 text-gray-400 "></i>
+                ) : (
+                  <i
+                    onClick={() => {
+                      setSearchTerm("");
+                    }}
+                    className="las la-times items-center text-2xl pr-6 mt-4 text-gray-400 "
+                  ></i>
+                )}
               </div>
             </div>
-
-            <div
+            <button
               onClick={() => setShowModalInsert(true)}
-              className="flex flex-row items-center h-12 p-2 cursor-pointer bg-gray-600 rounded-lg   hover:text-white  ring-gray-700 hover:ring-2 "
+              className="flex flex-row items-center p-3 mr-2 mt-4 h-12 cursor-pointer bg-gray-600 rounded-lg   hover:text-white  ring-gray-700 hover:ring-2 "
             >
-              <p className="text-white mx-2">Crear</p>
-            </div>
-          </header>
+              Crear
+            </button>
+          </div>
+
           {searchTerm
             ? searchResults.map((result) => (
                 <ProductCardDashBoard

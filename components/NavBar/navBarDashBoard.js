@@ -5,13 +5,9 @@ import UserActions from "./userActions";
 import { getTotalDailySales } from "../../utils/products_lib";
 
 export default function NavBarDashBoard({ user }) {
-  const [products] = useContext(ProductsContext);
-  const [totalSales, setTotalSales] = useState(0);
-  const [toggle, setToggle] = useState(false);
+  const [{ dailySales }] = useContext(ProductsContext);
 
-  useEffect(async () => {
-    setTotalSales(await getTotalDailySales(products));
-  }, [products]);
+  const [toggle, setToggle] = useState(false);
 
   const handleToggle = () => {
     setToggle(!toggle);
@@ -71,7 +67,7 @@ export default function NavBarDashBoard({ user }) {
           <div className="flex flex-row items-center">
             <p className="mr-2 hidden lg:inline-block">Venta:</p>
             <p className=" bg-black text-sm lg:text-md rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none relative justify-end p-2  font-bold">
-              $ {totalSales}
+              $ {dailySales}
             </p>
           </div>
           <a

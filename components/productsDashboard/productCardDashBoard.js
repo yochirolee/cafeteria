@@ -8,61 +8,19 @@ export default function ProductCardDashBoard({
 }) {
   return (
     <div className="flex flex-col lg:w-1/3  bg-white rounded-lg mx-2 text-center my-2 ">
-      <div className="flex flex-row items-center  ">
-        <div className="basis-2/4 ">
-          <h2 className="text-sm font-bold  text-gray-500  lg:text-2xl">
+      <div>
+        <div className="flex flex-row items-center border-b justify-around ">
+          <h2 className="basis-2/4 text-sm items-center font-bold p-2 text-gray-500 ">
             {product.name}
           </h2>
-          <div className="items-center text-md inline-flex text-sm rounded-lg  lg:bg-gray-600  lg:shadow-lg px-2 lg:font-bold lg:text-white">
-            <span className="text-xs pr-2 ">Precio: </span>
-            <span>$ {product.price}</span>
-          </div>
-        </div>
-        <div className="basis-5/6  ">
-          <div className="flex flex-col my-1  ">
-            <div
-              className={`
-          flex flex-row  mt-1 pb-2   mx-auto lg:border-none `}
-            >
-              <p className="mr-2 my-auto ">Inventario</p>
-              <p
-                className={`${
-                  product.quantity == 0
-                    ? "bg-red-600 animate-pulse"
-                    : product.quantity < 10
-                    ? " bg-yellow-500"
-                    : "bg-green-600 "
-                } flex flex-row px-2 h-6 my-auto  text-white rounded-full   mx-auto items-center lg:border-none `}
-              >
-                {product.quantity}
-              </p>
+          <div className="w-full flex justify-end mr-2 ">
+            <div className="border-r mr-2">
+              <i className="las la-balance-scale h-6 w-6  text-sm rounded-full text-center pt-0.5 mr-2   border "></i>
+              <i
+                onClick={() => handleGetProductForSellAll(product)}
+                className="las la-exchange-alt h-6 w-6   text-sm rounded-full text-center pt-0.5 mr-2   border "
+              ></i>
             </div>
-            <div className="flex mx-auto border rounded-lg bg-gray-100/80 p-1  text-xs ">
-              <div className="flex  items-center mx-2 ">
-                <p className="mr-1">Vendidos</p>
-                <p> {product.quantity_sold}</p>
-              </div>
-              <div className="flex  items-center mx-2 ">
-                <p className="mr-1">Venta</p>
-                <p> $ {product.price * product.quantity_sold}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className=" flex border-t bg-gray-100/80  w-full pb-2 ">
-        <div className="mx-auto">
-          <div className="place-items-end text-xl">
-            <button className="p-2  rounded-lg text-xs border border-yellow-600/30  mt-2 text-yellow-600 bg-yellow-50 hover:bg-yellow-600 hover:text-white">
-              Vender al Costo
-            </button>
-
-            <button
-              onClick={() => handleGetProductForSellAll(product)}
-              className="p-2 mx-2 rounded-lg text-xs border border-green-600/30  mt-2 text-green-600 bg-green-50 hover:bg-green-600 hover:text-white"
-            >
-              Vender Todo
-            </button>
             <i
               onClick={() => handleGetProductQuantityAdd(product)}
               className="las la-plus  h-6 w-6  text-sm rounded-full text-center pt-0.5 mr-2 border border-gray-300    text-gray-600 bg-gray-100 "
@@ -71,6 +29,7 @@ export default function ProductCardDashBoard({
               onClick={() => handleGetProductForUpdate(product)}
               className="las la-edit h-6 w-6  text-sm rounded-full text-center pt-0.5 mr-2   border border-green-300    text-green-600 bg-green-100"
             ></i>
+
             <i
               onClick={() => {
                 setDeleteId(product.id);
@@ -78,6 +37,42 @@ export default function ProductCardDashBoard({
               }}
               className="las la-trash-alt  h-6 w-6  text-sm rounded-full text-center pt-0.5   border border-red-300  text-red-600 bg-red-100"
             ></i>
+          </div>
+        </div>
+        <div className="flex flex-row justify-around items-center  mx-auto p-1  text-xs ">
+          <div className="flex flex-col mx-1 ">
+            <p className="mr-1 ">Inicio</p>
+            <p> {product.quantity}</p>
+          </div>
+          <div className="flex flex-col  mx-1 ">
+            <p className="mr-1 ">Entrada</p>
+            <p>{product.entry}</p>
+          </div>
+          <div className="flex flex-col   mx-1 ">
+            <p className="mr-1 ">A Venta</p>
+            <p> {product.quantity + product.entry}</p>
+          </div>
+          <div className="flex flex-col  items-center mx-1 ">
+            <p className="mr-1 ">Vendidos</p>
+            <p> {product.quantity_sold}</p>
+          </div>
+          <div className="flex flex-col  items-center mx-1 ">
+            <p className="mr-1 font-thin">Venta</p>
+            <p> $ {product.price * product.quantity_sold}</p>
+          </div>
+          <div className="flex flex-col text-center ">
+            <p className="mr-1 font-thin">Final</p>
+            <p
+              className={`${
+                product.quantity == 0
+                  ? "bg-red-600 animate-pulse"
+                  : product.quantity < 10
+                  ? " bg-yellow-500"
+                  : "bg-green-600 "
+              } flex flex-row px-2   text-white rounded-full   mx-auto items-center lg:border-none `}
+            >
+              {product.quantity + product.entry - product.quantity_sold}
+            </p>
           </div>
         </div>
       </div>

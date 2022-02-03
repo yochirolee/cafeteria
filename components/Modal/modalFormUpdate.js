@@ -103,6 +103,17 @@ export default function ModalFormUpdate({
                         defaultValue={productForUpdate.quantity}
                       />
                     </div>
+                    <div className="w-full">
+                      <label className="pl-2">Entrada</label>
+
+                      <input
+                        className="bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        type="number"
+                        placeholder="Cantidad"
+                        {...register("entry", { required: true })}
+                        defaultValue={productForUpdate.entry}
+                      />
+                    </div>
 
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex ">
                       <button

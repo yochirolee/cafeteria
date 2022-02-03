@@ -5,7 +5,7 @@ import authWrapper from "../lib/authWrapper";
 export default function Home({ user }) {
   return (
     <>
-      <NavBar user={user} />
+     <NavBar user={user} />
       <ProductsList />
     </>
   );

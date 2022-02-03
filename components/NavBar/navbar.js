@@ -5,13 +5,8 @@ import UserActions from "./userActions";
 import { getTotalDailySales } from "../../utils/products_lib";
 
 export default function NavBar({ user }) {
-  const [products] = useContext(ProductsContext);
-  const [totalSales, setTotalSales] = useState(0);
+  const [{ dailySales }] = useContext(ProductsContext);
   const [toggle, setToggle] = useState(false);
-
-  useEffect(async() => {
-    setTotalSales(await getTotalDailySales(products));
-  }, [products]);
 
   const handleToggle = () => {
     setToggle(!toggle);
@@ -29,7 +24,7 @@ export default function NavBar({ user }) {
           <div className="flex flex-row items-center">
             <p className="mr-2 ">Venta:</p>
             <p className=" bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none relative justify-end p-2  font-bold">
-              $ {totalSales}
+              $ {dailySales}
             </p>
           </div>
           <a

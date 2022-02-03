@@ -40,7 +40,7 @@ export const updateProduct = async (product, quantity, currentDay) => {
   const { data, error } = await supabase
     .from("products")
     .update({
-      quantity: product.quantity,
+      
       quantity_sold: product.quantity_sold,
     })
     .eq("id", product.id);
@@ -57,10 +57,7 @@ export const AddProductInventory = async (product, quantity, day) => {
   const { data, error } = await supabase
     .from("products")
     .update({
-      name: product.name,
-      cost: product.price,
-      price: product.salePrice,
-      quantity: product.quantity,
+      entry:quantity,
       day_id: day.id,
     })
     .eq("id", product.id);
@@ -70,7 +67,6 @@ export const AddProductInventory = async (product, quantity, day) => {
     day
   );
 
-  console.log(error, purchaseError, "ERROR UPDATING INVENTORY");
 
   return { data, purchase };
 };

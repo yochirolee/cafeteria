@@ -1,10 +1,10 @@
-import { useContext,useState,useEffect } from "react";
-import {ProductsContext} from "../../context/ProductsContext";
+import { useContext, useState, useEffect } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
 import ProductCard from "../products/productCard";
-import {updateProduct} from '../../utils/products_lib'
+import { updateProduct } from "../../utils/products_lib";
 
 export default function Rebalance({ selectedDay }) {
-  const [products, setProducts] = useContext(ProductsContext);
+  const [{ products }, dispatch] = useContext(ProductsContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -32,16 +32,19 @@ export default function Rebalance({ selectedDay }) {
 
       if (!error) {
         const index = products.indexOf(prod);
-        let _products = [...products];
-        _products[index] = prod;
-        setProducts(_products);
+        dispatch({
+          type: "update_product",
+          payload: { index: index, product: prod },
+        });
       }
     }
   };
 
   return products ? (
     <div className=" flex flex-col lg:grid  lg:grid-cols-6 justify-items-center">
-      <span className="bg-red-200 rounded-full mx-4 border-4 text-red-700 border-red-400 mt-2  text-center">Se esta Modificando el dia: {selectedDay.created_at}</span>
+      <span className="bg-red-200 rounded-full mx-4 border-4 text-red-700 border-red-400 mt-2  text-center">
+        Se esta Modificando el dia: {selectedDay.created_at}
+      </span>
       <header className="inline-flex w-full mx-auto bg-transparent shadow-sm items-center rounded-lg m-2 justify-around py-2 border-gray-500 border-dashed">
         <div className=" w-full  px-4 relative rounded-md ">
           <input
