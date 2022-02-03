@@ -5,7 +5,7 @@ export default function ProductCardActions({ prod, handleProductUpdate }) {
   const [updating, setUpdating] = useState(false);
 
   const handlePlus = () => {
-    if (prod.quantity - count > 0) setCount((count) => count + 1);
+    if (prod.quantity+prod.entry - count > 0) setCount((count) => count + 1);
   };
   const handleMinus = () => {
     if (count > 0) setCount((count) => count - 1);
@@ -38,11 +38,11 @@ export default function ProductCardActions({ prod, handleProductUpdate }) {
 
       <button
         className={`mt-4 text-sm lg:text-md rounded-lg w-3/4 ${
-          prod.quantity == 0 ? "bg-red-600" : "bg-gray-700"
+          prod.quantity+prod.entry == 0 ? "bg-red-600" : "bg-gray-700"
         }`}
       >
         <p className="p-2 text-white" onClick={() => handleUpdate(prod.id)}>
-          {prod.quantity == 0 ? "Agotado" : updating ? "Vendiendo" : "Vender"}
+          {prod.quantity+prod.entry == 0 ? "Agotado" : updating ? "Vendiendo" : "Vender"}
         </p>
       </button>
     </div>

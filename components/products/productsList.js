@@ -27,7 +27,7 @@ export default function ProductList() {
 
   const handleProductUpdate = async (id, count) => {
     const prod = products.find((product) => product.id == id);
-    if (count > 0 && prod.quantity - count >= 0) {
+    if (count > 0 && prod.quantity+prod.entry - count >= 0) {
      // prod.quantity = prod.quantity - count;
       prod.quantity_sold = prod.quantity_sold + count;
 

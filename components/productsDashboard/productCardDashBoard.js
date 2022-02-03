@@ -65,7 +65,7 @@ export default function ProductCardDashBoard({
             <p className="mr-1 ">Final</p>
             <p
               className={`${
-                product.quantity == 0
+                product.quantity + product.quantity + product.entry == 0
                   ? "bg-red-600 animate-pulse"
                   : product.quantity + product.entry < 10
                   ? " bg-yellow-500"
@@ -78,7 +78,13 @@ export default function ProductCardDashBoard({
         </div>
       </div>
       <div className="text-xs flex flex-row container justify-center">
-        <p>{product.cost} </p> <p className="mx-2">{product.price}</p>
+        <div className="flex">
+          <p>Compra:</p>
+          <p>{product.cost} </p>
+        </div>
+        <div>
+          <p>Venta:</p> <p className="mx-2">{product.price}</p>
+        </div>
       </div>
     </div>
   );
